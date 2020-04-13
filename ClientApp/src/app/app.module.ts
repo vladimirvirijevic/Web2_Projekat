@@ -9,6 +9,11 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegisteredUserComponent } from './registered-user/registered-user.component';
+import { UserProfilComponent } from './user-profil/user-profil.component';
+import { EditProfileComponent } from './user-profil/edit-profile/edit-profile.component';
+import { FriendlistComponent } from './user-profil/friendlist/friendlist.component';
+import { AddFriendComponent } from './user-profil/add-friend/add-friend.component';
 
 
 @NgModule({
@@ -16,7 +21,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     HomeComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    RegisteredUserComponent,
+    UserProfilComponent,
+    EditProfileComponent,
+    FriendlistComponent,
+    AddFriendComponent
   ],
   imports: [
     BrowserModule,
