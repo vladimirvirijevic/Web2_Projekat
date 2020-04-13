@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col">
+            <form class="search-flights">
+                <div class="row">
+                    <div class="col mb-4">
+                        <h2>Search Flights</h2>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col">
+                        <label class="my-1 mb-2">Type</label>
+                        <select class="custom-select">
+                          <option selected value="Round Trip">Round Trip</option>
+                          <option value="One Way">One Way</option>
+                        </select>
+                    </div> 
+                    <div class="col">
+                        <label class="my-1 mb-2">Seat</label>
+                        <select class="custom-select">
+                          <option value="Adult">Adult</option>
+                          <option value="Child">Child</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="my-1 mb-2">Cabin</label>
+                        <select class="custom-select">
+                          <option value="Economy" selected>Economy</option>
+                          <option value="Business">Business</option>
+                          <option value="Mixed">Mixed</option>
+                        </select>
+                    </div>
+                  </div>
+                <div class="row">
+                    <div class="col-auto">
+                      <input type="text" class="form-control" placeholder="From">
+                    </div> -
+                    <div class="col-auto">
+                      <input type="text" class="form-control" placeholder="To">
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-group form-inline">                            
+                            <label class="mr-3">Depart</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-group form-inline">                            
+                            <label class="mr-3">Return</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    
+                  </div>
+                  <div class="row">
+                      <div class="col">
+                          <button type="submit" class="btn btn-primary mt-4 search-btn">Seach</button>
+                      </div>
+                  </div>
+            </form>
+        </div>
+    </div>
+</div>

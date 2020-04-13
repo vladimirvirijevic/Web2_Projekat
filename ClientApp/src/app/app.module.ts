@@ -14,6 +14,8 @@ import { UserProfilComponent } from './user-profil/user-profil.component';
 import { EditProfileComponent } from './user-profil/edit-profile/edit-profile.component';
 import { FriendlistComponent } from './user-profil/friendlist/friendlist.component';
 import { AddFriendComponent } from './user-profil/add-friend/add-friend.component';
+import { FlightsComponent } from './flights/flights.component';
+import { CarsComponent } from './cars/cars.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { AddFriendComponent } from './user-profil/add-friend/add-friend.componen
     UserProfilComponent,
     EditProfileComponent,
     FriendlistComponent,
-    AddFriendComponent
+    AddFriendComponent,
+    FlightsComponent,
+    CarsComponent
   ],
   imports: [
     BrowserModule,
