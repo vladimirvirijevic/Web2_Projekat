@@ -1,0 +1,39 @@
+
+<div class="card">
+    <div class="card-header"> 
+     Available Airplane Companies  
+    <button type="button" class="btn btn-success" (click)="ClickedFilter()">Filter</button>
+    </div>
+    <div *ngIf="clickedFilter">
+    <form>
+        <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" class="form-control" placeholder="Enter company name">
+        </div>
+        <div class="form-group">
+            <label>Company Location</label>
+            <input type="text" class="form-control" placeholder="Enter company location">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect2">Destination</label>
+            <select multiple class="form-control" id="exampleFormControlSelect2">
+                <option>New York</option>
+                <option>Belgrade</option>
+                <option>Berlin</option>
+                <option>Tokyo</option>
+                <option>Miami</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+    </div>
+    <div class="card-body" *ngFor="let kompanija of airplaneCompanies">
+      <h5 class="card-title">{{kompanija.name}}</h5>
+      <p class="card-text">
+         Address: {{kompanija.address}}<br/>
+         {{kompanija.description}}<br/>
+         Grade: {{kompanija.grade}}
+      </p>
+      <a href="#" class="btn btn-primary">Check out</a>
+    </div>
+  </div>

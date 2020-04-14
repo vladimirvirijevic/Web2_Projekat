@@ -17,6 +17,10 @@ import { AddFriendComponent } from './user-profil/add-friend/add-friend.componen
 import { FlightsComponent } from './flights/flights.component';
 import { CarsComponent } from './cars/cars.component';
 import { RentacarProfileComponent } from './rentacar-profile/rentacar-profile.component';
+import { ListOfAvioCompaniesComponent } from './list-of-avio-companies/list-of-avio-companies.component';
+import { HistoryComponent } from './user-profil/history/history.component';
+
+
 
 
 @NgModule({
@@ -32,7 +36,11 @@ import { RentacarProfileComponent } from './rentacar-profile/rentacar-profile.co
     AddFriendComponent,
     FlightsComponent,
     CarsComponent,
-    RentacarProfileComponent
+    RentacarProfileComponent,
+    ListOfAvioCompaniesComponent,
+    HistoryComponent,
+    
+    
   ],
   imports: [
     BrowserModule,

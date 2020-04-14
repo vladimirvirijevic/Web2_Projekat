@@ -1,0 +1,56 @@
+<div class="row row-no-gutters">
+    <div class="column">
+      <table class="table">
+        <thead>
+          <tr>
+             <th scope="col">Reservation:</th>
+             <th scope="col">Date:</th>
+             <th scope="col">Time:</th>
+             <th scope="col">Company:</th>
+             <th scope="col">Route:</th>
+          </tr>
+      </thead>
+        <tbody>
+           <tr>
+             <th scope="row">Rezervacija 1</th>
+             <td>21.02.2020.</td>
+             <td>15:00:00</td>
+             <td>GulfAir</td>
+             <td>Belgrade-New York</td>
+             <td><button type="button" class="btn btn-primary" (click)="clickedOceni()">Oceni</button></td>
+           </tr>
+            <tr>
+              <th scope="row">Rezervacija 2</th>
+              <td>22.02.2020.</td>
+              <td>14:00:00</td>
+              <td>FlyOne</td>
+              <td>Paris-New York</td>
+              <td><button type="button" class="btn btn-primary">Oceni</button></td>
+            </tr>
+         </tbody>
+      </table>
+    </div>
+   <div class="column" *ngIf="oceniClicked">
+    <p>We are happy to hear from you!</p>
+    <div class="form-group pull-right">
+        <label for="exampleFormControlSelect2">Select grade:</label>
+        <select multiple class="form-control" id="exampleFormControlSelect2">
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+        </select>
+        <td><button type="button" class="btn btn-primary">Submit</button></td>
+    </div>
+   </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
