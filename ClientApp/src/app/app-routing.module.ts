@@ -10,10 +10,12 @@ import { FriendlistComponent } from './user-profil/friendlist/friendlist.compone
 import { AddFriendComponent } from './user-profil/add-friend/add-friend.component';
 import { FlightsComponent } from './flights/flights.component';
 import { CarsComponent } from './cars/cars.component';
+import { RentacarProfileComponent } from './rentacar-profile/rentacar-profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'flights', component: FlightsComponent },
+  { path: 'rentacar/:id', component: RentacarProfileComponent },
   { path: 'cars', component: CarsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },

@@ -16,6 +16,7 @@ import { FriendlistComponent } from './user-profil/friendlist/friendlist.compone
 import { AddFriendComponent } from './user-profil/add-friend/add-friend.component';
 import { FlightsComponent } from './flights/flights.component';
 import { CarsComponent } from './cars/cars.component';
+import { RentacarProfileComponent } from './rentacar-profile/rentacar-profile.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { CarsComponent } from './cars/cars.component';
     FriendlistComponent,
     AddFriendComponent,
     FlightsComponent,
-    CarsComponent
+    CarsComponent,
+    RentacarProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -80,7 +80,7 @@
                             <p class="company-address">{{ company.address }}</p>
                             <p class="company-description">{{ company.description }}</p>
                             <p class="company-grade"><b>Grade: </b>{{ company.grade }}</p>
-                            <button class="btn btn-primary">View More</button>
+                            <button [routerLink]="'rentacar/'+company.id" class="btn btn-primary">View More</button>
                         </div>
                     </div>
                 </div>
