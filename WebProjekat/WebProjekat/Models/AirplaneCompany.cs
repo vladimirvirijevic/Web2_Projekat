@@ -1,4 +1,6 @@
-﻿namespace WebProjekat.Models
+﻿using System.Collections.Generic;
+
+namespace WebProjekat.Models
 {
     public class AirplaneCompany
     {
@@ -7,5 +9,6 @@
         public string Address { get; set; }
         public string Description { get; set; }
         public int Grade { get; set; }
+        public virtual List<Location> Destinations { get; set; }
     }
 }

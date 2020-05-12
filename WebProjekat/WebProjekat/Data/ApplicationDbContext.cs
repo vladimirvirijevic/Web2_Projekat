@@ -11,5 +11,11 @@ namespace WebProjekat.Data
         }
 
         public DbSet<AirplaneCompany> AirplaneCompanies { get; set; }
+        public DbSet<Location> Locations { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
     }
 }

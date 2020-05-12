@@ -4,5 +4,5 @@ export class AirplaneCompany {
     address: string;
     description: string;
     grade: number;
-    destinations: string[];
+    destinations: Location[];
 }

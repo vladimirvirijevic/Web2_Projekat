@@ -21,8 +21,21 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.airplaneCompanies = this.airplaneService.getCompanies();
+    //this.airplaneCompanies = this.airplaneService.getCompanies();
+
+    this.getCompanies();
+
     this.rentacarCompanies = this.rentacarService.getCompanies();
+  }
+
+  getCompanies() {
+    this.airplaneService.getCompanies()
+      .subscribe(
+        data => {
+          //console.log(data);
+          this.airplaneCompanies = data;
+        }
+      )
   }
 
   openAirplaneFilter() {
