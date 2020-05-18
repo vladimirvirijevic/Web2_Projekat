@@ -19,7 +19,10 @@ import { FlightsComponent } from './flights/flights.component';
 import { CarsComponent } from './cars/cars.component';
 import { RentacarProfileComponent } from './rentacar-profile/rentacar-profile.component';
 import { ListOfAvioCompaniesComponent } from './list-of-avio-companies/list-of-avio-companies.component';
-import { HistoryComponent } from './user-profil/history/history.component';
+import { ListOfRentacarCompaniesComponent } from './list-of-rentacar-companies/list-of-rentacar-companies.component';
+import { ListOfInvitationsComponent } from './list-of-invitations/list-of-invitations.component';
+import { ReservedListComponent } from './reserved-list/reserved-list.component';
+
 
 
 
@@ -39,7 +42,10 @@ import { HistoryComponent } from './user-profil/history/history.component';
     CarsComponent,
     RentacarProfileComponent,
     ListOfAvioCompaniesComponent,
-    HistoryComponent,
+    ListOfRentacarCompaniesComponent,
+    ListOfInvitationsComponent,
+    ReservedListComponent,
+   
     
     
   ],

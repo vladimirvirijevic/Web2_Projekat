@@ -12,7 +12,11 @@ import { FlightsComponent } from './flights/flights.component';
 import { CarsComponent } from './cars/cars.component';
 import { RentacarProfileComponent } from './rentacar-profile/rentacar-profile.component';
 import { ListOfAvioCompaniesComponent } from './list-of-avio-companies/list-of-avio-companies.component';
-import { HistoryComponent } from './user-profil/history/history.component';
+import { ListOfRentacarCompaniesComponent } from './list-of-rentacar-companies/list-of-rentacar-companies.component';
+import { ListOfInvitationsComponent } from './list-of-invitations/list-of-invitations.component';
+import { ReservedListComponent } from './reserved-list/reserved-list.component';
+
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -21,17 +25,18 @@ const routes: Routes = [
   { path: 'cars', component: CarsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+
   
   {path: 'app', component:RegisteredUserComponent },
   {path:'app/listOfAircompanies', component:ListOfAvioCompaniesComponent},
-
+  {path:'app/listOfRentACarcompanies', component: ListOfRentacarCompaniesComponent},
+  {path:'app/listOfInvitations', component:ListOfInvitationsComponent},
+  {path:'app/reservedList', component:ReservedListComponent},
   {path: 'app/profile', component:UserProfilComponent,
     children:[
   { path: 'editProfile',component:EditProfileComponent},
   { path: 'friendList', component:FriendlistComponent},
-  { path: 'addFriend', component:AddFriendComponent},
-  {path:'history', component:HistoryComponent}
- 
+  { path: 'addFriend', component:AddFriendComponent}
   ]
   }
 ];

@@ -20,7 +20,7 @@ export class ListOfAvioCompaniesComponent implements OnInit {
 
   ngOnInit(): void {
 
-  this.airplaneCompanies = this.airplaneService.getCompanies();
+ // this.airplaneCompanies = this.airplaneService.getCompanies();
     this.rentacarCompanies = this.rentacarService.getCompanies();
   }
   ClickedFilter()

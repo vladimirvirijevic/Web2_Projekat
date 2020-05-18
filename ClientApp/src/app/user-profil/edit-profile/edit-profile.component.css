@@ -2,7 +2,7 @@
 input
 {
     border-radius: 10%;
-    border-color: lightseagreen; 
+    border-color:cornflowerblue; 
     width: 400px;  
     
    
@@ -10,7 +10,7 @@ input
 button
 {
     border-radius: 10%;
-    background-color: lightseagreen;
+    background-color:cornflowerblue;
     width: 100px;
 }
 
