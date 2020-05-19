@@ -23,17 +23,27 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     //this.airplaneCompanies = this.airplaneService.getCompanies();
 
-    this.getCompanies();
-
-    this.rentacarCompanies = this.rentacarService.getCompanies();
+    this.getAirplaneCompanies();
+    this.getRentacarCompanies();
+    //this.rentacarCompanies = this.rentacarService.getCompanies();
   }
 
-  getCompanies() {
+  getAirplaneCompanies() {
     this.airplaneService.getCompanies()
       .subscribe(
         data => {
           //console.log(data);
           this.airplaneCompanies = data;
+        }
+      )
+  }
+
+  getRentacarCompanies() {
+    this.rentacarService.getCompanies()
+      .subscribe(
+        data => {
+          //console.log(data);
+          this.rentacarCompanies = data;
         }
       )
   }

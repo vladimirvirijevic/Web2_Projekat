@@ -22,7 +22,19 @@ export class RentacarProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.companyId = Number(this.route.snapshot.paramMap.get('id'));
-    this.company = this.rentacarService.getCompany(this.companyId);
+    //this.company = this.rentacarService.getCompany(this.companyId);
+
+    this.getCompany();
+  }
+
+  getCompany() {
+    this.rentacarService.getCompany(this.companyId)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.company = data;
+        }
+      )
   }
 
   goBack() {

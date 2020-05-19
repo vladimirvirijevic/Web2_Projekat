@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { RentacarCompany } from '../models/rentacarCompany';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentacarService {
+  /*
   companies: RentacarCompany[] = [
    {
      id: 1,
@@ -111,9 +114,22 @@ export class RentacarService {
     ]
   }
   ];
+  */
 
+  private url = 'https://localhost:44347/api';
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
+  
+  getCompanies(): Observable<RentacarCompany[]> {
+    return this.http.get<RentacarCompany[]>(this.url + '/rentacar');
+  }
+
+  getCompany(id): Observable<RentacarCompany> {
+    return this.http.get<RentacarCompany>(this.url + `/rentacar/${id}`);
+  }
+  /*
 
   getCompanies(): RentacarCompany[] {
     return this.companies;
@@ -122,4 +138,5 @@ export class RentacarService {
   getCompany(id): RentacarCompany {
     return this.companies.filter(x => x.id == id)[0];
   }
+  */
 }
