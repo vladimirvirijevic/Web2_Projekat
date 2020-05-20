@@ -15,6 +15,8 @@ import { ListOfAvioCompaniesComponent } from './list-of-avio-companies/list-of-a
 import { ListOfRentacarCompaniesComponent } from './list-of-rentacar-companies/list-of-rentacar-companies.component';
 import { ListOfInvitationsComponent } from './list-of-invitations/list-of-invitations.component';
 import { ReservedListComponent } from './reserved-list/reserved-list.component';
+import { AuthtestComponent } from './authtest/authtest.component';
+import { TestLoginComponent } from './test-login/test-login.component';
 
 
 
@@ -25,7 +27,8 @@ const routes: Routes = [
   { path: 'cars', component: CarsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-
+  { path: 'test-register', component: AuthtestComponent },
+  { path: 'test-login', component: TestLoginComponent },
   
   {path: 'app', component:RegisteredUserComponent },
   {path:'app/listOfAircompanies', component:ListOfAvioCompaniesComponent},

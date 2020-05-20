@@ -22,10 +22,8 @@ import { ListOfAvioCompaniesComponent } from './list-of-avio-companies/list-of-a
 import { ListOfRentacarCompaniesComponent } from './list-of-rentacar-companies/list-of-rentacar-companies.component';
 import { ListOfInvitationsComponent } from './list-of-invitations/list-of-invitations.component';
 import { ReservedListComponent } from './reserved-list/reserved-list.component';
-
-
-
-
+import { AuthtestComponent } from './authtest/authtest.component';
+import { TestLoginComponent } from './test-login/test-login.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +43,8 @@ import { ReservedListComponent } from './reserved-list/reserved-list.component';
     ListOfRentacarCompaniesComponent,
     ListOfInvitationsComponent,
     ReservedListComponent,
+    AuthtestComponent,
+    TestLoginComponent
    
     
     
