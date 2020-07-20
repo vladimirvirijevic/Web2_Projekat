@@ -1,3 +1,5 @@
+import { Role } from './role';
+
 export class AuthUser {
     id: number;
     username: string;
@@ -5,4 +7,5 @@ export class AuthUser {
     firstName: string;
     lastName: string;
     token: string;
+    role: Role;
 }

@@ -37,9 +37,12 @@ namespace WebProjekat.Controllers
             return Ok(new
             {
                 Id = user.Id,
-                Username = user.Username,
+                Email = user.Email,
+                City = user.City,
+                Phone = user.Phone,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Role = user.Role,
                 Token = tokenString
             });
         }
@@ -52,8 +55,10 @@ namespace WebProjekat.Controllers
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Username = model.Username,
-                Email = model.Email
+                Phone = model.Phone,
+                City = model.City,
+                Email = model.Email,
+                Role = "User"
             };
 
             try

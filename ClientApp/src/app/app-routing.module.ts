@@ -15,20 +15,18 @@ import { ListOfAvioCompaniesComponent } from './list-of-avio-companies/list-of-a
 import { ListOfRentacarCompaniesComponent } from './list-of-rentacar-companies/list-of-rentacar-companies.component';
 import { ListOfInvitationsComponent } from './list-of-invitations/list-of-invitations.component';
 import { ReservedListComponent } from './reserved-list/reserved-list.component';
-import { AuthtestComponent } from './authtest/authtest.component';
-import { TestLoginComponent } from './test-login/test-login.component';
-
+//import { AuthGuard } from './helpers/auth.guard';
+import { AuthGuard } from './helpers/role-auth.guard';
+import { Role } from './models/role';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard], data: { roles: [Role.User] }},
   { path: 'flights', component: FlightsComponent },
   { path: 'rentacar/:id', component: RentacarProfileComponent },
   { path: 'cars', component: CarsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'test-register', component: AuthtestComponent },
-  { path: 'test-login', component: TestLoginComponent },
   
   {path: 'app', component:RegisteredUserComponent },
   {path:'app/listOfAircompanies', component:ListOfAvioCompaniesComponent},

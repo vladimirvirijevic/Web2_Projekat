@@ -1,6 +1,7 @@
 export class RegisterModel {
-    username: string;
     password: string;
+    city: string;
+    phone: string;
     email: string;
     firstName: string;
     lastName: string;

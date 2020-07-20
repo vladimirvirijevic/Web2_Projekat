@@ -11,7 +11,9 @@ namespace WebProjekat.Models
         public string LastName { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        public string City { get; set; }
+        [Required]
+        public string Phone { get; set; }
         [Required]
         public string Email { get; set; }
 
