@@ -82,13 +82,16 @@ namespace WebProjekat.Services.Users
             _context.Users.Add(user);
             await _context.SaveChangesAsync(new System.Threading.CancellationToken());
 
-            // Posalji Email
-            var sendTo = user.Email;
+            if (emailLink != null)
+            {
+                // Posalji Email
+                var sendTo = user.Email;
 
-            var link = $"{emailLink}/api/users/activate/{user.Email}/{confirmationToken}";
+                var link = $"{emailLink}/api/users/activate/{user.Email}/{confirmationToken}";
 
-            var message = new Message(new string[] { sendTo }, "Account Confirmation Link", $"Click the link below to activate your account:\n<a>{link}</a>");
-            _emailSender.SendEmail(message);
+                var message = new Message(new string[] { sendTo }, "Account Confirmation Link", $"Click the link below to activate your account:\n<a>{link}</a>");
+                _emailSender.SendEmail(message);
+            }
 
             return user;
         }

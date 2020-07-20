@@ -4,7 +4,7 @@
             <form class="search-flights">
                 <div class="row">
                     <div class="col mb-4">
-                        <h2>Search Flights</h2>
+                        <h3 style="text-align: center;"> Search Flights</h3>
                     </div>
                 </div>
                 <div class="row mb-4">
@@ -60,4 +60,15 @@
             </form>
         </div>
     </div>
+    <h3 style="text-align: center;" class="center mt-5 mb-5">Airline Services</h3>
+    <div class="profiles-overview">
+        <div class="company-overview" *ngFor="let company of airplaneCompanies">
+            <h4>{{ company.name }}</h4>
+            <p class="company-address">{{ company.address }}</p>
+            <p class="company-description">{{ company.description }}</p>
+            <p class="company-grade"><b>Grade: </b>{{ company.grade }}</p>
+            <button class="btn btn-primary">View More</button>
+        </div>
+    </div>
 </div>
+

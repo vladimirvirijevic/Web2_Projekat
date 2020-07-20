@@ -1,0 +1,15 @@
+<div class="sidenav">
+    <a routerLink="/admin/staff" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-user-friends"></i> STAFF</a>    
+    <a routerLink="/admin/rentacar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-car"></i> RENTACAR</a>
+    <a routerLink="/admin/airline" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-plane-departure"></i> AIRLINE</a>
+    <a style="cursor: pointer" (click)="logout()"><i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+</div>
+  
+<div class="main pt-5 pl-5">
+    <router-outlet></router-outlet>
+    
+</div>
+     
+
+
+  

@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         data => {
           this.showConfirmation = true;
-          //this.clearFields();
+          this.showErrorMessage = false;
         },
         error => {
           if (error.status == 409) {

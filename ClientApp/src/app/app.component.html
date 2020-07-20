@@ -1,30 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav *ngIf="!authService.currentUserValue || authService.currentUserValue.role != 'Admin'" class="navbar navbar-expand-lg navbar-dark bg-dark pl-5 pr-5">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul style="width: 1120px; margin: 0 auto;" class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Services</a>
+                <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Flights</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/flights" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Flights</a>
+                <a class="nav-link" routerLink="/car-rental" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Car Rental</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/cars" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Cars</a>
-            </li>
-            <li class="nav-item">
+            <li *ngIf="authService.currentUserValue" class="nav-item">
                 <a class="nav-link" routerLink="/app" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Profile</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li *ngIf="authService.currentUserValue" class="nav-item" (click)="logout()">
+                <a class="nav-link ml-auto">Logout</a>
             </li>
             <li *ngIf="!authService.currentUserValue" class="nav-item">
                 <a class="nav-link" routerLink="/register" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Register</a>
             </li>
             <li *ngIf="!authService.currentUserValue" class="nav-item">
                 <a class="nav-link" routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Login</a>
-            </li>
-            <li *ngIf="authService.currentUserValue" class="nav-item" (click)="logout()">
-                <a class="nav-link">Logout</a>
             </li>
         </ul>
     </div>

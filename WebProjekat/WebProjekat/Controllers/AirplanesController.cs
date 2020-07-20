@@ -38,6 +38,7 @@ namespace WebProjekat.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IEnumerable<AirplaneCompany>> GetCompanies()
         {
             return await _context.AirplaneCompanies.ToListAsync();

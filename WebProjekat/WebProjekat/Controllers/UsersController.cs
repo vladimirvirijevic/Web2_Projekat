@@ -70,7 +70,7 @@ namespace WebProjekat.Controllers
                 City = model.City,
                 Email = model.Email,
                 Confirmed = false,
-                Role = "User"
+                Role = "Admin"
             };
 
             try

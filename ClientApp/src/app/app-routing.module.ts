@@ -18,13 +18,16 @@ import { ReservedListComponent } from './reserved-list/reserved-list.component';
 //import { AuthGuard } from './helpers/auth.guard';
 import { AuthGuard } from './helpers/role-auth.guard';
 import { Role } from './models/role';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { StaffComponent } from './admin/staff/staff.component';
+import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.component';
+import { AdminRentacarComponent } from './admin/admin-rentacar/admin-rentacar.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard], data: { roles: [Role.User] }},
-  { path: 'flights', component: FlightsComponent },
+  { path: '', component: FlightsComponent, pathMatch: 'full' },
   { path: 'rentacar/:id', component: RentacarProfileComponent },
-  { path: 'cars', component: CarsComponent },
+  { path: 'car-rental', component: CarsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   
@@ -39,7 +42,15 @@ const routes: Routes = [
   { path: 'friendList', component:FriendlistComponent},
   { path: 'addFriend', component:AddFriendComponent}
   ]
-  }
+  },
+
+  // ADMIN ROUTES
+  { path: 'admin', component: AdminHomeComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] },
+    children: [
+      { path: 'staff', component: StaffComponent},
+      { path: 'airline', component: AdminAirlineComponent},
+      { path: 'rentacar', component: AdminRentacarComponent}
+    ] },
 ];
 
 @NgModule({

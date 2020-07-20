@@ -38,8 +38,13 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.email.value, this.password.value)
         .subscribe(
           data => {
-            this.showErrorMessage = false;
-            this.router.navigate(['/']);
+            console.log(data);
+            if (data.role === "Admin") {
+              this.router.navigate(['/admin']);
+            }
+            else if (data.role === "User") {
+              this.router.navigate(['/']);
+            }
           },
           error => {
             if (error.status == 400) {
