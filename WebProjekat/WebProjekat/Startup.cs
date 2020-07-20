@@ -16,7 +16,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using WebProjekat.Data;
 using WebProjekat.Models;
-using WebProjekat.Services;
+using WebProjekat.Services.Users;
+using WebProjekat.Services.Email;
 
 namespace WebProjekat
 {
@@ -36,6 +37,11 @@ namespace WebProjekat
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext"
                 )));
+
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+                    services.AddSingleton(emailConfig);
 
             // CORS 1
             services.AddCors();
@@ -86,6 +92,7 @@ namespace WebProjekat
             });
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

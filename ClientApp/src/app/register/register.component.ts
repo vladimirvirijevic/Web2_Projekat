@@ -11,6 +11,9 @@ import { MustMatch } from '../helpers/must-match.validator';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
+  showErrorMessage = false;
+  showConfirmation = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService
@@ -57,12 +60,25 @@ export class RegisterComponent implements OnInit {
     this.userService.register(registerInfo)
       .subscribe(
         data => {
-          console.log(data);
+          this.showConfirmation = true;
+          //this.clearFields();
         },
         error => {
-          console.log(error);
+          if (error.status == 409) {
+              this.showErrorMessage = true;
+          }
         }
       )
+  }
+
+  clearFields() {
+    this.registerForm.get('lastName').setValue('');
+    this.registerForm.get('firstName').setValue('');
+    this.registerForm.get('email').setValue('');
+    this.registerForm.get('password').setValue('');
+    this.registerForm.get('confirmPassword').setValue('');
+    this.registerForm.get('city').setValue('');
+    this.registerForm.get('phone').setValue('');
   }
 
 }

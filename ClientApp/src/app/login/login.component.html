@@ -1,6 +1,9 @@
 <div class="auth">
+    <div class="card p-5">
     <h1>Login</h1>
-
+    <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+        Invalid login!
+    </div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <input 
@@ -42,4 +45,5 @@
         <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-lg auth-btn">Login</button>
         <p>Don`t have account yet? <a routerLink="/register">Register</a></p>
       </form>
+      </div>
 </div>

@@ -1,6 +1,13 @@
 <div class="auth">
-    <h1>Register</h1>
-
+    
+    <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+        User with the same email already exists!
+    </div>
+    <div *ngIf="showConfirmation" class="alert alert-success" role="alert">
+        Confirmation link has been sent to your email!
+    </div>
+    <div class="register-form card p-5">
+        <h1>Register</h1>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <input 
@@ -114,4 +121,5 @@
         <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary btn-lg auth-btn">Register</button>
         <p>Already have account? <a routerLink="/login">Login</a></p>
       </form>
+    </div>
 </div>

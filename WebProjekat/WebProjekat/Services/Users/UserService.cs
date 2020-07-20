@@ -11,18 +11,21 @@ using System.Threading.Tasks;
 using WebProjekat.Data;
 using WebProjekat.Helpers;
 using WebProjekat.Models;
+using WebProjekat.Services.Email;
 
-namespace WebProjekat.Services
+namespace WebProjekat.Services.Users
 {
     public class UserService : IUserService
     {
         private readonly ApplicationDbContext _context;
         private readonly ApplicationSettings _appSettings;
+        private readonly IEmailSender _emailSender;
 
-        public UserService(ApplicationDbContext context, IOptions<ApplicationSettings> appSettings)
+        public UserService(ApplicationDbContext context, IOptions<ApplicationSettings> appSettings, IEmailSender emailSender)
         {
             _context = context;
             _appSettings = appSettings.Value;
+            _emailSender = emailSender;
         }
 
         public User Authenticate(string email, string password)
@@ -40,6 +43,10 @@ namespace WebProjekat.Services
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 return null;
 
+            // Check if user confirmed his account
+            if (user.Confirmed == false)
+                return null;
+
             // authentication successful
             return user;
         }
@@ -54,14 +61,14 @@ namespace WebProjekat.Services
             return _context.Users.FirstOrDefault(u => u.Id == id);
         }
 
-        public async Task<User> CreateAsync(User user, string password)
+        public async Task<User> CreateAsync(User user, string password, string emailLink)
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
             if (_context.Users.Any(x => x.Email == user.Email))
-                throw new AppException("Email \"" + user.Email + "\" is already taken");
+                return null;
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -69,8 +76,19 @@ namespace WebProjekat.Services
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
+            var confirmationToken = _emailSender.GenerateConfirmationToken();
+            user.ConfirmationToken = confirmationToken;
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync(new System.Threading.CancellationToken());
+
+            // Posalji Email
+            var sendTo = user.Email;
+
+            var link = $"{emailLink}/api/users/activate/{user.Email}/{confirmationToken}";
+
+            var message = new Message(new string[] { sendTo }, "Account Confirmation Link", $"Click the link below to activate your account:\n<a>{link}</a>");
+            _emailSender.SendEmail(message);
 
             return user;
         }
@@ -149,6 +167,27 @@ namespace WebProjekat.Services
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
+
+            return true;
+        }
+
+        public async Task<bool> ConfirmAccount(string email, string token)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            if (user.ConfirmationToken != token)
+            {
+                return false;
+            }
+
+            user.Confirmed = true;
 
             await _context.SaveChangesAsync(new System.Threading.CancellationToken());
 
