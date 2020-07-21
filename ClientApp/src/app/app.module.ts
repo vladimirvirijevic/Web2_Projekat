@@ -24,7 +24,6 @@ import { ListOfInvitationsComponent } from './list-of-invitations/list-of-invita
 import { ReservedListComponent } from './reserved-list/reserved-list.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
-import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { StaffComponent } from './admin/staff/staff.component';
 import { AdminRentacarComponent } from './admin/admin-rentacar/admin-rentacar.component';
 import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.component';
@@ -47,7 +46,6 @@ import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.compo
     ListOfRentacarCompaniesComponent,
     ListOfInvitationsComponent,
     ReservedListComponent,
-    AdminHomeComponent,
     StaffComponent,
     AdminRentacarComponent,
     AdminAirlineComponent 

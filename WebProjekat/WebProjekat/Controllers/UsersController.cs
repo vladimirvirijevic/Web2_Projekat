@@ -4,56 +4,48 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using WebProjekat.Services.Users;
 using WebProjekat.Models;
 using WebProjekat.Helpers;
 using WebProjekat.Services.Email;
+using WebProjekat.Services.Auth;
+using WebProjekat.Requests;
 
 namespace WebProjekat.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
+        private IAuthService _authService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IAuthService authService)
         {
             _userService = userService;
+            _authService = authService;
         }
 
-        [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateModel model)
+        public IActionResult Authenticate([FromBody] AuthenticateRequest request)
         {
-            if (model.Username == "" || model.Password == "")
+            if (request.Email == "" || request.Password == "")
             {
                 return BadRequest("You must enter all fields");
             }
 
-            var user = _userService.Authenticate(model.Username, model.Password);
+            //var user = _userService.Authenticate(model.Username, model.Password);
+            var user = _authService.Authenticate(request);
 
             if (user == null)
                 return BadRequest();
 
-            string tokenString = _userService.GenerateToken(user);
+            //string tokenString = _userService.GenerateToken(user);
 
-            return Ok(new
-            {
-                Id = user.Id,
-                Email = user.Email,
-                City = user.City,
-                Phone = user.Phone,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Role = user.Role,
-                Token = tokenString
-            });
+            return Ok(user);
         }
 
-        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]RegisterModel model)
         {
@@ -92,7 +84,6 @@ namespace WebProjekat.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpGet("activate/{email}/{token}")]
         public async Task<IActionResult> Activate([FromRoute] string email, [FromRoute] string token)
         {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AirplaneService } from '../services/airplane.service';
+import { AirlineService } from '../services/airline.service';
 import { AirplaneCompany } from '../models/airplaneCompany';
 import { RentacarService } from '../services/rentacar.service';
 import { RentacarCompany } from '../models/rentacarCompany';
@@ -15,7 +15,7 @@ export class ListOfAvioCompaniesComponent implements OnInit {
   clickedFilter:Boolean=false;
  
 
-  constructor( private airplaneService: AirplaneService,
+  constructor( private airplaneService: AirlineService,
     private rentacarService: RentacarService) { }
 
   ngOnInit(): void {

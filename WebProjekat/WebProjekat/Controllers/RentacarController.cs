@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebProjekat.Data;
+using WebProjekat.Helpers;
 using WebProjekat.Models;
 
 namespace WebProjekat.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RentacarController : ControllerBase
@@ -26,6 +25,7 @@ namespace WebProjekat.Controllers
 
         [HttpPost]
         [Route("AddCompany")]
+        [Authorize]
         public async Task<ActionResult<RentacarCompany>> AddCompany(RentacarCompany company)
         {
             _context.RentacarCompanies.Add(company);
@@ -36,7 +36,6 @@ namespace WebProjekat.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IEnumerable<RentacarCompany>> GetCompanies()
         {
             return await _context.RentacarCompanies.ToListAsync();

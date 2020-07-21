@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ using WebProjekat.Services.Users;
 
 namespace WebProjekat.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
@@ -28,14 +26,32 @@ namespace WebProjekat.Controllers
 
         [HttpGet]
         [Route("staff")]
-        public async Task<IEnumerable<User>> GetStaff()
+        [Authorize]
+        public async Task<ActionResult<List<User>>> GetStaff()
         {
             var staff = await _context.Users.Where(x => x.Role == "Admin" || x.Role == "AirlineAdmin" || x.Role == "RentacarAdmin").ToListAsync();
-            return staff;
+
+            return Ok(staff);
+        }
+
+        [HttpGet]
+        [Route("staff/{role}")]
+        [Authorize]
+        public async Task<ActionResult<List<User>>> GetStaffByRole([FromRoute] string role)
+        {
+            if (role == "")
+            {
+                return BadRequest();
+            }
+
+            var staff = await _context.Users.Where(x => x.Role == role).ToListAsync();
+
+            return Ok(staff);
         }
 
         [HttpPost]
         [Route("staff")]
+        [Authorize]
         public async Task<ActionResult<User>> AddUser([FromBody] RegisterModel model)
         {
             if (model.FirstName == "" || model.LastName == "" || model.Phone == "" || model.Email == "" || model.City == "")

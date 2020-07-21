@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AirplaneService } from '../services/airplane.service';
+import { AirlineService } from '../services/airline.service';
 import { AirplaneCompany } from '../models/airplaneCompany';
 import { RentacarService } from '../services/rentacar.service';
 import { RentacarCompany } from '../models/rentacarCompany';
@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   showRentacarFilter = false;
 
   constructor(
-    private airplaneService: AirplaneService,
+    private airplaneService: AirlineService,
     private rentacarService: RentacarService
   ) { }
 

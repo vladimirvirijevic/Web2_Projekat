@@ -18,6 +18,8 @@ using WebProjekat.Data;
 using WebProjekat.Models;
 using WebProjekat.Services.Users;
 using WebProjekat.Services.Email;
+using WebProjekat.Helpers;
+using WebProjekat.Services.Auth;
 
 namespace WebProjekat
 {
@@ -56,6 +58,7 @@ namespace WebProjekat
             services.Configure<ApplicationSettings>(appSettingsSection);
 
             // configure jwt authentication
+            /*
             var appSettings = appSettingsSection.Get<ApplicationSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
@@ -90,8 +93,11 @@ namespace WebProjekat
                     ValidateAudience = false
                 };
             });
-
+            */
+            services.AddHttpContextAccessor();
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailSender, EmailSender>();
         }
 
@@ -105,7 +111,10 @@ namespace WebProjekat
 
             app.UseHttpsRedirection();
 
+            app.UseMiddleware<JwtMiddleware>();
+
             app.UseRouting();
+
 
             // CORS 2
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

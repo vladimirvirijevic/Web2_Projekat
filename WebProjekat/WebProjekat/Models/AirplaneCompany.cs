@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WebProjekat.Requests.Airline;
 
 namespace WebProjekat.Models
 {
@@ -9,6 +10,17 @@ namespace WebProjekat.Models
         public string Address { get; set; }
         public string Description { get; set; }
         public int Grade { get; set; }
+
         public virtual List<Location> Destinations { get; set; }
+        public virtual User Admin { get; set; }
+
+        public AirplaneCompany() { }
+
+        public AirplaneCompany(CreateAirlineCompanyRequest companyInfo)
+        {
+            Name = companyInfo.Name;
+            Address = companyInfo.Address;
+            Description= companyInfo.Description;
+        }
     }
 }

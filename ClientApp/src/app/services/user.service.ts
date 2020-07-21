@@ -29,6 +29,10 @@ export class UserService {
         return this.http.get<AuthUser[]>(`${environment.api_url}/admin/staff`);
     }
 
+    getStaffByRole(role): Observable<AuthUser[]> {
+        return this.http.get<AuthUser[]>(`${environment.api_url}/admin/staff/${role}`);
+    }
+
     changeUsername(userInfo) {
         return this.http.put<any>(`${environment.api_url}/users/changeusername`, userInfo)
             .pipe(

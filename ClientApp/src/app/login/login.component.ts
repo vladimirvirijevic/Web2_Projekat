@@ -35,12 +35,17 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authenticationService.login(this.email.value, this.password.value)
+    const loginInfo = {
+      email: this.email.value,
+      password: this.password.value
+    };
+
+    this.authenticationService.login(loginInfo)
         .subscribe(
           data => {
             console.log(data);
             if (data.role === "Admin") {
-              this.router.navigate(['/admin']);
+              this.router.navigate(['/admin/staff']);
             }
             else if (data.role === "User") {
               this.router.navigate(['/']);

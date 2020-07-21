@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AirplaneService } from '../services/airplane.service';
+import { AirlineService } from '../services/airline.service';
 import { AirplaneCompany } from '../models/airplaneCompany';
 
 @Component({
@@ -12,7 +12,7 @@ export class FlightsComponent implements OnInit {
   airplaneCompanies: AirplaneCompany[] = [];
 
   constructor(
-    private airplaneService: AirplaneService
+    private airplaneService: AirlineService
   ) { }
 
   ngOnInit(): void {

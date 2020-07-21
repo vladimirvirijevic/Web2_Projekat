@@ -1,44 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebProjekat.Data;
+using WebProjekat.Helpers;
 using WebProjekat.Models;
+using WebProjekat.Requests.Airline;
+using WebProjekat.Services.Users;
 
 namespace WebProjekat.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class AirplanesController : ControllerBase
+    public class AirlineController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private IUserService _userService;
+        private IHttpContextAccessor _httpContextAccessor;
 
-        public AirplanesController(ApplicationDbContext context)
+        public AirlineController(ApplicationDbContext context, IUserService userService, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _userService = userService;
+            _httpContextAccessor = httpContextAccessor;
+
+            var user = _httpContextAccessor.HttpContext.Items["User"];
+            //var user2 = (User)HttpContext.Items["User"];
+            //var prinicpal = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            //var user = _userService.GetCurrentUser(prinicpal);
 
             // Seed Dummy Data
-            SeedCompanies();
+            //SeedCompanies();
         }
 
         [HttpPost]
-        [Route("AddCompany")]
-        public async Task<ActionResult<AirplaneCompany>> AddCompany (AirplaneCompany company) 
+        [Route("companies")]
+        [Authorize]
+        public async Task<ActionResult<AirplaneCompany>> AddCompany ([FromBody] CreateAirlineCompanyRequest request) 
         {
-            _context.AirplaneCompanies.Add(company);
+            if (request.Name == "" || request.Description == "" || request.AdminId == 0 || request.Address == "")
+            {
+                return BadRequest();
+            }
 
+            // Proveri da li vec postoji kompanija sa tim imenom
+            bool companyExists = await _context.AirplaneCompanies.FirstOrDefaultAsync(x => x.Name == request.Name) != null;
+
+            if (companyExists)
+            {
+                return Conflict();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            // Proveri da li je user admin
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            if (currentUser.Role != "Admin")
+            {
+                return BadRequest();
+            }
+
+            var airplaneCompany = new AirplaneCompany(request);
+            var user = await _context.Users.FindAsync(request.AdminId);
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            _context.AirplaneCompanies.Add(airplaneCompany);
+            user.AirlineCompanies.Add(airplaneCompany);
+            
             await _context.SaveChangesAsync();
 
-            return company;
+            return Ok(airplaneCompany);
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IEnumerable<AirplaneCompany>> GetCompanies()
         {
             return await _context.AirplaneCompanies.ToListAsync();

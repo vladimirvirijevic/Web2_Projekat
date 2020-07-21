@@ -18,7 +18,6 @@ import { ReservedListComponent } from './reserved-list/reserved-list.component';
 //import { AuthGuard } from './helpers/auth.guard';
 import { AuthGuard } from './helpers/role-auth.guard';
 import { Role } from './models/role';
-import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { StaffComponent } from './admin/staff/staff.component';
 import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.component';
 import { AdminRentacarComponent } from './admin/admin-rentacar/admin-rentacar.component';
@@ -45,12 +44,9 @@ const routes: Routes = [
   },
 
   // ADMIN ROUTES
-  { path: 'admin', component: AdminHomeComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] },
-    children: [
-      { path: 'staff', component: StaffComponent},
-      { path: 'airline', component: AdminAirlineComponent},
-      { path: 'rentacar', component: AdminRentacarComponent}
-    ] },
+  { path: 'admin/staff', component: StaffComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
+  { path: 'admin/airline', component: AdminAirlineComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
+  { path: 'admin/rentacar', component: AdminRentacarComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }}
 ];
 
 @NgModule({
