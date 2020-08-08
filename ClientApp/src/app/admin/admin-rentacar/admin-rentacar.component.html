@@ -1,1 +1,99 @@
-<p>admin-rentacar works!</p>
+<div class="row">
+    <h2 class="mr-5">Car Rental Companies</h2>
+    <button data-toggle="modal" data-target="#createRentalCompanyModal" class="btn btn-primary"><i class="fas fa-plus mr-2"></i>Add New</button>
+</div>
+
+<div class="row mt-5">
+    <table class="table">
+      <thead class="thead">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Name</th>
+          <th scope="col">Address</th>
+          <th scope="col">Description</th>
+          <th scope="col">Admin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let company of rentacarCompanies; let i=index">
+          <th>{{ i+1 }}</th>
+          <td>{{ company.name }}</td>
+          <td>{{ company.address }}</td>
+          <td>{{ company.description }}</td>
+          <td>{{ company.admin.firstName + ' ' + company.admin.lastName}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+    <div class="modal fade" id="createRentalCompanyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header pl-4 pr-4">
+              <h5 class="modal-title" id="exampleModalLabel">Create New Rentacar Company</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body p-4">
+                <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+                    {{ errorMessageText }}
+                </div>
+                <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                    Company created successfully!
+                </div>
+                <form [formGroup]="createCompany" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="name" 
+                            placeholder="Company Name"
+                            required
+                            formControlName="name">
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                            <div *ngIf="name.errors.required">
+                                Comapny Name is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="address" 
+                            placeholder="Address"
+                            required
+                            formControlName="address">
+                        <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger">
+                            <div *ngIf="address.errors.required">
+                                Address is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="description" 
+                            placeholder="Description"
+                            required
+                            formControlName="description">
+                        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
+                            <div *ngIf="description.errors.required">
+                                Description is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1">Rentacar Admin</label>
+                        <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selectedAdminId">
+                            <option  *ngFor="let admin of rentacarAdmins" [ngValue]="admin.id">{{admin.firstName + ' '  + admin.lastName}}</option>
+                        </select>
+                      </div>
+                    <button [disabled]="createCompany.invalid" type="submit" class="btn btn-primary btn-lg auth-btn">Create</button>
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>

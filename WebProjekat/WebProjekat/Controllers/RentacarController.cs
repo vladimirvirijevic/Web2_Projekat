@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using WebProjekat.Data;
 using WebProjekat.Helpers;
 using WebProjekat.Models;
+using WebProjekat.Requests.Rentacar;
 
 namespace WebProjekat.Controllers
 {
@@ -16,23 +17,61 @@ namespace WebProjekat.Controllers
     public class RentacarController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private IHttpContextAccessor _httpContextAccessor;
 
-        public RentacarController(ApplicationDbContext context)
+        public RentacarController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _context = context;
-            SeedCompanies();
+            //SeedCompanies();
         }
 
         [HttpPost]
-        [Route("AddCompany")]
+        [Route("companies")]
         [Authorize]
-        public async Task<ActionResult<RentacarCompany>> AddCompany(RentacarCompany company)
+        public async Task<ActionResult<AirplaneCompany>> AddCompany([FromBody] CreateRentacarCompanyRequest request)
         {
-            _context.RentacarCompanies.Add(company);
+            if (request.Name == "" || request.Description == "" || request.AdminId == 0 || request.Address == "")
+            {
+                return BadRequest();
+            }
+
+            // Proveri da li vec postoji kompanija sa tim imenom
+            bool companyExists = await _context.RentacarCompanies.FirstOrDefaultAsync(x => x.Name == request.Name) != null;
+
+            if (companyExists)
+            {
+                return Conflict();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            // Proveri da li je user admin
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            if (currentUser.Role != "Admin")
+            {
+                return BadRequest();
+            }
+
+            var rentacarCompany = new RentacarCompany(request);
+            var user = await _context.Users.FindAsync(request.AdminId);
+
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            _context.RentacarCompanies.Add(rentacarCompany);
+            user.RentacarCompany.Add(rentacarCompany);
+            user.IsCompanyAdmin = true;
 
             await _context.SaveChangesAsync();
 
-            return company;
+            return Ok(rentacarCompany);
         }
 
         [HttpGet]
@@ -54,6 +93,7 @@ namespace WebProjekat.Controllers
             return company;
         }
 
+        /*
         private void SeedCompanies()
         {
             if (_context.RentacarCompanies.Count() == 0)
@@ -138,5 +178,6 @@ namespace WebProjekat.Controllers
                 _context.SaveChanges();
             }
         }
+        */
     }
 }

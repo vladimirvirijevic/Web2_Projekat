@@ -27,6 +27,7 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
 import { StaffComponent } from './admin/staff/staff.component';
 import { AdminRentacarComponent } from './admin/admin-rentacar/admin-rentacar.component';
 import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.compo
     ReservedListComponent,
     StaffComponent,
     AdminRentacarComponent,
-    AdminAirlineComponent 
+    AdminAirlineComponent,
+    ChangePasswordComponent 
   ],
   imports: [
     BrowserModule,

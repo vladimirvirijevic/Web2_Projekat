@@ -21,6 +21,7 @@ import { Role } from './models/role';
 import { StaffComponent } from './admin/staff/staff.component';
 import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.component';
 import { AdminRentacarComponent } from './admin/admin-rentacar/admin-rentacar.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 const routes: Routes = [
@@ -29,8 +30,9 @@ const routes: Routes = [
   { path: 'car-rental', component: CarsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'change-password', component: ChangePasswordComponent },
   
-  {path: 'app', component:RegisteredUserComponent },
+  {path: 'app', component:RegisteredUserComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User]} },
   {path:'app/listOfAircompanies', component:ListOfAvioCompaniesComponent},
   {path:'app/listOfRentACarcompanies', component: ListOfRentacarCompaniesComponent},
   {path:'app/listOfInvitations', component:ListOfInvitationsComponent},
@@ -40,7 +42,8 @@ const routes: Routes = [
   { path: 'editProfile',component:EditProfileComponent},
   { path: 'friendList', component:FriendlistComponent},
   { path: 'addFriend', component:AddFriendComponent}
-  ]
+  ],
+  canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User] }
   },
 
   // ADMIN ROUTES

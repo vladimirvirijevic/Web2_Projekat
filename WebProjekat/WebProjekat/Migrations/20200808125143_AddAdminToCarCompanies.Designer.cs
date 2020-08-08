@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebProjekat.Data;
 
 namespace WebProjekat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200808125143_AddAdminToCarCompanies")]
+    partial class AddAdminToCarCompanies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,14 +162,8 @@ namespace WebProjekat.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsCompanyAdmin")
-                        .HasColumnType("bit");
-
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PasswordChanged")
-                        .HasColumnType("bit");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
@@ -210,7 +206,7 @@ namespace WebProjekat.Migrations
             modelBuilder.Entity("WebProjekat.Models.RentacarCompany", b =>
                 {
                     b.HasOne("WebProjekat.Models.User", "Admin")
-                        .WithMany("RentacarCompany")
+                        .WithMany()
                         .HasForeignKey("AdminId");
                 });
 #pragma warning restore 612, 618

@@ -66,6 +66,8 @@ namespace WebProjekat.Controllers
                 Phone = model.Phone,
                 City = model.City,
                 Email = model.Email,
+                PasswordChanged = false,
+                IsCompanyAdmin = false,
                 Confirmed = true,
                 Role = model.Role
             };

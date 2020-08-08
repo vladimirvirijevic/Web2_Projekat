@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { AuthenticationService } from '../services/authentication.service';
+import { Role } from '../models/role';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -19,6 +20,14 @@ export class AuthGuard implements CanActivate {
                 this.router.navigate(['/login']);
                 return false;
             }
+            
+            if (currentUser.role == Role.AirlineAdmin || currentUser.role == Role.RentacarAdmin) {
+                if (currentUser.passwordChanged == false) {
+                    this.router.navigate(['/change-password']);
+                    return false;
+                }
+            }
+            
 
             // authorised so return true
             return true;

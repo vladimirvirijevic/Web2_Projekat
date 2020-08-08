@@ -12,6 +12,7 @@ namespace WebProjekat.Responses
         public string Phone { get; set; }
         public string Role { get; set; }
         public string Token { get; set; }
+        public bool PasswordChanged { get; set; }
 
 
         public AuthenticateResponse(User user, string token)
@@ -24,6 +25,7 @@ namespace WebProjekat.Responses
             Phone = user.Phone;
             Role = user.Role;
             Token = token;
+            PasswordChanged = user.PasswordChanged;
         }
     }
 }

@@ -8,4 +8,5 @@ export class AuthUser {
     lastName: string;
     token: string;
     role: Role;
+    passwordChanged: boolean;
 }

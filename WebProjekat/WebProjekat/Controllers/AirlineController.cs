@@ -79,6 +79,7 @@ namespace WebProjekat.Controllers
 
             _context.AirplaneCompanies.Add(airplaneCompany);
             user.AirlineCompanies.Add(airplaneCompany);
+            user.IsCompanyAdmin = true;
             
             await _context.SaveChangesAsync();
 

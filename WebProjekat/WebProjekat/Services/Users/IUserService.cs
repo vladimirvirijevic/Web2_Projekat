@@ -15,6 +15,7 @@ namespace WebProjekat.Services.Users
         User GetCurrentUser(ClaimsPrincipal principal);
 
         Task<bool> ChangePassword(User userInfo, string oldPassword, string newPassword);
+        Task<bool> ChangeAdminPassword(User userInfo, string newPassword);
         Task<bool> ConfirmAccount(string email, string token);
     }
 }

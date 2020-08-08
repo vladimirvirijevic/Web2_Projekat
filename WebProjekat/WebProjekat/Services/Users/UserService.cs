@@ -157,6 +157,22 @@ namespace WebProjekat.Services.Users
             return currentUser;
         }
 
+        public async Task<bool> ChangeAdminPassword(User userInfo, string newPassword)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userInfo.Email);
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            user.PasswordChanged = true;
+
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
+
+            return true;
+        }
+
         public async Task<bool> ChangePassword(User userInfo, string oldPassword, string newPassword)
         {
             // check if password is correct

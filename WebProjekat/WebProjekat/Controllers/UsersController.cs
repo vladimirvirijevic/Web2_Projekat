@@ -10,6 +10,7 @@ using WebProjekat.Helpers;
 using WebProjekat.Services.Email;
 using WebProjekat.Services.Auth;
 using WebProjekat.Requests;
+using WebProjekat.Requests.User;
 
 namespace WebProjekat.Controllers
 {
@@ -20,11 +21,13 @@ namespace WebProjekat.Controllers
     {
         private IUserService _userService;
         private IAuthService _authService;
+        private IHttpContextAccessor _httpContextAccessor;
 
-        public UsersController(IUserService userService, IAuthService authService)
+        public UsersController(IUserService userService, IAuthService authService, IHttpContextAccessor httpContextAccessor)
         {
             _userService = userService;
             _authService = authService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost("authenticate")]
@@ -46,6 +49,25 @@ namespace WebProjekat.Controllers
             return Ok(user);
         }
 
+        [HttpPut("changepassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            if (request.NewPassword == null)
+            {
+                return BadRequest();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+            var result = await _userService.ChangeAdminPassword(currentUser, request.NewPassword);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]RegisterModel model)
         {
@@ -61,8 +83,10 @@ namespace WebProjekat.Controllers
                 Phone = model.Phone,
                 City = model.City,
                 Email = model.Email,
-                Confirmed = false,
-                Role = "Admin"
+                Confirmed = true,
+                PasswordChanged = false,
+                IsCompanyAdmin = false,
+                Role = "User"
             };
 
             try

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WebProjekat.Requests.Rentacar;
 
 namespace WebProjekat.Models
 {
@@ -10,5 +11,15 @@ namespace WebProjekat.Models
         public string Description { get; set; }
         public int Grade { get; set; }
         public virtual List<Car> Cars { get; set; }
+        public virtual User Admin { get; set; }
+
+        public RentacarCompany() { }
+
+        public RentacarCompany(CreateRentacarCompanyRequest companyInfo)
+        {
+            Name = companyInfo.Name;
+            Address = companyInfo.Address;
+            Description = companyInfo.Description;
+        }
     }
 }

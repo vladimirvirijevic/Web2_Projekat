@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { MustMatch } from '../helpers/must-match.validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.registerForm = this.formBuilder.group({
       'firstName': ['', [Validators.required]],
@@ -60,6 +62,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(registerInfo)
       .subscribe(
         data => {
+          this.router.navigate(['/login'])
           this.showConfirmation = true;
           this.showErrorMessage = false;
         },
