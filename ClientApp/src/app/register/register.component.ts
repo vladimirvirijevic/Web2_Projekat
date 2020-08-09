@@ -74,6 +74,10 @@ export class RegisterComponent implements OnInit {
       )
   }
 
+  public handleAddressChange(address: any) {
+    
+  }
+
   clearFields() {
     this.registerForm.get('lastName').setValue('');
     this.registerForm.get('firstName').setValue('');

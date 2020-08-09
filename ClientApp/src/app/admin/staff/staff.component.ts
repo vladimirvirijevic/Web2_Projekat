@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { MustMatch } from 'src/app/helpers/must-match.validator';
 import { AuthUser } from 'src/app/models/authUser';
+import { MapboxService, Feature } from 'src/app/services/mapbox.service';
 
 @Component({
   selector: 'app-staff',
@@ -18,7 +19,8 @@ export class StaffComponent implements OnInit {
   
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private mapboxService: MapboxService
   ) { 
     this.createUserForm = this.formBuilder.group({
       'firstName': ['', [Validators.required]],
@@ -86,5 +88,31 @@ export class StaffComponent implements OnInit {
           }
         }
       )
+  }
+
+  // MAPBOX
+  addresses: string[] = [];
+  selectedAddress = "tets";
+
+  search(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm && searchTerm.length > 0) {
+      this.mapboxService
+        .search_word(searchTerm)
+        .subscribe((features: Feature[]) => {
+          this.addresses = features.map(feat => feat.place_name);
+        });
+      } else {
+        this.addresses = [];
+      }
+  }
+
+  onSelect(address: string) {
+    this.selectedAddress = address;
+    this.addresses = [];
+  }
+
+  onSearchChange(searchValue: string): void {  
+    console.log(searchValue);
   }
 }

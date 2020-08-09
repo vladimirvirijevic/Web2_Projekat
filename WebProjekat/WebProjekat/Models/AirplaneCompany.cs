@@ -19,8 +19,6 @@ namespace WebProjekat.Models
         public AirplaneCompany(CreateAirlineCompanyRequest companyInfo)
         {
             Name = companyInfo.Name;
-            Address = companyInfo.Address;
-            Description= companyInfo.Description;
         }
     }
 }

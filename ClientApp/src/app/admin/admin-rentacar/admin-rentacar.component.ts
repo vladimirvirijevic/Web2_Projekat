@@ -28,15 +28,11 @@ export class AdminRentacarComponent implements OnInit {
     private rentacarService: RentacarService
   ) { 
     this.createCompany = this.formBuilder.group({
-      'name': ['', [Validators.required]],
-      'address': ['', [Validators.required]],
-      'description': ['', [Validators.required]]
+      'name': ['', [Validators.required]]
     });
   }
 
   get name() { return this.createCompany.get('name'); }
-  get address() { return this.createCompany.get('address'); }
-  get description() { return this.createCompany.get('description'); }
 
   ngOnInit(): void {
     this.getCompanies();
@@ -68,8 +64,6 @@ export class AdminRentacarComponent implements OnInit {
 
     const companyInfo = {
       name: this.name.value,
-      address: this.address.value,
-      description: this.description.value,
       adminId: this.selectedAdminId
     };
 

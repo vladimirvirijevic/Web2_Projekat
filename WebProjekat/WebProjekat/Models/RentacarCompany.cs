@@ -18,8 +18,6 @@ namespace WebProjekat.Models
         public RentacarCompany(CreateRentacarCompanyRequest companyInfo)
         {
             Name = companyInfo.Name;
-            Address = companyInfo.Address;
-            Description = companyInfo.Description;
         }
     }
 }

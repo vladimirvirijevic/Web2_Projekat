@@ -22,6 +22,7 @@ import { StaffComponent } from './admin/staff/staff.component';
 import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.component';
 import { AdminRentacarComponent } from './admin/admin-rentacar/admin-rentacar.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MyCompanyComponent } from './my-company/my-company.component';
 
 
 const routes: Routes = [
@@ -31,12 +32,14 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'change-password', component: ChangePasswordComponent },
+  {path:'mycompany', component: MyCompanyComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin]}},
   
   {path: 'app', component:RegisteredUserComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User]} },
   {path:'app/listOfAircompanies', component:ListOfAvioCompaniesComponent},
   {path:'app/listOfRentACarcompanies', component: ListOfRentacarCompaniesComponent},
   {path:'app/listOfInvitations', component:ListOfInvitationsComponent},
   {path:'app/reservedList', component:ReservedListComponent},
+  
   {path: 'app/profile', component:UserProfilComponent,
     children:[
   { path: 'editProfile',component:EditProfileComponent},

@@ -31,7 +31,7 @@ namespace WebProjekat.Controllers
         [Authorize]
         public async Task<ActionResult<AirplaneCompany>> AddCompany([FromBody] CreateRentacarCompanyRequest request)
         {
-            if (request.Name == "" || request.Description == "" || request.AdminId == 0 || request.Address == "")
+            if (request.Name == "" || request.AdminId == 0)
             {
                 return BadRequest();
             }

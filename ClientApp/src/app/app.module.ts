@@ -29,6 +29,9 @@ import { AdminRentacarComponent } from './admin/admin-rentacar/admin-rentacar.co
 import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { MyCompanyComponent } from './my-company/my-company.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +53,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     StaffComponent,
     AdminRentacarComponent,
     AdminAirlineComponent,
-    ChangePasswordComponent 
+    ChangePasswordComponent,
+    MyCompanyComponent 
   ],
   imports: [
     BrowserModule,
@@ -58,7 +62,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    GooglePlaceModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

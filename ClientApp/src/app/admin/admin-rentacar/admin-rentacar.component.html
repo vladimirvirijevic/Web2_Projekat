@@ -9,8 +9,6 @@
         <tr>
           <th scope="col"></th>
           <th scope="col">Name</th>
-          <th scope="col">Address</th>
-          <th scope="col">Description</th>
           <th scope="col">Admin</th>
         </tr>
       </thead>
@@ -18,8 +16,6 @@
         <tr *ngFor="let company of rentacarCompanies; let i=index">
           <th>{{ i+1 }}</th>
           <td>{{ company.name }}</td>
-          <td>{{ company.address }}</td>
-          <td>{{ company.description }}</td>
           <td>{{ company.admin.firstName + ' ' + company.admin.lastName}}</td>
         </tr>
       </tbody>
@@ -54,34 +50,6 @@
                         <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
                             <div *ngIf="name.errors.required">
                                 Comapny Name is required.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            id="address" 
-                            placeholder="Address"
-                            required
-                            formControlName="address">
-                        <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger">
-                            <div *ngIf="address.errors.required">
-                                Address is required.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            id="description" 
-                            placeholder="Description"
-                            required
-                            formControlName="description">
-                        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
-                            <div *ngIf="description.errors.required">
-                                Description is required.
                             </div>
                         </div>
                     </div>
