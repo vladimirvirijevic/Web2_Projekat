@@ -12,7 +12,6 @@ import { Location } from '@angular/common';
 export class RentacarProfileComponent implements OnInit {
   companyId: number;
   company: RentacarCompany;
-  showCars = false;
 
   constructor(
     private rentacarService: RentacarService,
@@ -39,11 +38,6 @@ export class RentacarProfileComponent implements OnInit {
 
   goBack() {
     this.location.back();
-  }
-
-  toggleCars() {
-    this.showCars = !this.showCars;
-    console.log(this.showCars);
   }
 
 }

@@ -18,7 +18,7 @@
                 <a class="nav-link mr-3" routerLink="/admin/staff" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-users mr-2"></i>Staff</a>
             </li>
             <li *ngIf="authService.currentUserValue && (authService.currentUserValue.role == 'AirlineAdmin' || authService.currentUserValue.role == 'RentacarAdmin' )" class="nav-item">
-                <a class="nav-link mr-3" routerLink="/rentalcompany" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-briefcase mr-2"></i>My Company</a>
+                <a class="nav-link mr-3" routerLink="/rentalcompany/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-briefcase mr-2"></i>My Company</a>
             </li>
             <li *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'Admin'" class="nav-item">
                 <a class="nav-link mr-3" routerLink="/admin/airline" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-plane-arrival mr-2"></i>Airline Service</a>
@@ -30,6 +30,9 @@
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
+            <li *ngIf="authService.currentUserValue" class="nav-item mr-3">
+                <a class="nav-link ml-auto" routerLink="/app/profile">{{authService.currentUserValue.firstName }} ({{authService.currentUserValue.role}})</a>
+            </li>
             <li *ngIf="authService.currentUserValue" class="nav-item mr-3" (click)="logout()">
                 <a style="cursor: pointer; color: #fff;" class="nav-link ml-auto btn btn-danger">Logout</a>
             </li>

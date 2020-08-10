@@ -15,6 +15,8 @@ export class MyRentacarProfileComponent implements OnInit {
   company: RentacarCompany;
   editCompany: FormGroup;
 
+  companyExists = false;
+
   errorMessageText = "";
 
   showSuccessMessage = false;
@@ -53,9 +55,13 @@ export class MyRentacarProfileComponent implements OnInit {
     this.adminService.getMyCompany(userId)
       .subscribe(
         data => {
+          this.companyExists = true;
           this.company = data;
           this.setEditFormValues(this.company);
           console.log(data);
+        },
+        error => {
+          this.companyExists = false;
         }
       )
   }

@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
+import { Branch } from '../models/branch';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,39 @@ export class RentacarAdminService {
         catchError(this.handleError)
     );
   }
+
+  createBranch(branchInfo) {
+    return this.http.post<any>(`${environment.api_url}/rentacaradmin/branch`, branchInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  deleteCar(carId) {
+    return this.http.delete<any>(`${environment.api_url}/rentacaradmin/car/${carId}`)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  deleteBranch(branchId) {
+    return this.http.delete<any>(`${environment.api_url}/rentacaradmin/branch/${branchId}`)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  createCar(carInfo) {
+    return this.http.post<any>(`${environment.api_url}/rentacaradmin/car`, carInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  getBranches(companyId): Observable<Branch[]> {
+    return this.http.get<Branch[]>(`${environment.api_url}/rentacaradmin/brances/${companyId}`);
+  }
+
 
   handleError(error: HttpErrorResponse) {
     return throwError(error);

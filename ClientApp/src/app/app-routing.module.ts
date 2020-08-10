@@ -23,6 +23,9 @@ import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.compo
 import { AdminRentacarComponent } from './admin/admin-rentacar/admin-rentacar.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { MyRentacarCompanyComponent } from './my-rentacar-company/my-rentacar-company.component';
+import { MyRentacarProfileComponent } from './my-rentacar-company/my-rentacar-profile/my-rentacar-profile.component';
+import { RentacarBranchComponent } from './my-rentacar-company/rentacar-branch/rentacar-branch.component';
+import { RentacarCarsComponent } from './my-rentacar-company/rentacar-cars/rentacar-cars.component';
 
 
 const routes: Routes = [
@@ -32,7 +35,11 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'change-password', component: ChangePasswordComponent },
-  {path:'rentalcompany', component: MyRentacarCompanyComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin]}},
+  {path:'rentalcompany', component: MyRentacarCompanyComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin]}, children: [
+    { path: 'profile', component: MyRentacarProfileComponent},
+    { path: 'branches', component: RentacarBranchComponent},
+    { path: 'cars', component: RentacarCarsComponent},
+  ]},
   
   {path: 'app', component:RegisteredUserComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User]} },
   {path:'app/listOfAircompanies', component:ListOfAvioCompaniesComponent},

@@ -1,0 +1,162 @@
+<div class="row mt-5">
+    <div class="col">
+        <h2>Cars <button data-toggle="modal" data-target="#addCarModal" class="ml-4 btn btn-primary mb-3"><i class="fas fa-plus mr-2"></i>Add Car</button></h2>
+    </div>
+</div>
+
+<div *ngIf="showMainErrorMessage" class="row">
+    <div class="col">
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ mainErrorMessage }}</strong>
+          </div>
+    </div>
+</div>
+
+<div *ngIf="showMainSuccessMessage" class="row">
+    <div class="col">
+        <div class="alert alert-success" role="alert">
+            <strong>{{ mainSuccessMessage }}</strong>
+          </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col">
+        <table class="table">
+            <thead class="thead">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Year</th>
+                <th scope="col">Seats</th>
+                <th scope="col">Type</th>
+                <th scope="col">Branch</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let car of cars; let i=index">
+                <th>{{ i+1 }}</th>
+                <td>{{ car.brand }}</td>
+                <td>{{ car.model }}</td>
+                <td>{{ car.year }}</td>
+                <td>{{ car.seats }}</td>
+                <td>{{ car.type }}</td>
+                <td>{{ car.branchAddress }}</td>
+                <td><button (click)="deleteCar(car.id)" class="btn btn-danger"><i class="fas fa-trash-alt mr-2"></i>Delete</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="addCarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header pl-4 pr-4">
+          <h5 class="modal-title" id="exampleModalLabel">Add Car</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4">
+            <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+                {{ errorMessageText }}
+            </div>
+            <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                Branch created successfully!
+            </div>
+            <form [formGroup]="addCarForm" (ngSubmit)="onSubmit()">
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="brand" 
+                        placeholder="Brand"
+                        required
+                        formControlName="brand">
+                    
+                  </div>
+                  <div *ngIf="brand.invalid && (brand.dirty || brand.touched)" class="alert alert-danger">
+                    <div *ngIf="brand.errors.required">
+                        Brand is required.
+                    </div>
+                </div>
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="model" 
+                        placeholder="Model"
+                        required
+                        formControlName="model">
+                    
+                  </div>
+                  <div *ngIf="model.invalid && (model.dirty || model.touched)" class="alert alert-danger">
+                    <div *ngIf="model.errors.required">
+                        Model is required.
+                    </div>
+                </div>
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="brand" 
+                        placeholder="Year"
+                        required
+                        formControlName="year">
+                    
+                  </div>
+                  <div *ngIf="year.invalid && (year.dirty || year.touched)" class="alert alert-danger">
+                    <div *ngIf="year.errors.required">
+                        Year is required.
+                    </div>
+                </div>
+
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="brand" 
+                        placeholder="Seats"
+                        required
+                        formControlName="seats">
+                    
+                  </div>
+                  <div *ngIf="seats.invalid && (seats.dirty || seats.touched)" class="alert alert-danger">
+                    <div *ngIf="seats.errors.required">
+                        Seats are required.
+                    </div>
+                </div>
+
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="type" 
+                        placeholder="Type"
+                        required
+                        formControlName="type">
+                    
+                  </div>
+                  <div *ngIf="type.invalid && (type.dirty || type.touched)" class="alert alert-danger ">
+                    <div *ngIf="type.errors.required">
+                        Type are required.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sel1">Choose Branch</label>
+                    <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selectedBranchId">
+                        <option  *ngFor="let branch of branches" [ngValue]="branch.id">{{branch.address}}</option>
+                    </select>
+                  </div>
+                
+                <button [disabled]="addCarForm.invalid" type="submit" class="btn btn-primary mt-3">Add</button>
+                <button data-dismiss="modal" aria-label="Close" type="button" class="ml-3 btn btn-danger mt-3">Close</button>
+              </form>
+            
+        </div>
+      </div>
+    </div>
+  </div>

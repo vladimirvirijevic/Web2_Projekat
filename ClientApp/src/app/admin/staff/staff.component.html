@@ -42,7 +42,7 @@
         </div>
         <div class="modal-body p-4">
             <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
-                User with the same email already exists!
+                {{ errorMessage }}
             </div>
             <div *ngIf="showConfirmation" class="alert alert-success" role="alert">
                 User created successfully!

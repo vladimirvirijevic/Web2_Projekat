@@ -10,7 +10,7 @@ namespace WebProjekat.Models
         public string Address { get; set; }
         public string Description { get; set; }
         public int Grade { get; set; }
-        public virtual List<Car> Cars { get; set; }
+        public virtual List<RentacarBranch> Branches { get; set; } = new List<RentacarBranch>();
         public virtual User Admin { get; set; }
 
         public RentacarCompany() { }

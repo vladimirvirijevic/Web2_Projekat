@@ -65,6 +65,12 @@ namespace WebProjekat.Controllers
                 return BadRequest();
             }
 
+            // Proveri da li je user vec admin neke kompanije
+            if (user.RentacarCompany.Count > 0)
+            {
+                return NotFound();
+            }
+
             _context.RentacarCompanies.Add(rentacarCompany);
             user.RentacarCompany.Add(rentacarCompany);
             user.IsCompanyAdmin = true;
@@ -92,5 +98,7 @@ namespace WebProjekat.Controllers
 
             return company;
         }
+
+        
     }
 }

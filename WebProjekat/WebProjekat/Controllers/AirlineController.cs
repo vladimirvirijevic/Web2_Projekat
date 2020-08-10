@@ -77,6 +77,12 @@ namespace WebProjekat.Controllers
                 return BadRequest();
             }
 
+            // Proveri da li je user vec admin neke kompanije
+            if (user.AirlineCompanies.Count > 0)
+            {
+                return NotFound();
+            }
+
             _context.AirplaneCompanies.Add(airplaneCompany);
             user.AirlineCompanies.Add(airplaneCompany);
             user.IsCompanyAdmin = true;

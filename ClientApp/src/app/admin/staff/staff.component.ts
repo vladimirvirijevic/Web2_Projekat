@@ -16,6 +16,8 @@ export class StaffComponent implements OnInit {
   showConfirmation = false;
 
   staff: AuthUser[] = [];
+
+  errorMessage = "There was an error!";
   
   constructor(
     private formBuilder: FormBuilder,
@@ -85,7 +87,9 @@ export class StaffComponent implements OnInit {
           if (error.status == 409) {
               this.showErrorMessage = true;
               this.showConfirmation = false;
+              this.errorMessage = "User with the same email already exists!";
           }
+          
         }
       )
   }

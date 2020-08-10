@@ -1,4 +1,4 @@
-import { Car } from './car';
+import { Branch } from './branch';
 
 export class RentacarCompany {
     id: number;
@@ -6,5 +6,5 @@ export class RentacarCompany {
     address: string;
     description: string;
     grade: number;
-    cars: Car[];
+    branches: Branch[];
 }

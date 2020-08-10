@@ -70,13 +70,18 @@ export class AdminRentacarComponent implements OnInit {
     this.rentacarService.createCompany(companyInfo)
       .subscribe(
         data => {
+          console.log(data.status);
           this.showSuccessMessage = true;
           this.showErrorMessage = false;
           this.getCompanies();
         },
         error => {
+          console.log(error.status);
           if (error.status == 409) {
             this.errorMessageText = "Company with the same name already exists.";
+          }
+          if (error.status == 404) {
+            this.errorMessageText = "Rentacar Admin already manages company!";
           }
           else {
             this.errorMessageText = "There was an error.";

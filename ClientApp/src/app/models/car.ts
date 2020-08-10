@@ -2,8 +2,8 @@ export class Car {
     id: number;
     model: string;
     brand: string;
-    doors: number;
+    seats: number;
     year: number;
-    engineType: string;
-    capacity: number;
+    type: string;
+    branchAddress: string;
 }
