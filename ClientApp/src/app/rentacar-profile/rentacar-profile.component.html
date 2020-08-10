@@ -1,10 +1,59 @@
-<div class="container">
-    <div class="row mt-5">
+<div *ngIf="company">
+    <div class="row mb-4">
         <div class="col">
-            <h2 class="mb-5">{{ company.name }}</h2>
-            <p class="mb-2"><b>Address: </b>{{ company.address }}</p>
-            <p class="mb-2"><b>Description: </b>{{ company.description }}</p>
-            <p class="mb-2"><b>Grade: </b>{{ company.grade }}</p>
+            <h2 class="display-6">{{ company.name }}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <p><b>Address:</b></p>
+        </div>
+        <div class="col-10">
+            <p>{{ (company.address != null) ? company.address : "Address not set" }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <p><b>Description:</b></p>
+        </div>
+        <div class="col-10">
+            <p>{{ (company.description != null) ? company.description : "Description not set" }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <p><b>Grade:</b></p>
+        </div>
+        <div class="col-10">
+            <p>{{ company.grade }}</p>
+        </div>
+    </div>
+
+    <div *ngIf="company.branches" class="mb-5">
+        <div *ngFor="let branch of company.branches; let i = index;" class="row mt-5">
+            <div class="col">
+                <p style="font-size: 30px;" class="mb-3 mt-5">Branch {{i+1}}: {{ branch.address }}</p>
+                <div *ngFor="let car of branch.cars" class="car row mt-3 mb-3">
+                    <div class="col">
+                        <p><i class="fas fa-car mr-2"></i> {{ car.brand }} {{ car.model }}</p>
+                    </div>
+                    <div class="col">
+                        <p><i class="fas fa-caravan mr-2"></i> {{ car.type }}</p>
+                    </div>
+                    <div class="col">
+                        <p><i class="fas fa-history mr-2"></i>{{ car.year }}</p>
+                    </div>
+                    <div class="col">
+                        <p><i class="fas fa-users mr-2"></i>{{ car.seats }}</p>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>
+
+

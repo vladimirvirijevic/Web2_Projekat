@@ -15,7 +15,7 @@ export class RentacarService {
   ) { }
   
   getCompanies(): Observable<RentacarCompany[]> {
-    return this.http.get<RentacarCompany[]>(environment.api_url + '/rentacar');
+    return this.http.get<RentacarCompany[]>(`${environment.api_url}/rentacar`);
   }
 
   getCompany(id): Observable<RentacarCompany> {

@@ -24,3 +24,16 @@
 .auth .alert-danger {
     margin: 10px 0;
 }
+
+.car {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-size: 18px;
+    box-shadow: 0 0 .6rem rgb(180, 179, 179);
+}
+
+.car p {
+    padding-top: 15px;
+}

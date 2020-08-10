@@ -31,7 +31,7 @@ import { RentacarCarsComponent } from './my-rentacar-company/rentacar-cars/renta
 const routes: Routes = [
   { path: '', component: FlightsComponent, pathMatch: 'full' },
   { path: 'rentacar/:id', component: RentacarProfileComponent },
-  { path: 'car-rental', component: CarsComponent },
+  { path: 'rentacar', component: CarsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'change-password', component: ChangePasswordComponent },

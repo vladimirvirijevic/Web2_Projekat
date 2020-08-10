@@ -9,7 +9,7 @@
                 <a class="nav-link mr-3" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-plane-departure mr-2"></i>Flights</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link mr-3" routerLink="/car-rental" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-car mr-2"></i>Car Rental</a>
+                <a class="nav-link mr-3" routerLink="/rentacar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-car mr-2"></i>Car Rental</a>
             </li>
             <li *ngIf="authService.currentUserValue && authService.currentUserValue.role != 'Admin'" class="nav-item">
                 <a class="nav-link mr-3" routerLink="/app" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-user mr-2"></i>Profile</a>
