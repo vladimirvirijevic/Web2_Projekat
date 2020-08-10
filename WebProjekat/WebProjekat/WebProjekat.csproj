@@ -19,5 +19,10 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Requests\Airline\" />
+    <Folder Include="Requests\Rentacar\" />
+  </ItemGroup>
+
 
 </Project>

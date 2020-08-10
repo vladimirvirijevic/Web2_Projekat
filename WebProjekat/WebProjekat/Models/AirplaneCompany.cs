@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using WebProjekat.Requests.Airline;
+using WebProjekat.Requests.AirlineAdmin;
 
 namespace WebProjekat.Models
 {

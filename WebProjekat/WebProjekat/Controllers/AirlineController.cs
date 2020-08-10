@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using WebProjekat.Data;
 using WebProjekat.Helpers;
 using WebProjekat.Models;
-using WebProjekat.Requests.Airline;
+using WebProjekat.Requests.AirlineAdmin;
 using WebProjekat.Services.Users;
 
 namespace WebProjekat.Controllers

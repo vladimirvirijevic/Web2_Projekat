@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,13 @@ namespace WebProjekat.Controllers
     {
         private readonly ApplicationDbContext _context;
         private IUserService _userService;
+        private IHttpContextAccessor _httpContextAccessor;
 
-        public AdminController(ApplicationDbContext context, IUserService userService)
+        public AdminController(ApplicationDbContext context, IUserService userService, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _userService = userService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
@@ -88,6 +91,40 @@ namespace WebProjekat.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        [HttpGet]
+        [Route("mycompany/{userId}")]
+        [Authorize]
+        public ActionResult<AirplaneCompany> GetMyCompany([FromRoute] int userId)
+        {
+            if (userId == 0)
+            {
+                return BadRequest();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            if (userId != currentUser.Id)
+            {
+                return BadRequest();
+            }
+
+            if (currentUser.Role == "AirlineAdmin" && currentUser.AirlineCompanies.Count > 0)
+            {
+                return Ok(currentUser.AirlineCompanies[0]);
+            } 
+            else if (currentUser.Role == "RentacarAdmin" && currentUser.RentacarCompany.Count > 0)
+            {
+                return Ok(currentUser.RentacarCompany[0]);
+            }
+
+            return NotFound();
         }
     }
 }

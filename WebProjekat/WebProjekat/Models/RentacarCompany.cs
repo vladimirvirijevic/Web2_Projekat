@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using WebProjekat.Requests.Rentacar;
+using WebProjekat.Requests.RentacarAdmin;
 
 namespace WebProjekat.Models
 {

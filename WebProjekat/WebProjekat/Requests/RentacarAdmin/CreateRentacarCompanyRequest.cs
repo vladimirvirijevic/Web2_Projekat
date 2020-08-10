@@ -1,4 +1,4 @@
-﻿namespace WebProjekat.Requests.Rentacar
+﻿namespace WebProjekat.Requests.RentacarAdmin
 {
     public class CreateRentacarCompanyRequest
     {

@@ -30,7 +30,8 @@ import { AdminAirlineComponent } from './admin/admin-airline/admin-airline.compo
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
-import { MyCompanyComponent } from './my-company/my-company.component';
+import { MyRentacarCompanyComponent } from './my-rentacar-company/my-rentacar-company.component';
+import { MyRentacarProfileComponent } from './my-rentacar-company/my-rentacar-profile/my-rentacar-profile.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { MyCompanyComponent } from './my-company/my-company.component';
     AdminRentacarComponent,
     AdminAirlineComponent,
     ChangePasswordComponent,
-    MyCompanyComponent 
+    MyRentacarCompanyComponent,
+    MyRentacarProfileComponent 
   ],
   imports: [
     BrowserModule,
