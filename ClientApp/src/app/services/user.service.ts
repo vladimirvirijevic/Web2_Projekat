@@ -47,4 +47,10 @@ export class UserService {
     changePassword(userInfo) {
         return this.http.put<any>(`${environment.api_url}/users/changepassword`, userInfo);
     }
+    
+    editUser(userInfo)
+    {
+        return this.http.put<any>(`${environment.api_url}/users/editUser`, userInfo);
+    }
+
 }

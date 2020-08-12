@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using WebProjekat.Data;
 using WebProjekat.Helpers;
 using WebProjekat.Models;
+using WebProjekat.Responses;
 using WebProjekat.Services.Email;
 
 namespace WebProjekat.Services.Users
@@ -207,6 +208,26 @@ namespace WebProjekat.Services.Users
             }
 
             user.Confirmed = true;
+
+            await _context.SaveChangesAsync(new System.Threading.CancellationToken());
+
+            return true;
+        }
+
+        public async Task<bool> EditUser(User user1)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email ==user1.Email);
+          
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.FirstName = user1.FirstName;
+            user.LastName = user1.LastName;
+            user.City = user1.City;
+            user.Phone= user1.Phone;
+            
 
             await _context.SaveChangesAsync(new System.Threading.CancellationToken());
 

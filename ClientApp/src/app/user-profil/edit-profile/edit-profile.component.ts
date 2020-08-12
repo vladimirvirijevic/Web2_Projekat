@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
+import { AuthUser } from 'src/app/models/authUser';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -6,10 +12,58 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
-
-  constructor() { }
+  
+   editForm:FormGroup;
+   
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    public authenticationService: AuthenticationService
+  ) {
+      this.editForm=this.formBuilder.group({
+        'textEditForFirstName': [this.authenticationService.currentUserValue.firstName],
+        'textEditForSecondName': [ this.authenticationService.currentUserValue.lastName],
+        'textForCity':[ this.authenticationService.currentUserValue.city],
+        'textForPhone':[ this.authenticationService.currentUserValue.phone]});
+   }
 
   ngOnInit(): void {
-  }
 
+  }
+ 
+  get firstName() { return this.editForm.get('textEditForFirstName'); }
+  get lastName() { return this.editForm.get('textEditForSecondName'); }
+  get city() { return this.editForm.get('textForCity'); }
+  get phone() { return this.editForm.get('textForPhone'); }
+
+  onEdit()
+  {
+    const userInfo={
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      city: this.city.value,
+      phone: this.phone.value
+    }
+
+    this.userService.editUser(userInfo)
+    .subscribe(
+      data => {
+        console.log(data);
+      
+      },
+      error => {
+        if (error.status == 400) {
+         
+          console.log('ok');
+        }
+        else {
+          console.log('error');
+        }
+      }
+    );
+
+
+
+
+  }
 }

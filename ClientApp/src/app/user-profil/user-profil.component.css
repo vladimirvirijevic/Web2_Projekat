@@ -5,7 +5,7 @@ nav
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 350px;
-    margin-left: 50px;
+   
     text-align: center;
     margin-top: 50px;
   }
@@ -18,7 +18,7 @@ nav
       max-width: 350px;
       margin-bottom: auto;
       border-style: ridge;
-      margin-left: 50px;
+     
   }
   
   .imgRound
@@ -28,4 +28,8 @@ nav
   }
 boja-slike{
   background-color:cornflowerblue;
+}
+h4{
+  text-align: center;
+  font-style: italic;
 }

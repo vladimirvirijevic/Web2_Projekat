@@ -7,6 +7,8 @@ export class AuthUser {
     password: string;
     firstName: string;
     lastName: string;
+    city:string;
+    phone:string;
     token: string;
     role: Role;
     passwordChanged: boolean;

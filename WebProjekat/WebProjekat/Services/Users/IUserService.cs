@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WebProjekat.Models;
+using WebProjekat.Responses;
 
 namespace WebProjekat.Services.Users
 {
@@ -17,5 +18,6 @@ namespace WebProjekat.Services.Users
         Task<bool> ChangePassword(User userInfo, string oldPassword, string newPassword);
         Task<bool> ChangeAdminPassword(User userInfo, string newPassword);
         Task<bool> ConfirmAccount(string email, string token);
+        Task<bool> EditUser(User user);
     }
 }

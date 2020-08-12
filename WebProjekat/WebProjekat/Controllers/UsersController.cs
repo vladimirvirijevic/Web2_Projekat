@@ -11,6 +11,7 @@ using WebProjekat.Services.Email;
 using WebProjekat.Services.Auth;
 using WebProjekat.Requests;
 using WebProjekat.Requests.User;
+using WebProjekat.Responses;
 
 namespace WebProjekat.Controllers
 {
@@ -67,6 +68,29 @@ namespace WebProjekat.Controllers
 
             return Ok();
         }
+
+        [HttpPut("editUser")]
+        public async Task<IActionResult> EditUser([FromBody] EditUser requestEdit)
+        {
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+            User user = new User();
+            user.FirstName = requestEdit.firstName;
+            user.LastName = requestEdit.lastName;
+            user.Phone = requestEdit.phone;
+            user.City = requestEdit.city;
+            user.Email = currentUser.Email;
+            var result = await _userService.EditUser(user);
+            if (!result)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+
+
+        }
+
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]RegisterModel model)

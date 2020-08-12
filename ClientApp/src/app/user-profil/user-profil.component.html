@@ -5,36 +5,34 @@
         <li class="nav-item">
           <button type="button" class="btn btn-outline-light"  routerLink="/app/profile/editProfile">Edit profile</button>
         </li>
-        <li class="nav-item">
+        <li *ngIf="authenticationService.currentUserValue.role=='User'" class="nav-item">
          <button type="button" class="btn btn-outline-light"  routerLink="/app/profile/friendList">FriendList</button>
       </li>
-      <li class="nav-item">
+      <li *ngIf="authenticationService.currentUserValue.role=='User'" class="nav-item">
         <button type="button" class="btn btn-outline-light"  routerLink="/app/profile/addFriend">Add friend</button>
     </li>
       </ul>
     </div>
   </nav>  
   <div class="row">
-    <div class="column-xs-12">
+    <div class="column-lg-10">
       <div class="card">
         <img src="assets\images\22-223965_no-profile-picture-icon-circle-member-icon-png.png" width="100" height="300" style="width:100%"/>
-        <h3>Dijana Atanaskovic</h3>
+        
       </div>
     <div>           
-        <p>First name: Dijana<br/>
-        Last name: Atanaskovic <br/>
-        Username: dijana.atanaskovic<br/>
-        <img src="assets\images\birthday-cake.png" width="25" height="25" class="imgRound"/>Birthday: 29.06.1997.<br/>
-        <img src="assets\images\little-rabbit-trucking-email-computer-software-email-png-clip-art.png" width="40" height="25" class="imgRound"/>  Email: dijana.atanaskovic@gmail.com<br/>
-        Type: Admin<br/>
-        <img src="assets\images\download.jfif" width="25" height="20" class="imgRound"/> Address: Aleksandrovac<br/>
-        Points:0
+      <h4>{{firstName}} {{secondName}}</h4>
+        <p>
+        <img src="assets\images\little-rabbit-trucking-email-computer-software-email-png-clip-art.png" width="40" height="25" class="imgRound"/> Email: {{authenticationService.currentUserValue.email}} <br/>
+        <img src="assets\images\download.jfif" width="35" height="25" class="imgRound"/>City: {{authenticationService.currentUserValue.city}} <br/>
+        <img src="assets\images\downloadphone.png" width="35" height="25" class="imgRound"/> Phone: {{authenticationService.currentUserValue.phone}}<br/>
+        Points:
         <br/>
     </p>
     </div>
     </div>
     <div>
-      <div class="column-xs-12">
+      <div class="column-xs">
         <router-outlet></router-outlet>
       </div>
     </div>

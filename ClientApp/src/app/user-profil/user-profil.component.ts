@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AuthenticationService } from '../services/authentication.service';
 
 
 @Component({
@@ -8,15 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-profil.component.css']
 })
 export class UserProfilComponent implements OnInit {
-  
-  
-  constructor(
-    ) { 
+	public firstName:string;
+	public secondName:string;
+
+
     
+  constructor(public authenticationService: AuthenticationService
+    ) { 
+		this.firstName="";
+		this.secondName="";
   }
 
   ngOnInit(): void {
-   
+	this.firstName=this.authenticationService.currentUserValue.firstName.toUpperCase();
+	this.secondName=this.authenticationService.currentUserValue.lastName.toUpperCase();
+ 	
   }
  
+
+ 	
+    
 }
