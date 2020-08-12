@@ -7,6 +7,6 @@
         public double Lat { get; set; }
         public double Long { get; set; }
 
-        public virtual AirplaneCompany CompanyTest1 { get; set; }
+        public virtual AirplaneCompany CompanyTest3 { get; set; }
     }
 }
