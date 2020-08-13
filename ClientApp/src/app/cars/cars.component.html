@@ -83,15 +83,24 @@
         </div>
     </div>
 
+    
+
     <div class="row mt-3 align-items-center justify-content-between mb-5">
-        <div *ngFor="let company of companies" class="col-3 m-3">
-            <div class="card" style="width: 18rem;">
+        <div *ngFor="let company of companies" class="col">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">{{ company.name }}</h5>
+                </div>
                 <div class="card-body">
-                  <h5 class="card-title">{{ company.name }}</h5>
-                  <p class="address">{{ (company.address != null) ? company.address : "Address not yet set" }}</p>
-                  <p class="card-text">{{ (company.description != null) ? company.description : "Description not yet set" }}</p>
-                  <p class="card-text">{{ company.grade }}</p>
-                  <button (click)="viewCompany(company.id)" class="btn btn-primary">See More</button>
+                    <div class="row">
+                        <div class="col">
+                            <p class="address"><b>Address: </b>{{ (company.address != null) ? company.address : "Address not yet set" }}</p>
+                            <p class="card-text"><b>Description: </b>{{ (company.description != null) ? company.description : "Description not yet set" }}</p>
+                            <p class="card-text"><b>Grade: </b>{{ company.grade }}</p>
+                        </div>
+                    </div>
+                    
+                    <button (click)="viewCompany(company.id)" class="btn btn-primary mt-4">Visit</button>
                 </div>
               </div>
         </div>

@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
+import { Car } from '../models/car';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,11 @@ export class RentacarService {
   getCompany(id): Observable<RentacarCompany> {
     return this.http.get<RentacarCompany>(`${environment.api_url}/rentacar/${id}`);
   }
+
+  getCar(carId): Observable<Car> {
+    return this.http.get<Car>(`${environment.api_url}/rentacar/car/${carId}`);
+  }
+
   createCompany(companyInfo) {
     return this.http.post<any>(`${environment.api_url}/rentacar/companies`, companyInfo)
     .pipe(

@@ -26,6 +26,7 @@ import { MyRentacarCompanyComponent } from './my-rentacar-company/my-rentacar-co
 import { MyRentacarProfileComponent } from './my-rentacar-company/my-rentacar-profile/my-rentacar-profile.component';
 import { RentacarBranchComponent } from './my-rentacar-company/rentacar-branch/rentacar-branch.component';
 import { RentacarCarsComponent } from './my-rentacar-company/rentacar-cars/rentacar-cars.component';
+import { CarComponent } from './car/car.component';
 
 
 const routes: Routes = [
@@ -59,7 +60,9 @@ const routes: Routes = [
   // ADMIN ROUTES
   { path: 'admin/staff', component: StaffComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
   { path: 'admin/airline', component: AdminAirlineComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
-  { path: 'admin/rentacar', component: AdminRentacarComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }}
+  { path: 'admin/rentacar', component: AdminRentacarComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
+
+  { path: 'car/:id', component: CarComponent },
 ];
 
 @NgModule({
