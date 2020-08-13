@@ -21,10 +21,10 @@ export class EditProfileComponent implements OnInit {
     public authenticationService: AuthenticationService
   ) {
       this.editForm=this.formBuilder.group({
-        'textEditForFirstName': [this.authenticationService.currentUserValue.firstName],
-        'textEditForSecondName': [ this.authenticationService.currentUserValue.lastName],
-        'textForCity':[ this.authenticationService.currentUserValue.city],
-        'textForPhone':[ this.authenticationService.currentUserValue.phone]});
+        'textEditForFirstName': [this.authenticationService.currentUserValue.firstName, Validators.required],
+        'textEditForSecondName': [ this.authenticationService.currentUserValue.lastName, Validators.required],
+        'textForCity':[ this.authenticationService.currentUserValue.city,Validators.required],
+        'textForPhone':[ this.authenticationService.currentUserValue.phone, Validators.required]});
    }
 
   ngOnInit(): void {
