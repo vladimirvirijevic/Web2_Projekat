@@ -1,3 +1,5 @@
+import { Flight } from './Flight';
+
 export class AirplaneCompany {
     id: number;
     name: string;
@@ -5,4 +7,5 @@ export class AirplaneCompany {
     description: string;
     grade: number;
     destinations: Location[];
+    flights: Flight[];
 }

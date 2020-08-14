@@ -16,7 +16,7 @@ export class AirlineService {
   private url = 'https://localhost:44347/api/airline';
 
   getCompanies(): Observable<AirplaneCompany[]> {
-    return this.http.get<AirplaneCompany[]>(this.url);
+    return this.http.get<AirplaneCompany[]>(`${environment.api_url}/airline/getcompanies`);
   }
 
   createCompany(companyInfo) {

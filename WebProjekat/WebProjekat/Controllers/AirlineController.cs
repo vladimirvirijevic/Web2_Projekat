@@ -92,7 +92,7 @@ namespace WebProjekat.Controllers
             return Ok(airplaneCompany);
         }
 
-        [HttpGet]
+        [HttpGet("getcompanies")]
         public async Task<IEnumerable<AirplaneCompany>> GetCompanies()
         {
             return await _context.AirplaneCompanies.ToListAsync();

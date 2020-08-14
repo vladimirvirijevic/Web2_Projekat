@@ -2,7 +2,6 @@
 <div class="card">
     <div class="card-header"> 
      Available Airplane Companies  
-    <button type="button" class="btn btn-success" (click)="ClickedFilter()">Filter</button>
     </div>
     <div *ngIf="clickedFilter">
     <form>
@@ -27,13 +26,19 @@
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
     </div>
-    <div class="card-body" *ngFor="let kompanija of airplaneCompanies">
-      <h5 class="card-title">{{kompanija.name}}</h5>
+    <div>
+    <div *ngIf="airplaneCompanies.length===0 else elseBlock">
+        <p>There are no available companies at the moment!</p>
+    </div>
+    <ng-template #elseBlock>
+    <div class="card-body" *ngFor="let kompanija of airplaneCompanies; let i=index">
+      <h5 class="card-title">{{i+1}}. {{kompanija.name}}</h5>
       <p class="card-text">
          Address: {{kompanija.address}}<br/>
-         {{kompanija.description}}<br/>
+         Description: {{kompanija.description}}<br/>
          Grade: {{kompanija.grade}}
       </p>
-      <a href="#" class="btn btn-primary">Check out</a>
+      <a class="btn btn-primary">Check out</a>
     </div>
+    </ng-template>
   </div>

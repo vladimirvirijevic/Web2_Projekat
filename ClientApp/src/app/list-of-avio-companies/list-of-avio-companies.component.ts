@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AirlineService } from '../services/airline.service';
 import { AirplaneCompany } from '../models/airplaneCompany';
-import { RentacarService } from '../services/rentacar.service';
 import { RentacarCompany } from '../models/rentacarCompany';
 
 @Component({
@@ -10,21 +9,27 @@ import { RentacarCompany } from '../models/rentacarCompany';
   styleUrls: ['./list-of-avio-companies.component.css']
 })
 export class ListOfAvioCompaniesComponent implements OnInit {
-  airplaneCompanies: AirplaneCompany[] = [];
-  rentacarCompanies: RentacarCompany[] = [];
+  airplaneCompanies: AirplaneCompany[]=[];
   clickedFilter:Boolean=false;
- 
+  emptyMessege:Boolean;
 
-  constructor( private airplaneService: AirlineService,
-    private rentacarService: RentacarService) { }
+  constructor( private airplaneService: AirlineService) { }
 
   ngOnInit(): void {
 
- // this.airplaneCompanies = this.airplaneService.getCompanies();
-    //this.rentacarCompanies = this.rentacarService.getCompanies();
+    
+   
   }
-  ClickedFilter()
+
+  getCompanies()
   {
-    this.clickedFilter=true;
+    this.airplaneService.getCompanies()
+    .subscribe(
+      data => {
+        console.log(data);
+        this.airplaneCompanies = data;
+      }
+    )
   }
+  
 }
