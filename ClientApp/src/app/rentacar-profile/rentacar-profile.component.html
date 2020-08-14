@@ -47,7 +47,8 @@
                         <p><i class="fas fa-users mr-2"></i>{{ car.seats }}</p>
                     </div>
                     <div class="col">
-                        <button class="btn btn-primary">Book Now</button>
+                        <button (click)="viewCar(car.id)" class="btn btn-primary">See More</button>
+                        
                     </div>
                 </div>
             </div>

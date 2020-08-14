@@ -43,7 +43,11 @@ export class RentacarCarsComponent implements OnInit {
       'model': ['', [Validators.required]],
       'year': ['', [Validators.required]],
       'seats': ['', [Validators.required]],
-      'type': ['', [Validators.required]]
+      'type': ['', [Validators.required]],
+      'availableFrom': ['', [Validators.required]],
+      'availableUntil': ['', [Validators.required]],
+      'pickupLocation': ['', [Validators.required]],
+      'dropoffLocation': ['', [Validators.required]],
     });
    }
 
@@ -52,6 +56,10 @@ export class RentacarCarsComponent implements OnInit {
    get year() { return this.addCarForm.get('year'); }
    get seats() { return this.addCarForm.get('seats'); }
    get type() { return this.addCarForm.get('type'); }
+   get availableFrom() { return this.addCarForm.get('availableFrom'); }
+   get availableUntil() { return this.addCarForm.get('availableUntil'); }
+   get pickupLocation() { return this.addCarForm.get('pickupLocation'); }
+   get dropoffLocation() { return this.addCarForm.get('dropoffLocation'); }
 
   ngOnInit(): void {
     this.getCompany();
@@ -89,6 +97,10 @@ export class RentacarCarsComponent implements OnInit {
       year: this.year.value,
       seats: this.seats.value,
       type: this.type.value,
+      availableFrom: this.availableFrom.value,
+      availableUntil: this.availableUntil.value,
+      pickupLocation: this.pickupLocation.value,
+      dropoffLocation: this.dropoffLocation.value,
     };
 
     this.rentacarAdminService.createCar(carInfo)
@@ -99,8 +111,16 @@ export class RentacarCarsComponent implements OnInit {
           this.getCompany();
         },
         error => {
-          this.showSuccessMessage = false;
-          this.showErrorMessage = true;
+          if (error.status == 409) {
+            this.errorMessageText = "Available From Date is greated then Available Until Date!";
+            this.showSuccessMessage = false;
+            this.showErrorMessage = true;
+          }
+          else {
+            this.showSuccessMessage = false;
+            this.showErrorMessage = true;
+          }
+          
         }
       );
   }

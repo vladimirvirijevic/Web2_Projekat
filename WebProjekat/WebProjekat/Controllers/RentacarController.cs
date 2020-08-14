@@ -99,6 +99,17 @@ namespace WebProjekat.Controllers
             return company;
         }
 
-        
+        [HttpGet("car/{carId}")]
+        public async Task<ActionResult<RentacarCompany>> GetCar(int carId)
+        {
+            var car = await _context.Cars.FindAsync(carId);
+
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(car);
+        }
     }
 }

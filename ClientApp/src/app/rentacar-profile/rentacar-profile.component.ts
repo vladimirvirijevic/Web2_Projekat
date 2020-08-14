@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RentacarCompany } from '../models/rentacarCompany';
 import { RentacarService } from '../services/rentacar.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -16,7 +16,8 @@ export class RentacarProfileComponent implements OnInit {
   constructor(
     private rentacarService: RentacarService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -38,6 +39,10 @@ export class RentacarProfileComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  viewCar(carId) {
+    this.router.navigate([`/car/${carId}`]);
   }
 
 }

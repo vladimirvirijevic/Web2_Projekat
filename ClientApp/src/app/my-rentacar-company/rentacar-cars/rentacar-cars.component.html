@@ -65,7 +65,7 @@
                 {{ errorMessageText }}
             </div>
             <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
-                Branch created successfully!
+                Car created successfully!
             </div>
             <form [formGroup]="addCarForm" (ngSubmit)="onSubmit()">
                 <div class="input-group form-group-no-border mb-2 mt-3">
@@ -145,6 +145,72 @@
                         Type are required.
                     </div>
                 </div>
+
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="pickupLocation" 
+                        placeholder="Pick-up Location"
+                        required
+                        formControlName="pickupLocation">
+                    
+                  </div>
+                  <div *ngIf="pickupLocation.invalid && (pickupLocation.dirty || pickupLocation.touched)" class="alert alert-danger ">
+                    <div *ngIf="pickupLocation.errors.required">
+                        Pick-up Location is required.
+                    </div>
+                </div>
+
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="dropoffLocation" 
+                        placeholder="Drop-off Location"
+                        required
+                        formControlName="dropoffLocation">
+                    
+                  </div>
+                  <div *ngIf="dropoffLocation.invalid && (dropoffLocation.dirty || dropoffLocation.touched)" class="alert alert-danger ">
+                    <div *ngIf="dropoffLocation.errors.required">
+                        Drop-off Location is required.
+                    </div>
+                </div>
+
+                <label>Available From</label>
+                <div class="input-group form-group-no-border mb-2">
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        id="availableFrom" 
+                        placeholder="availableFrom"
+                        required
+                        formControlName="availableFrom">
+                    
+                  </div>
+                  <div *ngIf="availableFrom.invalid && (availableFrom.dirty || availableFrom.touched)" class="alert alert-danger">
+                    <div *ngIf="availableFrom.errors.required">
+                        Available From Date is required.
+                    </div>
+                </div>
+                <label>Available Until</label>
+                <div class="input-group form-group-no-border mb-2">
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        id="availableUntil" 
+                        placeholder="availableUntil"
+                        required
+                        formControlName="availableUntil">
+                    
+                  </div>
+                  <div *ngIf="availableUntil.invalid && (availableUntil.dirty || availableUntil.touched)" class="alert alert-danger">
+                    <div *ngIf="availableUntil.errors.required">
+                        Available Until Date is required.
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="sel1">Choose Branch</label>
                     <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selectedBranchId">

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebProjekat.Data;
 
 namespace WebProjekat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200813191218_AddGradeAndDatesToCar")]
+    partial class AddGradeAndDatesToCar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,16 +69,10 @@ namespace WebProjekat.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DropoffLocation")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Grade")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PickupLocation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Seats")
@@ -102,7 +98,7 @@ namespace WebProjekat.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ComapnyId")
+                    b.Property<int?>("CompanyTest3Id")
                         .HasColumnType("int");
 
                     b.Property<double>("Lat")
@@ -116,7 +112,7 @@ namespace WebProjekat.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComapnyId");
+                    b.HasIndex("CompanyTest3Id");
 
                     b.ToTable("Locations");
                 });
@@ -234,9 +230,9 @@ namespace WebProjekat.Migrations
 
             modelBuilder.Entity("WebProjekat.Models.Location", b =>
                 {
-                    b.HasOne("WebProjekat.Models.AirplaneCompany", "Comapny")
+                    b.HasOne("WebProjekat.Models.AirplaneCompany", "CompanyTest3")
                         .WithMany("Destinations")
-                        .HasForeignKey("ComapnyId");
+                        .HasForeignKey("CompanyTest3Id");
                 });
 
             modelBuilder.Entity("WebProjekat.Models.RentacarBranch", b =>

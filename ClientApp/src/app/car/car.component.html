@@ -1,0 +1,16 @@
+<div *ngIf="car" class="row">
+    <div class="col">
+        <h2 class="mb-3">{{ car.brand + " " + car.model }}</h2>
+        <p><b>Type: </b> {{ car.type }}</p>
+        <p><b>Seats: </b> {{ car.seats }}</p>
+        <p><b>Year: </b> {{ car.year }}</p>
+        <p><b>Available From: </b> {{ car.availableFrom }}</p>
+        <p><b>Available Until: </b> {{ car.availableUntil }}</p>
+        <p><b>Pick-up Location: </b> {{ car.pickupLocation }}</p>
+        <p><b>Drop-off Location: </b> {{ car.dropoffLocation }}</p>
+        <p><b>Company: </b> {{ car.branch.company.name }}</p>
+        <p><b>Branch: </b> {{ car.branch.address }}</p>
+        <button class="mt-3 btn btn-primary">Book Now</button>
+        <button (click)="goBack()" class="btn btn-secondary ml-3 mt-3">Go Back</button>
+    </div>
+</div>
