@@ -13,10 +13,10 @@ export class AirlineService {
     private http: HttpClient
   ) { }
 
-  private url = 'https://localhost:44347/api/airline';
+ // private url = 'https://localhost:44347/api/airline';
 
   getCompanies(): Observable<AirplaneCompany[]> {
-    return this.http.get<AirplaneCompany[]>(`${environment.api_url}/airline/getcompanies`);
+    return this.http.get<AirplaneCompany[]>(`${environment.api_url}/airline/getCompanies`);
   }
 
   createCompany(companyInfo) {

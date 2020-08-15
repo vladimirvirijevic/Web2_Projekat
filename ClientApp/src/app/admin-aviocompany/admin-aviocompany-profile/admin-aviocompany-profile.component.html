@@ -1,0 +1,35 @@
+<div *ngIf="company" class="row mt-5">
+    <div class="col">
+        <h2>Company Profile <button data-toggle="modal" data-target="#editCompanyProfile" class="ml-4 btn btn-primary mb-3"><i class="fas fa-edit mr-2"></i>Edit Company Profile</button></h2>
+        <hr>
+
+    </div>
+</div>
+
+
+<div *ngIf="company">
+    <div class="row">
+        <div class="col-2">
+            <p><b>Name:</b></p>
+        </div>
+        <div class="col-10">
+            <p>{{ (company.name != null) ? company.name : "Name not set" }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <p><b>Address:</b></p>
+        </div>
+        <div class="col-10">
+            <p>{{ (company.address != null) ? company.address : "Address not set" }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <p><b>Description:</b></p>
+        </div>
+        <div class="col-10">
+            <p>{{ (company.description != null) ? company.description : "Description not set" }}</p>
+        </div>
+    </div>
+</div>

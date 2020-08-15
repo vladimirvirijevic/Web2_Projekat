@@ -1,0 +1,7 @@
+<nav *ngIf="avioCompanyExists" class="nav nav-pills nav-justified">
+    <a class="nav-link" routerLink="/avioAdmin/company/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-id-card mr-2"></i>Company Profile</a>
+</nav>
+<div *ngIf="!avioCompanyExists">
+    <h2>Company not yet set!</h2>
+</div>
+<router-outlet></router-outlet>

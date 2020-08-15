@@ -27,10 +27,9 @@
     </form>
     </div>
     <div>
-    <div *ngIf="airplaneCompanies.length===0 else elseBlock">
+  <!--  <div *ngIf="airplaneCompanies.length==0">
         <p>There are no available companies at the moment!</p>
-    </div>
-    <ng-template #elseBlock>
+    </div>-->
     <div class="card-body" *ngFor="let kompanija of airplaneCompanies; let i=index">
       <h5 class="card-title">{{i+1}}. {{kompanija.name}}</h5>
       <p class="card-text">
@@ -40,5 +39,4 @@
       </p>
       <a class="btn btn-primary">Check out</a>
     </div>
-    </ng-template>
   </div>

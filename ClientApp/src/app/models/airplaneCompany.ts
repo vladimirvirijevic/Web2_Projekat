@@ -1,4 +1,5 @@
 import { Flight } from './Flight';
+import { AuthUser } from './authUser';
 
 export class AirplaneCompany {
     id: number;
@@ -6,6 +7,7 @@ export class AirplaneCompany {
     address: string;
     description: string;
     grade: number;
-    destinations: Location[];
-    flights: Flight[];
+    destinations:Location[];
+    admin:AuthUser;
+   
 }

@@ -17,7 +17,7 @@ export class ListOfAvioCompaniesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+    this.getCompanies();
    
   }
 

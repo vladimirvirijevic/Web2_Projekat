@@ -34,8 +34,10 @@ import { MyRentacarCompanyComponent } from './my-rentacar-company/my-rentacar-co
 import { MyRentacarProfileComponent } from './my-rentacar-company/my-rentacar-profile/my-rentacar-profile.component';
 import { RentacarBranchComponent } from './my-rentacar-company/rentacar-branch/rentacar-branch.component';
 import { RentacarCarsComponent } from './my-rentacar-company/rentacar-cars/rentacar-cars.component';
-import { AviocompanyProfileComponent } from './aviocompany-profile/aviocompany-profile.component';
 import { CarComponent } from './car/car.component';
+import { AviocompanyProfileComponent } from './aviocompany-profile/aviocompany-profile.component';
+import { AdminAviocompanyComponent } from './admin-aviocompany/admin-aviocompany.component';
+import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-aviocompany-profile/admin-aviocompany-profile.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { CarComponent } from './car/car.component';
     MyRentacarCompanyComponent,
     MyRentacarProfileComponent,
     RentacarBranchComponent,
-    RentacarCarsComponent 
+    RentacarCarsComponent,
+    AdminAviocompanyComponent,
+    AdminAviocompanyProfileComponent 
   ],
   imports: [
     BrowserModule,

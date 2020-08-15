@@ -27,6 +27,8 @@ import { MyRentacarProfileComponent } from './my-rentacar-company/my-rentacar-pr
 import { RentacarBranchComponent } from './my-rentacar-company/rentacar-branch/rentacar-branch.component';
 import { RentacarCarsComponent } from './my-rentacar-company/rentacar-cars/rentacar-cars.component';
 import { CarComponent } from './car/car.component';
+import { AdminAviocompanyComponent } from './admin-aviocompany/admin-aviocompany.component';
+import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-aviocompany-profile/admin-aviocompany-profile.component';
 
 
 const routes: Routes = [
@@ -36,7 +38,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'change-password', component: ChangePasswordComponent },
-  {path:'rentalcompany', component: MyRentacarCompanyComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin]}, children: [
+  {path:'rentalcompany', component: MyRentacarCompanyComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.RentacarAdmin]}, children: [
     { path: 'profile', component: MyRentacarProfileComponent},
     { path: 'branches', component: RentacarBranchComponent},
     { path: 'cars', component: RentacarCarsComponent},
@@ -63,6 +65,15 @@ const routes: Routes = [
   { path: 'admin/rentacar', component: AdminRentacarComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
 
   { path: 'car/:id', component: CarComponent },
+  
+  //route za avioAdmina
+  {path: 'avioAdmin/company', component:AdminAviocompanyComponent,
+    children:
+    [
+      {path:'profile', component:AdminAviocompanyProfileComponent}
+
+    ],
+  canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }}
 ];
 
 @NgModule({
