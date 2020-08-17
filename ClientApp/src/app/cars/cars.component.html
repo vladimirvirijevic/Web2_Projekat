@@ -1,93 +1,73 @@
 <div class="container">
-    <div class="row mt-5">
+    <div class="row text-center mt-5 mb-3">
         <div class="col">
-            <form class="search-cars">
-                <div class="row">
-                    <div class="col mb-4">
-                        <h2>Search Cars</h2>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Pick-up location</label>
-                            <input type="text" class="form-control" placeholder="Enter Pick-up location">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Drop-off location</label>
-                            <input type="text" class="form-control" placeholder="Enter Drop-off location">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Pick-up date</label>
-                            <input type="date" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Pick-up time</label>
-                            <input type="time" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Drop-off date</label>
-                            <input type="date" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Drop-off time</label>
-                            <input type="time" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="form-group form-inline">                            
-                            <label class="mr-3">Passengers</label>
-                            <input type="number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group form-inline">                            
-                            <label class="mr-3">Car Type</label>
-                            <select class="custom-select">
-                                <option value="Adult">SUV</option>
-                                <option value="Child">Van</option>
-                                <option value="Child">Sedan</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary search-btn">Seach</button>
-                    </div>
-                </div>
-            </form>
+            <h3>Search Car Rental Services</h3>
+            <p>Please enter service name or location, as well as car pick-up and drop-off date</p>
         </div>
     </div>
+    <form class="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label>Service Name</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Enter service name"
+                        formControlName="name">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>Service Location</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Enter service location"
+                        formControlName="location">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label>Pick-up Date</label>
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        placeholder="Enter pick-up date"
+                        required
+                        formControlName="pickupDate">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label>Drop-off Date</label>
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        placeholder="Enter drop-off date"
+                        required
+                        formControlName="dropoffDate">
+                </div>
+            </div>
+        </div>
+        <button [disabled]="searchForm.invalid" type="submit" class="btn btn-primary">Search</button>
+    </form>
 
     <div class="row text-center mt-5">
         <div class="col">
-            <h3>Rentacar Companies</h3>
-            <hr>
+            <h3>Car Rental Services</h3>
         </div>
     </div>
 
     
 
-    <div class="row mt-3 align-items-center justify-content-between mb-5">
-        <div *ngFor="let company of companies" class="col">
-            <div class="card">
+    <div *ngFor="let company of companies" class="row mt-3 mb-5">
+            <div  class="card card-company">
                 <div class="card-header">
                     <h5 class="card-title">{{ company.name }}</h5>
                 </div>
@@ -96,13 +76,16 @@
                         <div class="col">
                             <p class="address"><b>Address: </b>{{ (company.address != null) ? company.address : "Address not yet set" }}</p>
                             <p class="card-text"><b>Description: </b>{{ (company.description != null) ? company.description : "Description not yet set" }}</p>
+                            <p><b>Branches</b></p>
+                            <ul class="list-group list-group-flush mb-3">
+                                <li *ngFor="let branch of company.branches; let i=index" class="list-group-item">{{ i + 1 }} {{ branch.address }}</li>
+                              </ul>
                             <p class="card-text"><b>Grade: </b>{{ company.grade }}</p>
                         </div>
                     </div>
                     
                     <button (click)="viewCompany(company.id)" class="btn btn-primary mt-4">Visit</button>
                 </div>
-              </div>
         </div>
         
     </div>

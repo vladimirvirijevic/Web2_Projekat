@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Ocsp;
 using WebProjekat.Data;
 using WebProjekat.Helpers;
 using WebProjekat.Models;
+using WebProjekat.Requests.Rentacar;
 using WebProjekat.Requests.RentacarAdmin;
 
 namespace WebProjekat.Controllers
@@ -110,6 +113,42 @@ namespace WebProjekat.Controllers
             }
 
             return Ok(car);
+        }
+
+        [HttpPost("search")]
+        public async Task<ActionResult<IEnumerable<RentacarCompany>>> SearchServices([FromBody] SearchRentacarServiceRequest request)
+        {
+            // Validacija datuma
+            DateTime pickupDate = DateTime.ParseExact(request.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime dropoffDate = DateTime.ParseExact(request.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            if (pickupDate > dropoffDate)
+            {
+                return Conflict();
+            }
+
+            List<RentacarCompany> foundCompanies = new List<RentacarCompany>();
+
+            if (request.Location == "" && request.Name == "")
+            {
+                return NotFound();
+            }
+            else if (request.Location == "")
+            {
+                foundCompanies = await _context.RentacarCompanies.Where(x => x.Name == request.Name).ToListAsync();
+            }
+            else if (request.Name == "")
+            {
+                foundCompanies = await _context.RentacarCompanies.Where(x => x.Address == request.Location).ToListAsync();
+            }
+            else
+            {
+                foundCompanies = await _context.RentacarCompanies.Where(x => x.Address == request.Location && x.Name == request.Name).ToListAsync();
+            }
+
+            // TODO: pretraga po slobodnim datumim automobila
+
+            return Ok(foundCompanies);
         }
     }
 }

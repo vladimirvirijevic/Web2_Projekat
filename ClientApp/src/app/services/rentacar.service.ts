@@ -33,8 +33,16 @@ export class RentacarService {
         catchError(this.handleError)
     );
   }
+  
 
   handleError(error: HttpErrorResponse) {
     return throwError(error);
+  }
+
+  searchCompanies(searchInfo) {
+    return this.http.post<any>(`${environment.api_url}/rentacar/search`, searchInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
   }
 }

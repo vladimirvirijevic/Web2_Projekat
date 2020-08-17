@@ -10,9 +10,8 @@ namespace WebProjekat.Models
         public int Seats { get; set; }
         public int Year { get; set; }
         public int Grade { get; set; }
+        public double PricePerDay { get; set; }
         public string Type{ get; set; }
-        public string AvailableFrom{ get; set; }
-        public string AvailableUntil{ get; set; }
         public string PickupLocation{ get; set; }
         public string DropoffLocation{ get; set; }
         public virtual RentacarBranch Branch { get; set; }
@@ -24,10 +23,9 @@ namespace WebProjekat.Models
             Brand = carInfo.Brand;
             Model = carInfo.Model;
             Seats = carInfo.Seats;
+            PricePerDay = carInfo.PricePerDay;
             Year = carInfo.Year;
             Type = carInfo.Type;
-            AvailableFrom = carInfo.AvailableFrom;
-            AvailableUntil = carInfo.AvailableUntil;
             PickupLocation = carInfo.PickupLocation;
             DropoffLocation = carInfo.DropoffLocation;
         }

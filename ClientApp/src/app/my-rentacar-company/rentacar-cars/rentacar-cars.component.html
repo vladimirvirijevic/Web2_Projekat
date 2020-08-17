@@ -31,6 +31,7 @@
                 <th scope="col">Year</th>
                 <th scope="col">Seats</th>
                 <th scope="col">Type</th>
+                <th scope="col">Price Per Day</th>
                 <th scope="col">Branch</th>
                 <th scope="col"></th>
             </tr>
@@ -43,6 +44,7 @@
                 <td>{{ car.year }}</td>
                 <td>{{ car.seats }}</td>
                 <td>{{ car.type }}</td>
+                <td>{{ car.pricePerDay }}</td>
                 <td>{{ car.branchAddress }}</td>
                 <td><button (click)="deleteCar(car.id)" class="btn btn-danger"><i class="fas fa-trash-alt mr-2"></i>Delete</button></td>
             </tr>
@@ -132,6 +134,22 @@
 
                 <div class="input-group form-group-no-border mb-2 mt-3">
                     <input 
+                        type="number" 
+                        class="form-control" 
+                        id="pricePerDay" 
+                        placeholder="Price Per Day"
+                        required
+                        formControlName="pricePerDay">
+                    
+                  </div>
+                  <div *ngIf="pricePerDay.invalid && (pricePerDay.dirty || pricePerDay.touched)" class="alert alert-danger">
+                    <div *ngIf="pricePerDay.errors.required">
+                        Price Per Day is required
+                    </div>
+                </div>
+
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
                         type="text" 
                         class="form-control" 
                         id="type" 
@@ -177,40 +195,6 @@
                         Drop-off Location is required.
                     </div>
                 </div>
-
-                <label>Available From</label>
-                <div class="input-group form-group-no-border mb-2">
-                    <input 
-                        type="date" 
-                        class="form-control" 
-                        id="availableFrom" 
-                        placeholder="availableFrom"
-                        required
-                        formControlName="availableFrom">
-                    
-                  </div>
-                  <div *ngIf="availableFrom.invalid && (availableFrom.dirty || availableFrom.touched)" class="alert alert-danger">
-                    <div *ngIf="availableFrom.errors.required">
-                        Available From Date is required.
-                    </div>
-                </div>
-                <label>Available Until</label>
-                <div class="input-group form-group-no-border mb-2">
-                    <input 
-                        type="date" 
-                        class="form-control" 
-                        id="availableUntil" 
-                        placeholder="availableUntil"
-                        required
-                        formControlName="availableUntil">
-                    
-                  </div>
-                  <div *ngIf="availableUntil.invalid && (availableUntil.dirty || availableUntil.touched)" class="alert alert-danger">
-                    <div *ngIf="availableUntil.errors.required">
-                        Available Until Date is required.
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <label for="sel1">Choose Branch</label>
                     <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selectedBranchId">

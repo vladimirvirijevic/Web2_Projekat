@@ -8,6 +8,7 @@ export class Car {
     availableUntil: string;
     seats: number;
     year: number;
+    pricePerDay: number;
     type: string;
     pickupLocation: string;
     dropoffLocation: string;

@@ -125,19 +125,6 @@ namespace WebProjekat.Controllers
         [Route("car")]
         public async Task<IActionResult> CreateCar([FromBody] CreateCarRequest request)
         {
-            if (request.PickupLocation == "" || request.DropoffLocation == "" || request.AvailableFrom == "" || request.AvailableUntil == "" || request.Type == "" || request.Brand == "" || request.Model == "" || request.Seats == 0 || request.Year == 0)
-            {
-                return BadRequest();
-            }
-
-            DateTime fromDate = DateTime.ParseExact(request.AvailableFrom, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            DateTime untilDate = DateTime.ParseExact(request.AvailableUntil, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-            if (fromDate > untilDate)
-            {
-                return Conflict();
-            }
-
             bool branchExists = await _context.RentacarBranches.FirstOrDefaultAsync(x => x.Id == request.BranchId) != null;
 
             if (!branchExists)

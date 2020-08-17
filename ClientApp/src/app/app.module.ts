@@ -66,7 +66,8 @@ import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-avio
     RentacarBranchComponent,
     RentacarCarsComponent,
     AdminAviocompanyComponent,
-    AdminAviocompanyProfileComponent 
+    AdminAviocompanyProfileComponent ,
+    CarComponent
   ],
   imports: [
     BrowserModule,

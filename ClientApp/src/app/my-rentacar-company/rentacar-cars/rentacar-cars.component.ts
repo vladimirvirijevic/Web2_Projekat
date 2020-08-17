@@ -44,9 +44,10 @@ export class RentacarCarsComponent implements OnInit {
       'year': ['', [Validators.required]],
       'seats': ['', [Validators.required]],
       'type': ['', [Validators.required]],
-      'availableFrom': ['', [Validators.required]],
-      'availableUntil': ['', [Validators.required]],
+      //'availableFrom': ['', [Validators.required]],
+      //'availableUntil': ['', [Validators.required]],
       'pickupLocation': ['', [Validators.required]],
+      'pricePerDay': ['', [Validators.required]],
       'dropoffLocation': ['', [Validators.required]],
     });
    }
@@ -56,10 +57,11 @@ export class RentacarCarsComponent implements OnInit {
    get year() { return this.addCarForm.get('year'); }
    get seats() { return this.addCarForm.get('seats'); }
    get type() { return this.addCarForm.get('type'); }
-   get availableFrom() { return this.addCarForm.get('availableFrom'); }
-   get availableUntil() { return this.addCarForm.get('availableUntil'); }
+   //get availableFrom() { return this.addCarForm.get('availableFrom'); }
+   //get availableUntil() { return this.addCarForm.get('availableUntil'); }
    get pickupLocation() { return this.addCarForm.get('pickupLocation'); }
    get dropoffLocation() { return this.addCarForm.get('dropoffLocation'); }
+   get pricePerDay() { return this.addCarForm.get('pricePerDay'); }
 
   ngOnInit(): void {
     this.getCompany();
@@ -97,8 +99,7 @@ export class RentacarCarsComponent implements OnInit {
       year: this.year.value,
       seats: this.seats.value,
       type: this.type.value,
-      availableFrom: this.availableFrom.value,
-      availableUntil: this.availableUntil.value,
+      pricePerDay: this.pricePerDay.value,
       pickupLocation: this.pickupLocation.value,
       dropoffLocation: this.dropoffLocation.value,
     };
@@ -111,6 +112,7 @@ export class RentacarCarsComponent implements OnInit {
           this.getCompany();
         },
         error => {
+          console.log(error);
           if (error.status == 409) {
             this.errorMessageText = "Available From Date is greated then Available Until Date!";
             this.showSuccessMessage = false;

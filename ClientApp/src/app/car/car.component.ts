@@ -23,15 +23,18 @@ export class CarComponent implements OnInit {
     this.carId = Number(this.route.snapshot.paramMap.get('id'));
     //this.company = this.rentacarService.getCompany(this.companyId);
 
-    this.getCompany(this.carId);
+    this.getCar(this.carId);
   }
 
-  getCompany(carId) {
+  getCar(carId) {
     this.rentacarService.getCar(carId)
       .subscribe(
         data => {
           console.log(data);
           this.car = data;
+        },
+        error => {
+          console.log(error);
         }
       )
   }
