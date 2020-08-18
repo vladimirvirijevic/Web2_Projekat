@@ -121,37 +121,114 @@ namespace WebProjekat.Controllers
         [HttpPost("search")]
         public async Task<ActionResult<IEnumerable<RentacarCompany>>> SearchServices([FromBody] SearchRentacarServiceRequest request)
         {
-            // Validacija datuma
-            DateTime pickupDate = DateTime.ParseExact(request.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            DateTime dropoffDate = DateTime.ParseExact(request.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-            if (pickupDate > dropoffDate)
-            {
-                return Conflict();
-            }
-
             List<RentacarCompany> foundCompanies = new List<RentacarCompany>();
+            List<RentacarCompany> companies = new List<RentacarCompany>();
 
             if (request.Location == "" && request.Name == "")
             {
-                return NotFound();
+                companies = await _context.RentacarCompanies.ToListAsync();
             }
             else if (request.Location == "")
             {
-                foundCompanies = await _context.RentacarCompanies.Where(x => x.Name == request.Name).ToListAsync();
+                //companies = await _context.RentacarCompanies.Where(x => x.Name == request.Name).ToListAsync();
+                companies = await _context.RentacarCompanies.Where(x => x.Name.Contains(request.Name)).ToListAsync();
             }
             else if (request.Name == "")
             {
-                foundCompanies = await _context.RentacarCompanies.Where(x => x.Address == request.Location).ToListAsync();
+                //companies = await _context.RentacarCompanies.Where(x => x.Address == request.Location).ToListAsync();
+                companies = await _context.RentacarCompanies.Where(x => x.Address.Contains(request.Location)).ToListAsync();
             }
             else
             {
-                foundCompanies = await _context.RentacarCompanies.Where(x => x.Address == request.Location && x.Name == request.Name).ToListAsync();
+                companies = await _context.RentacarCompanies.Where(x => x.Address.Contains(request.Location) && x.Name.Contains(request.Name)).ToListAsync();
+            }
+
+            if (request.PickupDate != "" && request.DropoffDate == "") 
+            {
+                return BadRequest();
+            }
+            else if (request.PickupDate == "" && request.DropoffDate != "")
+            {
+                return BadRequest();
+            }
+
+            if (request.PickupDate != "" && request.DropoffDate != "")
+            {
+                // Validacija datuma
+                DateTime pickupDate = DateTime.ParseExact(request.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                DateTime dropoffDate = DateTime.ParseExact(request.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                if (pickupDate > dropoffDate)
+                {
+                    return Conflict();
+                }
+
+                foreach (var company in companies)
+                {
+                    foreach (var branch in company.Branches)
+                    {
+                        foreach (var car in branch.Cars)
+                        {
+                            foreach (var carReservation in car.CarReservations)
+                            {
+                                DateTime reservationPickupDate = DateTime.ParseExact(carReservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                                DateTime reservationDropoffDate = DateTime.ParseExact(carReservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                                var dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                                if (dates.Contains(pickupDate) || dates.Contains(dropoffDate))
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    if (!foundCompanies.Contains(company))
+                                    {
+                                        foundCompanies.Add(company);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return Ok(foundCompanies);
+            }
+            else
+            {
+                return Ok(companies);
             }
 
             // TODO: pretraga po slobodnim datumim automobila
+            /*
+             foreach (var company in companies)
+                {
+                    foreach (var branch in company.Branches)
+                    {
+                        foreach (var car in branch.Cars)
+                        {
+                            foreach (var carReservation in car.CarReservations)
+                            {
+                                DateTime reservationPickupDate = DateTime.ParseExact(carReservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                                DateTime reservationDropoffDate = DateTime.ParseExact(carReservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
-            return Ok(foundCompanies);
+                                var dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                                if (dates.Contains(pickupDate) || dates.Contains(dropoffDate))
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    foundCompanies.Add(company);
+                                }
+                            }
+                        }
+                    }
+                }
+             */
+
+            
         }
 
         [HttpPost("book")]
