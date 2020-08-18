@@ -12,6 +12,7 @@ using WebProjekat.Helpers;
 using WebProjekat.Models;
 using WebProjekat.Requests.Rentacar;
 using WebProjekat.Requests.RentacarAdmin;
+using WebProjekat.Services.Date;
 
 namespace WebProjekat.Controllers
 {
@@ -21,11 +22,13 @@ namespace WebProjekat.Controllers
     {
         private readonly ApplicationDbContext _context;
         private IHttpContextAccessor _httpContextAccessor;
+        private IDateService _dateService;
 
-        public RentacarController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public RentacarController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor, IDateService dateService)
         {
             _httpContextAccessor = httpContextAccessor;
             _context = context;
+            _dateService = dateService;
             //SeedCompanies();
         }
 
@@ -149,6 +152,71 @@ namespace WebProjekat.Controllers
             // TODO: pretraga po slobodnim datumim automobila
 
             return Ok(foundCompanies);
+        }
+
+        [HttpPost("book")]
+        [Authorize]
+        public async Task<ActionResult> BookCar([FromBody] BookCarRequest request)
+        {
+            DateTime pickupDate = DateTime.ParseExact(request.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime dropoffDate = DateTime.ParseExact(request.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            if (!_dateService.ValidateDateRange(pickupDate, dropoffDate))
+            {
+                return Conflict();
+            }
+
+            var user = await _context.Users.FindAsync(request.UserId);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (request.UserId != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            var car = await _context.Cars.FindAsync(request.CarId);
+
+            if (car == null)
+            {
+                return BadRequest();
+            }
+
+            // TODO Proveri da li auto vec rezervisan za taj datum
+            if (car.CarReservations.Count > 0)
+            {
+                foreach (var reservation in car.CarReservations)
+                {
+                    DateTime reservationPickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    DateTime reservationDropoffDate = DateTime.ParseExact(reservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                    var dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                    if (dates.Contains(pickupDate) || dates.Contains(dropoffDate))
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+
+
+
+            var carReservation = new CarReservation(request);
+
+            carReservation.Days = _dateService.DaysBetweenDates(pickupDate, dropoffDate);
+            carReservation.TotalPrice = car.PricePerDay * carReservation.Days;
+            carReservation.Status = "CONFIRMED";
+
+            car.CarReservations.Add(carReservation);
+            user.CarReservations.Add(carReservation);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

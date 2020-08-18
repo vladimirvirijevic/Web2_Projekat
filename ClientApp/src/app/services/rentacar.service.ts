@@ -45,4 +45,11 @@ export class RentacarService {
         catchError(this.handleError)
     );
   }
+
+  bookCar(bookingInfo) {
+    return this.http.post<any>(`${environment.api_url}/rentacar/book`, bookingInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
 }

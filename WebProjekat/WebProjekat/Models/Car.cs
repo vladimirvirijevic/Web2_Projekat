@@ -1,4 +1,5 @@
-﻿using WebProjekat.Requests.RentacarAdmin;
+﻿using System.Collections.Generic;
+using WebProjekat.Requests.RentacarAdmin;
 
 namespace WebProjekat.Models
 {
@@ -15,6 +16,7 @@ namespace WebProjekat.Models
         public string PickupLocation{ get; set; }
         public string DropoffLocation{ get; set; }
         public virtual RentacarBranch Branch { get; set; }
+        public virtual List<CarReservation> CarReservations { get; set; } = new List<CarReservation>();
 
         public Car() { }
 

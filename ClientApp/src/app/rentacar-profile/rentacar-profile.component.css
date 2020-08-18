@@ -11,3 +11,7 @@ b {
 .search-btn {
     padding: 10px 34px;
 }
+
+.card-company {
+    width: 100% !important;
+}

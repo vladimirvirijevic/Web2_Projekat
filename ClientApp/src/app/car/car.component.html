@@ -1,4 +1,4 @@
-<div  class="row">
+<div class="row">
     <div *ngIf="car" class="col">
         <h2 class="mb-3">{{ car.brand + " " + car.model }}</h2>
         <p><b>Type: </b> {{ car.type }}</p>
@@ -8,7 +8,37 @@
         <p><b>Drop-off Location: </b> {{ car.dropoffLocation }}</p>
         <p><b>Company: </b> {{ car.branch.company.name }}</p>
         <p><b>Branch: </b> {{ car.branch.address }}</p>
-        <button class="mt-3 btn btn-primary">Book Now</button>
-        <button (click)="goBack()" class="btn btn-secondary ml-3 mt-3">Go Back</button>
+        <button (click)="goBack()" class="btn btn-secondary mt-3">Go Back</button>
+    </div>
+    <div *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'User'" class="col">
+        <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+            <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+                {{ errorMessage }}
+            </div>
+            <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                Car booked successfully!
+            </div>
+            <div class="form-group">
+                <label for="pickupDate">Pickup Date</label>
+                <input 
+                    type="date" 
+                    class="form-control" 
+                    id="pickupDate" 
+                    placeholder="Enter Pickup Date"
+                    required
+                    formControlName="pickupDate">
+            </div>
+            <div class="form-group">
+                <label for="dropoffDate">Dropoff Date</label>
+                <input 
+                    type="date" 
+                    class="form-control" 
+                    id="dropoffDate" 
+                    placeholder="Enter Dropoff Date"
+                    required
+                    formControlName="dropoffDate">
+            </div>
+            <button [disabled]="bookingForm.invalid" class="btn btn-primary" type="submit">Book Now</button>
+        </form>
     </div>
 </div>

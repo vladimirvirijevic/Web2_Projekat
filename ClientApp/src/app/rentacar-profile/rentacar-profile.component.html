@@ -62,39 +62,26 @@
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            <label>Pick-up time</label>
-                            <input type="time" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="form-group">
                             <label>Drop-off date</label>
                             <input type="date" class="form-control">
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Drop-off time</label>
-                            <input type="time" class="form-control">
-                        </div>
-                    </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col">
-                        <div class="form-group form-inline">                            
-                            <label class="mr-3">Passengers</label>
+                        <div class="form-group">
+                            <label>Passenger</label>
                             <input type="number" class="form-control">
                         </div>
                     </div>
                     <div class="col">
-                        <div class="form-group form-inline">                            
+                        <div class="form-group">                            
                             <label class="mr-3">Car Type</label>
                             <select class="custom-select">
-                                <option value="Adult">SUV</option>
-                                <option value="Child">Van</option>
-                                <option value="Child">Sedan</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Van">Van</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                     </div>
@@ -108,11 +95,15 @@
         </div>
     </div>
 
-    <div *ngIf="company.branches" class="mb-5">
+    <div class="row mt-5 mb-3">
+        <div class="col">
+            <h4>Cars</h4>
+        </div>
+    </div>
+    <!-- <div *ngIf="company.branches" class="mb-5">
         <div *ngFor="let branch of company.branches; let i = index;" class="row mt-5">
             <div class="col">
-                <p style="font-size: 30px;" class="mb-3 mt-5">Branch {{i+1}}: {{ branch.address }}</p>
-                <div *ngFor="let car of branch.cars" class="car row mt-3 mb-3">
+                <div *ngFor="let car of branch.cars" class="car row mb-3">
                     <div class="col">
                         <p><i class="fas fa-car mr-2"></i> {{ car.brand }} {{ car.model }}</p>
                     </div>
@@ -127,13 +118,41 @@
                     </div>
                     <div class="col">
                         <button (click)="viewCar(car.id)" class="btn btn-primary">See More</button>
-                        
                     </div>
                 </div>
             </div>
             
         </div>
+    </div> -->
+    <div *ngFor="let branch of company.branches; let i = index;" class="row ">
+        <div *ngFor="let car of branch.cars"  class="card card-company mt-3 mb-5">
+            <div class="card-header">
+                <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <p class="address"><b>Type: </b>{{ car.type }}</p>
+                        <p class="card-text"><b>Year: </b>{{ car.year }}</p>
+                        <p class="card-text"><b>Seats: </b>{{ car.seats }}</p>
+                        <p class="card-text"><b>Grade: </b>{{ car.grade }}</p>
+                    </div>
+                    <div class="col-8">
+                        <p class="address"><b>Price Per Day: </b>{{ car.pricePerDay }}</p>
+                        <p><b>Pickup: </b>{{ car.pickupLocation }}</p>
+                        <p><b>Dropoff: </b>{{ car.dropoffLocation }}</p>
+                        <p><b>Branch: </b>{{ branch.address }}</p>
+                    </div>
+                </div>
+                
+                <div class="row pl-3">
+                    <button (click)="viewCar(car.id)" class="btn btn-primary">Book</button>
+                </div>
+            </div>
+            
     </div>
+    
+</div>
 </div>
 
 

@@ -20,6 +20,7 @@ using WebProjekat.Services.Users;
 using WebProjekat.Services.Email;
 using WebProjekat.Helpers;
 using WebProjekat.Services.Auth;
+using WebProjekat.Services.Date;
 
 namespace WebProjekat
 {
@@ -99,6 +100,7 @@ namespace WebProjekat
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IDateService, DateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

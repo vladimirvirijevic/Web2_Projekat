@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebProjekat.Data;
 
 namespace WebProjekat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200818074402_AddCarReservations")]
+    partial class AddCarReservations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,20 +104,11 @@ namespace WebProjekat.Migrations
                     b.Property<int?>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Days")
-                        .HasColumnType("int");
-
                     b.Property<string>("DropoffDate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PickupDate")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("float");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -269,7 +262,7 @@ namespace WebProjekat.Migrations
             modelBuilder.Entity("WebProjekat.Models.CarReservation", b =>
                 {
                     b.HasOne("WebProjekat.Models.Car", "Car")
-                        .WithMany("CarReservations")
+                        .WithMany()
                         .HasForeignKey("CarId");
 
                     b.HasOne("WebProjekat.Models.User", "User")
