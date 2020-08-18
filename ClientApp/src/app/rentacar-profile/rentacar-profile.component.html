@@ -33,7 +33,7 @@
 
     <div class="row mt-5">
         <div class="col">
-            <form class="search-cars">
+            <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="search-cars">
                 <div class="row">
                     <div class="col mb-4">
                         <h2>Search Cars</h2>
@@ -43,13 +43,25 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Pick-up location</label>
-                            <input type="text" class="form-control" placeholder="Enter Pick-up location">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Enter Pick-up location"
+                                required
+                                formControlName="pickupLocation"
+                                >
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label>Drop-off location</label>
-                            <input type="text" class="form-control" placeholder="Enter Drop-off location">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Enter Drop-off location"
+                                required
+                                formControlName="dropoffLocation"
+                                >
                         </div>
                     </div>
                 </div>
@@ -57,38 +69,54 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Pick-up date</label>
-                            <input type="date" class="form-control">
+                            <input 
+                                type="date" 
+                                class="form-control"
+                                required
+                                formControlName="pickupDate"
+                                >
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label>Drop-off date</label>
-                            <input type="date" class="form-control">
+                            <input 
+                                type="date" 
+                                class="form-control"
+                                required
+                                formControlName="dropoffDate"
+                                >
                         </div>
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col">
                         <div class="form-group">
-                            <label>Passenger</label>
-                            <input type="number" class="form-control">
+                            <label>Seats</label>
+                            <input 
+                                type="number" 
+                                class="form-control"
+                                required
+                                formControlName="seats"
+                                >
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">                            
                             <label class="mr-3">Car Type</label>
-                            <select class="custom-select">
-                                <option value="SUV">SUV</option>
-                                <option value="Van">Van</option>
+                            <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selectedType">
                                 <option value="Sedan">Sedan</option>
-                                <option value="Other">Other</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="Any">Any</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button type="submit" class="btn btn-primary search-btn">Seach</button>
+                        <button [disabled]="searchForm.invalid" type="submit" class="btn btn-primary">Seach</button>
+                        <button (click)="resetSearch()" type="button" class="ml-3 btn btn-secondary">Reset Search</button>
                     </div>
                 </div>
             </form>
@@ -100,57 +128,33 @@
             <h4>Cars</h4>
         </div>
     </div>
-    <!-- <div *ngIf="company.branches" class="mb-5">
-        <div *ngFor="let branch of company.branches; let i = index;" class="row mt-5">
-            <div class="col">
-                <div *ngFor="let car of branch.cars" class="car row mb-3">
-                    <div class="col">
-                        <p><i class="fas fa-car mr-2"></i> {{ car.brand }} {{ car.model }}</p>
-                    </div>
-                    <div class="col">
-                        <p><i class="fas fa-caravan mr-2"></i> {{ car.type }}</p>
-                    </div>
-                    <div class="col">
-                        <p><i class="fas fa-history mr-2"></i>{{ car.year }}</p>
-                    </div>
-                    <div class="col">
-                        <p><i class="fas fa-users mr-2"></i>{{ car.seats }}</p>
-                    </div>
-                    <div class="col">
-                        <button (click)="viewCar(car.id)" class="btn btn-primary">See More</button>
-                    </div>
-                </div>
-            </div>
-            
+
+    
+    <div *ngFor="let car of cars"  class="card card-company mt-3 mb-5">
+        <div class="card-header">
+            <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
         </div>
-    </div> -->
-    <div *ngFor="let branch of company.branches; let i = index;" class="row ">
-        <div *ngFor="let car of branch.cars"  class="card card-company mt-3 mb-5">
-            <div class="card-header">
-                <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <p class="address"><b>Type: </b>{{ car.type }}</p>
-                        <p class="card-text"><b>Year: </b>{{ car.year }}</p>
-                        <p class="card-text"><b>Seats: </b>{{ car.seats }}</p>
-                        <p class="card-text"><b>Grade: </b>{{ car.grade }}</p>
-                    </div>
-                    <div class="col-8">
-                        <p class="address"><b>Price Per Day: </b>{{ car.pricePerDay }}</p>
-                        <p><b>Pickup: </b>{{ car.pickupLocation }}</p>
-                        <p><b>Dropoff: </b>{{ car.dropoffLocation }}</p>
-                        <p><b>Branch: </b>{{ branch.address }}</p>
-                    </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <p class="address"><b>Type: </b>{{ car.type }}</p>
+                    <p class="card-text"><b>Year: </b>{{ car.year }}</p>
+                    <p class="card-text"><b>Seats: </b>{{ car.seats }}</p>
+                    <p class="card-text"><b>Grade: </b>{{ car.grade }}</p>
                 </div>
-                
-                <div class="row pl-3">
-                    <button (click)="viewCar(car.id)" class="btn btn-primary">Book</button>
+                <div class="col-8">
+                    <p class="address"><b>Price Per Day: </b>{{ car.pricePerDay }}</p>
+                    <p><b>Pickup: </b>{{ car.pickupLocation }}</p>
+                    <p><b>Dropoff: </b>{{ car.dropoffLocation }}</p>
+                    <p><b>Branch: </b>{{ car.branch.address }}</p>
                 </div>
             </div>
             
+        <div class="row pl-3">
+            <button (click)="viewCar(car.id)" class="btn btn-primary">Book</button>
+        </div>
     </div>
+            
     
 </div>
 </div>

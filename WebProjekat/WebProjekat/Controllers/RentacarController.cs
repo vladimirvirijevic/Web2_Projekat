@@ -143,7 +143,7 @@ namespace WebProjekat.Controllers
                 companies = await _context.RentacarCompanies.Where(x => x.Address.Contains(request.Location) && x.Name.Contains(request.Name)).ToListAsync();
             }
 
-            if (request.PickupDate != "" && request.DropoffDate == "") 
+            if (request.PickupDate != "" && request.DropoffDate == "")
             {
                 return BadRequest();
             }
@@ -169,23 +169,33 @@ namespace WebProjekat.Controllers
                     {
                         foreach (var car in branch.Cars)
                         {
-                            foreach (var carReservation in car.CarReservations)
+                            if (car.CarReservations.Count > 0)
                             {
-                                DateTime reservationPickupDate = DateTime.ParseExact(carReservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                                DateTime reservationDropoffDate = DateTime.ParseExact(carReservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-                                var dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
-
-                                if (dates.Contains(pickupDate) || dates.Contains(dropoffDate))
+                                foreach (var carReservation in car.CarReservations)
                                 {
-                                    continue;
-                                }
-                                else
-                                {
-                                    if (!foundCompanies.Contains(company))
+                                    DateTime reservationPickupDate = DateTime.ParseExact(carReservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                                    DateTime reservationDropoffDate = DateTime.ParseExact(carReservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                                    var dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                                    if (dates.Contains(pickupDate) || dates.Contains(dropoffDate))
                                     {
-                                        foundCompanies.Add(company);
+                                        continue;
                                     }
+                                    else
+                                    {
+                                        if (!foundCompanies.Contains(company))
+                                        {
+                                            foundCompanies.Add(company);
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (!foundCompanies.Contains(company))
+                                {
+                                    foundCompanies.Add(company);
                                 }
                             }
                         }
@@ -198,37 +208,6 @@ namespace WebProjekat.Controllers
             {
                 return Ok(companies);
             }
-
-            // TODO: pretraga po slobodnim datumim automobila
-            /*
-             foreach (var company in companies)
-                {
-                    foreach (var branch in company.Branches)
-                    {
-                        foreach (var car in branch.Cars)
-                        {
-                            foreach (var carReservation in car.CarReservations)
-                            {
-                                DateTime reservationPickupDate = DateTime.ParseExact(carReservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                                DateTime reservationDropoffDate = DateTime.ParseExact(carReservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-                                var dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
-
-                                if (dates.Contains(pickupDate) || dates.Contains(dropoffDate))
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    foundCompanies.Add(company);
-                                }
-                            }
-                        }
-                    }
-                }
-             */
-
-            
         }
 
         [HttpPost("book")]
@@ -294,6 +273,99 @@ namespace WebProjekat.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpPost("searchcars")]
+        public async Task<ActionResult<Car>> SearchCars([FromBody] SearchCarsRequest request)
+        {
+            var company = await _context.RentacarCompanies.FindAsync(request.CompanyId);
+
+            if (company == null)
+            {
+                return BadRequest();
+            }
+
+            DateTime pickupDate = DateTime.ParseExact(request.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime dropoffDate = DateTime.ParseExact(request.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            if (!_dateService.ValidateDateRange(pickupDate, dropoffDate))
+            {
+                return Conflict();
+            }
+
+            List<Car> foundCars = new List<Car>();
+
+            foreach (var branch in company.Branches)
+            {
+                foreach (var car in branch.Cars)
+                {
+                    if (car.DropoffLocation.Contains(request.DropoffLocation) && car.PickupLocation.Contains(request.PickupLocation) && car.Seats >= request.Seats)
+                    {
+                        if (request.Type != "Any")
+                        {
+                            if (!car.Type.Contains(request.Type))
+                            {
+                                continue;
+                            }
+                        }
+
+                        if (car.CarReservations.Count > 0)
+                        {
+                            // Proveri datume
+                            foreach (var reservation in car.CarReservations)
+                            {
+                                DateTime reservationPickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                                DateTime reservationDropoffDate = DateTime.ParseExact(reservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                                var dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                                if (dates.Contains(pickupDate) || dates.Contains(dropoffDate))
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    if (!foundCars.Contains(car))
+                                    {
+                                        foundCars.Add(car);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!foundCars.Contains(car))
+                            {
+                                foundCars.Add(car);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return Ok(foundCars);
+        }
+
+        [HttpGet("{companyId}/cars")]
+        public async Task<ActionResult<List<Car>>> GetCars(int companyId)
+        {
+            var cars = new List<Car>();
+
+            var company = await _context.RentacarCompanies.FindAsync(companyId);
+
+            if (company == null)
+            {
+                return BadRequest();
+            }
+
+            company.Branches.ForEach(branch =>
+            {
+                branch.Cars.ForEach(car => {
+                    cars.Add(car);
+                });
+            });
+
+            return Ok(cars);
         }
     }
 }
