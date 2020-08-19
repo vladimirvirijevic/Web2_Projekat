@@ -64,6 +64,90 @@ namespace WebProjekat.Controllers
             return Ok();
         }
 
+        //dobavlja sve lokacije sa nekim id-ijem kompanije
+        [HttpGet("getLocations/{companyId}")]
+        [Authorize]
+        public async Task<IEnumerable<Location>> GetLocations(int companyId)
+        {
+           
+
+            return  await _context.Locations.Where(x => x.Comapny.Id == companyId).ToListAsync();
+
+            
+        }
+        [HttpPost("addLocation/{companyId}")]
+        [Authorize]
+        public async Task<IActionResult> AddLocation(int companyId, [FromBody] AddLocationRequest request)
+        {
+            if (request.Address == "")
+            {
+                return BadRequest();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            //TODO: jedna kompanija ne sme da ima vise istih lokacija
+            bool locationExists = await _context.Locations.FirstOrDefaultAsync(x => x.Name == request.Address)!=null;
+
+            if (locationExists)
+            {
+                return Conflict();
+            }
+            
+            var company = await _context.AirplaneCompanies.FirstOrDefaultAsync(x => x.Id == companyId);
+            
+            if (company.Admin.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            var location = new Location();
+            location.Name = request.Address;
+            location.Comapny = new AirplaneCompany();
+            location.Comapny = company;
+
+            _context.Locations.Add(location);
+            company.Destinations.Add(location);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+        }
+        [HttpDelete("deleteLocation/{locationId}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteLocation(int locationId)
+        {
+            if (locationId == 0)
+            {
+                return BadRequest();
+            }
+
+            var location = await _context.Locations.FindAsync(locationId);
+            if (location == null)
+            {
+                return NotFound();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (location.Comapny.Admin.Id!= currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            _context.Locations.Remove(location);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+
+        }
 
     }
 }

@@ -29,6 +29,8 @@ import { RentacarCarsComponent } from './my-rentacar-company/rentacar-cars/renta
 import { CarComponent } from './car/car.component';
 import { AdminAviocompanyComponent } from './admin-aviocompany/admin-aviocompany.component';
 import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-aviocompany-profile/admin-aviocompany-profile.component';
+import { AdminAviocompanyDestinationsComponent } from './admin-aviocompany/admin-aviocompany-destinations/admin-aviocompany-destinations.component';
+
 
 
 const routes: Routes = [
@@ -70,8 +72,8 @@ const routes: Routes = [
   {path: 'avioAdmin/company', component:AdminAviocompanyComponent,
     children:
     [
-      {path:'profile', component:AdminAviocompanyProfileComponent}
-
+      {path:'profile', component:AdminAviocompanyProfileComponent},
+      {path:'destinations', component:AdminAviocompanyDestinationsComponent}
     ],
   canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }}
 ];

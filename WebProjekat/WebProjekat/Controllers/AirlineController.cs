@@ -98,7 +98,7 @@ namespace WebProjekat.Controllers
             return await _context.AirplaneCompanies.ToListAsync();
         }
 
-        private void SeedCompanies()
+      /*  private void SeedCompanies()
         {
             if (_context.AirplaneCompanies.Count() == 0)
             {
@@ -150,6 +150,6 @@ namespace WebProjekat.Controllers
 
                 _context.SaveChanges();
             }
-        }
+        }*/
     }
 }

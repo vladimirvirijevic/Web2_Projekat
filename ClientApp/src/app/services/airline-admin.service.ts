@@ -16,6 +16,17 @@ export class AirlineAdminService {
   {
     return this.http.put<any>(`${environment.api_url}/airlineadmin/editCompany/${companyId}`, companyInfo);
   }
-
-
+  //vraca destinacije na kojima posluje avioKompanija
+  getLocations(companyId):Observable<Location[]>
+  {
+    return this.http.get<Location[]>(`${environment.api_url}/airlineadmin/getLocations/${companyId}`);
+  }
+  addLocation(companyId, locationInfo)
+  {
+    return this.http.post<any>(`${environment.api_url}/airlineadmin/addLocation/${companyId}`,locationInfo);
+  }
+  deleteLocation(locationId)
+  {
+    return this.http.delete<any>(`${environment.api_url}/airlineadmin/deleteLocation/${locationId}`);
+  }
 }

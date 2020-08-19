@@ -38,6 +38,7 @@ import { CarComponent } from './car/car.component';
 import { AviocompanyProfileComponent } from './aviocompany-profile/aviocompany-profile.component';
 import { AdminAviocompanyComponent } from './admin-aviocompany/admin-aviocompany.component';
 import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-aviocompany-profile/admin-aviocompany-profile.component';
+import { AdminAviocompanyDestinationsComponent } from './admin-aviocompany/admin-aviocompany-destinations/admin-aviocompany-destinations.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-avio
     RentacarCarsComponent,
     AdminAviocompanyComponent,
     AdminAviocompanyProfileComponent ,
-    CarComponent
+    CarComponent,
+    AdminAviocompanyDestinationsComponent
   ],
   imports: [
     BrowserModule,

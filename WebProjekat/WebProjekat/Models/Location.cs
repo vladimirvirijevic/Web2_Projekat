@@ -1,4 +1,6 @@
-﻿namespace WebProjekat.Models
+﻿using WebProjekat.Requests.AirlineAdmin;
+
+namespace WebProjekat.Models
 {
     public class Location
     {
@@ -8,5 +10,8 @@
         public double Long { get; set; }
 
         public virtual AirplaneCompany Comapny { get; set; }
+
+       
+
     }
 }

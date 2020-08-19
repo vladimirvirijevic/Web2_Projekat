@@ -12,7 +12,7 @@
                 <a class="nav-link mr-3" routerLink="/rentacar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-car mr-2"></i>Car Rental</a>
             </li>
             <li *ngIf="authService.currentUserValue && authService.currentUserValue.role != 'Admin'" class="nav-item">
-                <a class="nav-link mr-3" routerLink="/app" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-user mr-2"></i>Profile</a>
+                <a class="nav-link mr-3" routerLink="/app/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-user mr-2"></i>Profile</a>
             </li>
             <li *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'Admin'" class="nav-item">
                 <a class="nav-link mr-3" routerLink="/admin/staff" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-users mr-2"></i>Staff</a>
