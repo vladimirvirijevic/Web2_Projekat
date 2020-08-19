@@ -167,6 +167,12 @@ namespace WebProjekat.Controllers
                 return Unauthorized();
             }
 
+            // Proveri da li auto ima rezervacija
+            if (car.CarReservations.Count > 0)
+            {
+                return Conflict();
+            }
+
             _context.Cars.Remove(car);
             await _context.SaveChangesAsync();
 
@@ -209,5 +215,51 @@ namespace WebProjekat.Controllers
             return Ok(branch);
         }
 
+
+        [HttpPut]
+        [Authorize]
+        [Route("car/{carId}")]
+        public IActionResult EditCar(int carId, [FromBody] EditCarRequest request)
+        {
+            if (carId == 0)
+            {
+                return BadRequest();
+            }
+
+            var car = _context.Cars.Find(carId);
+
+            if (car == null)
+            {
+                return NotFound();
+            }
+
+            // Proveri da li auto pripada kompaniji ulogovanog admina
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (car.Branch.Company.Admin.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            // Proveri da li auto ima rezervacija
+            if (car.CarReservations.Count > 0)
+            {
+                return Conflict();
+            }
+
+            car.Brand = request.Brand;
+            car.Model = request.Model;
+            car.Year = request.Year;
+            car.Seats = request.Seats;
+            car.Type = request.Type;
+            car.PricePerDay = request.PricePerDay;
+            car.PickupLocation = request.PickupLocation;
+            car.DropoffLocation = request.DropoffLocation;
+
+            _context.Entry(car).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return Ok();
+        }
     }
 }

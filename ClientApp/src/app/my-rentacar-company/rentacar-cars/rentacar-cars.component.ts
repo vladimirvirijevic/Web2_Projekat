@@ -6,6 +6,7 @@ import { RentacarAdminService } from 'src/app/services/rentacar-admin.service';
 import { AdminService } from 'src/app/services/admin.service';
 import { Branch } from 'src/app/models/branch';
 import { Car } from 'src/app/models/car';
+import { RentacarService } from 'src/app/services/rentacar.service';
 
 @Component({
   selector: 'app-rentacar-cars',
@@ -14,7 +15,13 @@ import { Car } from 'src/app/models/car';
 })
 export class RentacarCarsComponent implements OnInit {
   addCarForm: FormGroup;
+  editCarForm: FormGroup;
   company: RentacarCompany;
+
+  editCarId = -1;
+
+  selectedType = "Any";
+  selectedAddType = "Any";
 
   branches: Branch[] = [];
   cars: Car[] = [];
@@ -31,11 +38,16 @@ export class RentacarCarsComponent implements OnInit {
 
   showSuccessMessage = false;
   showErrorMessage = false;
+
+  editErrorMessageText = "There was an error!";
+  showEditSuccessMessage = false;
+  showEditErrorMessage = false;
   
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private rentacarAdminService: RentacarAdminService,
+    private rentacarService: RentacarService,
     private adminService: AdminService
   ) {
     this.addCarForm = this.formBuilder.group({
@@ -43,7 +55,20 @@ export class RentacarCarsComponent implements OnInit {
       'model': ['', [Validators.required]],
       'year': ['', [Validators.required]],
       'seats': ['', [Validators.required]],
-      'type': ['', [Validators.required]],
+      //'type': ['', [Validators.required]],
+      //'availableFrom': ['', [Validators.required]],
+      //'availableUntil': ['', [Validators.required]],
+      'pickupLocation': ['', [Validators.required]],
+      'pricePerDay': ['', [Validators.required]],
+      'dropoffLocation': ['', [Validators.required]],
+    });
+
+    this.editCarForm = this.formBuilder.group({
+      'brand': ['', [Validators.required]],
+      'model': ['', [Validators.required]],
+      'year': ['', [Validators.required]],
+      'seats': ['', [Validators.required]],
+      //'type': ['', [Validators.required]],
       //'availableFrom': ['', [Validators.required]],
       //'availableUntil': ['', [Validators.required]],
       'pickupLocation': ['', [Validators.required]],
@@ -56,12 +81,21 @@ export class RentacarCarsComponent implements OnInit {
    get model() { return this.addCarForm.get('model'); }
    get year() { return this.addCarForm.get('year'); }
    get seats() { return this.addCarForm.get('seats'); }
-   get type() { return this.addCarForm.get('type'); }
+   //get type() { return this.addCarForm.get('type'); }
    //get availableFrom() { return this.addCarForm.get('availableFrom'); }
    //get availableUntil() { return this.addCarForm.get('availableUntil'); }
    get pickupLocation() { return this.addCarForm.get('pickupLocation'); }
    get dropoffLocation() { return this.addCarForm.get('dropoffLocation'); }
    get pricePerDay() { return this.addCarForm.get('pricePerDay'); }
+
+   get brandEdit() { return this.editCarForm.get('brand'); }
+   get modelEdit() { return this.editCarForm.get('model'); }
+   get yearEdit() { return this.editCarForm.get('year'); }
+   get seatsEdit() { return this.editCarForm.get('seats'); }
+   //get typeEdit() { return this.addCarForm.get('type'); }
+   get pickupLocationEdit() { return this.editCarForm.get('pickupLocation'); }
+   get dropoffLocationEdit() { return this.editCarForm.get('dropoffLocation'); }
+   get pricePerDayEdit() { return this.editCarForm.get('pricePerDay'); }
 
   ngOnInit(): void {
     this.getCompany();
@@ -98,7 +132,7 @@ export class RentacarCarsComponent implements OnInit {
       model: this.model.value,
       year: this.year.value,
       seats: this.seats.value,
-      type: this.type.value,
+      type: this.selectedAddType,
       pricePerDay: this.pricePerDay.value,
       pickupLocation: this.pickupLocation.value,
       dropoffLocation: this.dropoffLocation.value,
@@ -127,6 +161,22 @@ export class RentacarCarsComponent implements OnInit {
       );
   }
 
+  editCar(carId) {
+    this.rentacarService.getCar(carId)
+      .subscribe(
+        data => {
+          this.editCarId = carId;
+          this.editCarForm.controls.brand.setValue(data.brand);
+          this.editCarForm.controls.model.setValue(data.model);
+          this.editCarForm.controls.year.setValue(data.year);
+          this.editCarForm.controls.seats.setValue(data.seats);
+          this.editCarForm.controls.pickupLocation.setValue(data.pickupLocation);
+          this.editCarForm.controls.dropoffLocation.setValue(data.dropoffLocation);
+          this.editCarForm.controls.pricePerDay.setValue(data.pricePerDay);
+        }
+      )
+  }
+
   deleteCar(carId) {
     this.rentacarAdminService.deleteCar(carId)
       .subscribe(
@@ -138,7 +188,7 @@ export class RentacarCarsComponent implements OnInit {
         },
         error => {
           if (error.status == 409) {
-            this.mainErrorMessage = "Failed! Car is reserved";
+            this.mainErrorMessage = "Failed! Car is booked!";
             this.showMainErrorMessage = true;
             this.showMainSuccessMessage = false;
           }
@@ -146,4 +196,40 @@ export class RentacarCarsComponent implements OnInit {
       );
   } 
 
+  onEdit() {
+    if (this.editCarForm.invalid || this.editCarId == -1) {
+      return;
+    }
+
+    const carId = this.editCarId;
+
+    const editInfo = {
+      brand: this.brandEdit.value,
+      model: this.modelEdit.value,
+      year: this.yearEdit.value,
+      seats: this.seatsEdit.value,
+      type: this.selectedType,
+      pricePerDay: this.pricePerDayEdit.value,
+      pickupLocation: this.pickupLocationEdit.value,
+      dropoffLocation: this.dropoffLocationEdit.value,
+    };
+
+    this.rentacarAdminService.editCar(carId, editInfo)
+      .subscribe(
+        data => {
+          this.getCompany();
+          this.showEditErrorMessage = false;
+          this.mainSuccessMessage = "Car edited successfully!";
+          this.showEditSuccessMessage = true;
+          this.showMainErrorMessage = false;
+        },
+        error => {
+          if (error.status == 409) {
+            this.editErrorMessageText = "Failed! Car is booked!";
+            this.showEditErrorMessage = true;
+            this.showEditSuccessMessage = false;
+          }
+        }
+      )
+  }
 }
