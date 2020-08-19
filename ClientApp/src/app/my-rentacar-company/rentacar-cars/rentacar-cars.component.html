@@ -34,6 +34,7 @@
                 <th scope="col">Price Per Day</th>
                 <th scope="col">Branch</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -46,6 +47,7 @@
                 <td>{{ car.type }}</td>
                 <td>{{ car.pricePerDay }}</td>
                 <td>{{ car.branchAddress }}</td>
+                <td><button data-toggle="modal" data-target="#editCarModal" style="color: #fff;" (click)="editCar(car.id)" class="btn btn-warning"><i class="fas fa-edit mr-2"></i>Edit</button></td>
                 <td><button (click)="deleteCar(car.id)" class="btn btn-danger"><i class="fas fa-trash-alt mr-2"></i>Delete</button></td>
             </tr>
             </tbody>
@@ -148,21 +150,15 @@
                     </div>
                 </div>
 
-                <div class="input-group form-group-no-border mb-2 mt-3">
-                    <input 
-                        type="text" 
-                        class="form-control" 
-                        id="type" 
-                        placeholder="Type"
-                        required
-                        formControlName="type">
-                    
-                  </div>
-                  <div *ngIf="type.invalid && (type.dirty || type.touched)" class="alert alert-danger ">
-                    <div *ngIf="type.errors.required">
-                        Type are required.
-                    </div>
-                </div>
+                <div class="form-group">                            
+                    <label class="mr-3">Car Type</label>
+                    <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selectedAddType">
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Hatchback">Hatchback</option>
+                        <option value="Any">Any</option>
+                    </select>
+                </div>  
 
                 <div class="input-group form-group-no-border mb-2 mt-3">
                     <input 
@@ -203,6 +199,161 @@
                   </div>
                 
                 <button [disabled]="addCarForm.invalid" type="submit" class="btn btn-primary mt-3">Add</button>
+                <button data-dismiss="modal" aria-label="Close" type="button" class="ml-3 btn btn-danger mt-3">Close</button>
+              </form>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="editCarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header pl-4 pr-4">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Car</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4">
+            <div *ngIf="showEditErrorMessage" class="alert alert-danger" role="alert">
+                {{ editErrorMessageText }}
+            </div>
+            <div *ngIf="showEditSuccessMessage" class="alert alert-success" role="alert">
+                Car edited successfully!
+            </div>
+            <form [formGroup]="editCarForm" (ngSubmit)="onSubmit()">
+
+                <label class="mr-3">Brand</label>
+                <div class="input-group form-group-no-border mb-4">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="brand" 
+                        placeholder="Brand"
+                        required
+                        formControlName="brand">
+                    
+                  </div>
+                  <div *ngIf="brandEdit.invalid && (brandEdit.dirty || brandEdit.touched)" class="alert alert-danger">
+                    <div *ngIf="brandEdit.errors.required">
+                        Brand is required.
+                    </div>
+                </div>
+
+                <label class="mr-3">Model</label>
+                <div class="input-group form-group-no-border mb-4">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="model" 
+                        placeholder="Model"
+                        required
+                        formControlName="model">
+                    
+                  </div>
+                  <div *ngIf="modelEdit.invalid && (modelEdit.dirty || modelEdit.touched)" class="alert alert-danger">
+                    <div *ngIf="modelEdit.errors.required">
+                        Model is required.
+                    </div>
+                </div>
+
+                <label class="mr-3">Year</label>
+                <div class="input-group form-group-no-border mb-4">
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="brand" 
+                        placeholder="Year"
+                        required
+                        formControlName="year">
+                    
+                  </div>
+                  <div *ngIf="yearEdit.invalid && (yearEdit.dirty || yearEdit.touched)" class="alert alert-danger">
+                    <div *ngIf="yearEdit.errors.required">
+                        Year is required.
+                    </div>
+                </div>
+
+                <label class="mr-3">Seats</label>
+                <div class="input-group form-group-no-border mb-4">
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="brand" 
+                        placeholder="Seats"
+                        required
+                        formControlName="seats">
+                    
+                  </div>
+                  <div *ngIf="seatsEdit.invalid && (seatsEdit.dirty || seatsEdit.touched)" class="alert alert-danger">
+                    <div *ngIf="seatsEdit.errors.required">
+                        Seats are required.
+                    </div>
+                </div>
+
+                <label class="mr-3">Price Per Day</label>
+                <div class="input-group form-group-no-border mb-4">
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="pricePerDay" 
+                        placeholder="Price Per Day"
+                        required
+                        formControlName="pricePerDay">
+                    
+                  </div>
+                  <div *ngIf="pricePerDayEdit.invalid && (pricePerDayEdit.dirty || pricePerDayEdit.touched)" class="alert alert-danger">
+                    <div *ngIf="pricePerDayEdit.errors.required">
+                        Price Per Day is required
+                    </div>
+                </div>
+
+                <label class="mr-3">Pick-up Location</label>
+                <div class="input-group form-group-no-border mb-4">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="pickupLocation" 
+                        placeholder="Pick-up Location"
+                        required
+                        formControlName="pickupLocation">
+                    
+                  </div>
+                  <div *ngIf="pickupLocationEdit.invalid && (pickupLocationEdit.dirty || pickupLocationEdit.touched)" class="alert alert-danger ">
+                    <div *ngIf="pickupLocationEdit.errors.required">
+                        Pick-up Location is required.
+                    </div>
+                </div>
+
+                <label class="mr-3">Drop-off Location</label>
+                <div class="input-group form-group-no-border mb-4">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="dropoffLocation" 
+                        placeholder="Drop-off Location"
+                        required
+                        formControlName="dropoffLocation">
+                    
+                  </div>
+                  <div *ngIf="dropoffLocationEdit.invalid && (dropoffLocationEdit.dirty || dropoffLocationEdit.touched)" class="alert alert-danger ">
+                    <div *ngIf="dropoffLocationEdit.errors.required">
+                        Drop-off Location is required.
+                    </div>
+                </div>
+                <div class="form-group">                            
+                    <label class="mr-3">Car Type</label>
+                    <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selectedType">
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Hatchback">Hatchback</option>
+                        <option value="Any">Any</option>
+                    </select>
+                </div>                
+                <button (click)="onEdit()" [disabled]="editCarForm.invalid" type="submit" class="btn btn-primary mt-3">Edit</button>
                 <button data-dismiss="modal" aria-label="Close" type="button" class="ml-3 btn btn-danger mt-3">Close</button>
               </form>
             

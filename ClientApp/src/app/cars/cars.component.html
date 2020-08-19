@@ -39,7 +39,6 @@
                         type="date" 
                         class="form-control" 
                         placeholder="Enter pick-up date"
-                        required
                         formControlName="pickupDate">
                 </div>
             </div>
@@ -50,12 +49,12 @@
                         type="date" 
                         class="form-control" 
                         placeholder="Enter drop-off date"
-                        required
                         formControlName="dropoffDate">
                 </div>
             </div>
         </div>
-        <button [disabled]="searchForm.invalid" type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <button (click)="resetSearch()" type="button" class="ml-3 btn btn-secondary">Reset Search</button>
     </form>
 
     <div class="row text-center mt-5">

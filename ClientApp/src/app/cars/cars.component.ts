@@ -24,8 +24,8 @@ export class CarsComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       'name': [''],
       'location': [''],
-      'pickupDate': ['', [Validators.required]],
-      'dropoffDate': ['', [Validators.required]]
+      'pickupDate': [''],
+      'dropoffDate': ['']
     });
    }
 
@@ -37,6 +37,10 @@ export class CarsComponent implements OnInit {
   get location() { return this.searchForm.get('location'); }
   get pickupDate() { return this.searchForm.get('pickupDate'); }
   get dropoffDate() { return this.searchForm.get('dropoffDate'); }
+
+  resetSearch() {
+    this.getCompanies();
+  }
 
   onSubmit() {
     if (this.searchForm.invalid) {

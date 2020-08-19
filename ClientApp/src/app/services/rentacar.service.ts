@@ -52,4 +52,15 @@ export class RentacarService {
         catchError(this.handleError)
     );
   }
+
+  searchCars(searchInfo) {
+    return this.http.post<any>(`${environment.api_url}/rentacar/searchcars`, searchInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  getCars(companyId): Observable<Car[]> {
+    return this.http.get<Car[]>(`${environment.api_url}/rentacar/${companyId}/cars`);
+  }
 }

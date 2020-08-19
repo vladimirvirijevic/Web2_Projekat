@@ -58,4 +58,11 @@ export class RentacarAdminService {
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }
+
+  editCar(cardId, editInfo) {
+    return this.http.put<any>(`${environment.api_url}/rentacaradmin/car/${cardId}`, editInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
 }
