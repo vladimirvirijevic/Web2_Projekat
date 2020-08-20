@@ -224,7 +224,7 @@
             <div *ngIf="showEditSuccessMessage" class="alert alert-success" role="alert">
                 Car edited successfully!
             </div>
-            <form [formGroup]="editCarForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="editCarForm" (ngSubmit)="onEdit()">
 
                 <label class="mr-3">Brand</label>
                 <div class="input-group form-group-no-border mb-4">
@@ -353,7 +353,7 @@
                         <option value="Any">Any</option>
                     </select>
                 </div>                
-                <button (click)="onEdit()" [disabled]="editCarForm.invalid" type="submit" class="btn btn-primary mt-3">Edit</button>
+                <button [disabled]="editCarForm.invalid" type="submit" class="btn btn-primary mt-3">Edit</button>
                 <button data-dismiss="modal" aria-label="Close" type="button" class="ml-3 btn btn-danger mt-3">Close</button>
               </form>
             

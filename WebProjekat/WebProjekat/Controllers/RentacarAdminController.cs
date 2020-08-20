@@ -79,7 +79,6 @@ namespace WebProjekat.Controllers
             return Ok(branches);
         }
 
-
         [HttpPost]
         [Authorize]
         [Route("branch")]
@@ -261,5 +260,40 @@ namespace WebProjekat.Controllers
 
             return Ok();
         }
+
+        [HttpPut]
+        [Authorize]
+        [Route("branch/{branchId}")]
+        public async Task<IActionResult> EditBranch(int branchId, [FromBody] EditRentacarBranchRequest request)
+        {
+            if (branchId == 0)
+            {
+                return BadRequest();
+            }
+
+            var branch = await _context.RentacarBranches.FindAsync(branchId);
+
+            if (branch == null)
+            {
+                return NotFound();
+            }
+
+            // Proveri da li filijala pripada kompaniji ulogovanog admina
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (branch.Company.Admin.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            branch.Address = request.Address;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
     }
 }
+

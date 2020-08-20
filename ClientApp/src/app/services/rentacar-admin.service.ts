@@ -65,4 +65,11 @@ export class RentacarAdminService {
         catchError(this.handleError)
     );
   }
+
+  editBanch(branchId, editInfo) {
+    return this.http.put<any>(`${environment.api_url}/rentacaradmin/branch/${branchId}`, editInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
 }
