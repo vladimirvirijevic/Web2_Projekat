@@ -222,6 +222,13 @@ namespace WebProjekat.Controllers
                 return Conflict();
             }
 
+            DateTime today = DateTime.Today;
+
+            if (pickupDate < today)
+            {
+                return StatusCode(403);
+            }
+
             var user = await _context.Users.FindAsync(request.UserId);
             if (user == null)
             {
