@@ -40,6 +40,8 @@ import { AdminAviocompanyComponent } from './admin-aviocompany/admin-aviocompany
 import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-aviocompany-profile/admin-aviocompany-profile.component';
 import { AdminAviocompanyDestinationsComponent } from './admin-aviocompany/admin-aviocompany-destinations/admin-aviocompany-destinations.component';
 import { AdminAviocompanyFlightsComponent } from './admin-aviocompany/admin-aviocompany-flights/admin-aviocompany-flights.component';
+import { RentacarReservationsComponent } from './my-rentacar-company/rentacar-reservations/rentacar-reservations.component';
+import { RentacarEarningsComponent } from './my-rentacar-company/rentacar-earnings/rentacar-earnings.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,9 @@ import { AdminAviocompanyFlightsComponent } from './admin-aviocompany/admin-avio
     AdminAviocompanyComponent,
     AdminAviocompanyProfileComponent ,
     CarComponent,
+    AdminAviocompanyDestinationsComponent,
+    RentacarReservationsComponent,
+    RentacarEarningsComponent
     AdminAviocompanyDestinationsComponent,
     AdminAviocompanyFlightsComponent
   ],

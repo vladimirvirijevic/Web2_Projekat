@@ -1,6 +1,6 @@
 <div class="row mt-5">
     <div class="col">
-        <h2>Company Branches <button data-toggle="modal" data-target="#addBranchModal" class="ml-4 btn btn-primary mb-3"><i class="fas fa-plus mr-2"></i>Add  Branch</button></h2>
+        <h2>Company Branches <button data-toggle="modal" data-target="#addBranchModal" class="ml-4 btn btn-success mb-3"><i class="fas fa-plus mr-2"></i>Add  Branch</button></h2>
     </div>
 </div>
 
@@ -27,6 +27,8 @@
             <tr>
                 <th scope="col"></th>
                 <th scope="col">Address</th>
+                <th scope="col">Cars</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -34,6 +36,8 @@
             <tr *ngFor="let branch of company.branches; let i=index">
                 <th>{{ i+1 }}</th>
                 <td>{{ branch.address }}</td>
+                <td>{{ branch.cars.length }}</td>
+                <td><button data-toggle="modal" data-target="#editBranchModal" (click)="editBranch(branch.id)" class="btn btn-warning" style="color: #fff;"><i class="fas fa-edit mr-2"></i>Edit</button></td>
                 <td><button (click)="deleteBranch(branch.id)" class="btn btn-danger"><i class="fas fa-trash-alt mr-2"></i>Delete</button></td>
             </tr>
             </tbody>
@@ -87,3 +91,51 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="editBranchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header pl-4 pr-4">
+          <h5 class="modal-title" id="exampleModalLabel">Add Branch</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4">
+            <div *ngIf="showEditErrorMessage" class="alert alert-danger" role="alert">
+                {{ errorEditMessageText }}
+            </div>
+            <div *ngIf="showEditSuccessMessage" class="alert alert-success" role="alert">
+                Branch edited successfully!
+            </div>
+            <form [formGroup]="editBranchForm" (ngSubmit)="onEdit()">
+                <div class="input-group form-group-no-border mb-4 mt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </span>
+                      </div>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="address" 
+                        placeholder="Branch Address"
+                        required
+                        formControlName="address">
+                    
+                  </div>
+                  <div *ngIf="addressEdit.invalid && (addressEdit.dirty || addressEdit.touched)" class="alert alert-danger">
+                    <div *ngIf="addressEdit.errors.required">
+                        Address is required.
+                    </div>
+                </div>
+                
+                <button [disabled]="editBranchForm.invalid" type="submit" class="btn btn-primary">Save</button>
+                <button data-dismiss="modal" aria-label="Close" type="button" class="ml-3 btn btn-danger">Close</button>
+              </form>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+

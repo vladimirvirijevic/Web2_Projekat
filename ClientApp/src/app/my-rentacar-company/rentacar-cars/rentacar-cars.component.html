@@ -1,6 +1,6 @@
 <div class="row mt-5">
     <div class="col">
-        <h2>Cars <button data-toggle="modal" data-target="#addCarModal" class="ml-4 btn btn-primary mb-3"><i class="fas fa-plus mr-2"></i>Add Car</button></h2>
+        <h2>Cars <button data-toggle="modal" data-target="#addCarModal" class="ml-4 btn btn-success mb-3"><i class="fas fa-plus mr-2"></i>Add Car</button></h2>
     </div>
 </div>
 
@@ -224,7 +224,7 @@
             <div *ngIf="showEditSuccessMessage" class="alert alert-success" role="alert">
                 Car edited successfully!
             </div>
-            <form [formGroup]="editCarForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="editCarForm" (ngSubmit)="onEdit()">
 
                 <label class="mr-3">Brand</label>
                 <div class="input-group form-group-no-border mb-4">
@@ -353,7 +353,7 @@
                         <option value="Any">Any</option>
                     </select>
                 </div>                
-                <button (click)="onEdit()" [disabled]="editCarForm.invalid" type="submit" class="btn btn-primary mt-3">Edit</button>
+                <button [disabled]="editCarForm.invalid" type="submit" class="btn btn-primary mt-3">Edit</button>
                 <button data-dismiss="modal" aria-label="Close" type="button" class="ml-3 btn btn-danger mt-3">Close</button>
               </form>
             

@@ -1,0 +1,98 @@
+<div class="row mt-5">
+    <div class="col">
+        <h2>Earnings</h2>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Daily</a>
+        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Weekly</a>
+        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Monthly</a>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <div class="form-group">
+                            <label for="date-input">Choose Day</label>
+                            <input [(ngModel)]="selectedDay" type="date" class="form-control" id="date-input">
+                          </div>
+                          <div (click)="getDailyEarnings()" class="button" class="btn btn-secondary">See Earnings</div>
+                        </div>
+                </div>
+                <div class="col mt-4">
+                    <p style="font-size: 32px;">Daily Earnings: <b>{{ dailyEarnings.totalEarning }} $</b></p>
+                </div>
+            </div>
+            <div *ngIf="dailyEarnings.reservations.length > 0" class="row mt-5">
+                <div class="col">
+                    <h4>Reservations</h4>
+                    <table class="table">
+                        <thead class="thead">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Car</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Pickup date</th>
+                            <th scope="col">Dropoff date</th>
+                            <th scope="col">Days</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let reservation of dailyEarnings.reservations; let i=index">
+                            <th>{{ i+1 }}</th>
+                            <td><a [routerLink]="'/car/'+reservation.car.id">{{ reservation.car.brand + " " + reservation.car.model}}</a></td>
+                            <td>{{ reservation.user.firstName + " " + reservation.user.lastName }}</td>
+                            <td>{{ reservation.pickupDate }}</td>
+                            <td>{{ reservation.dropoffDate }}</td>
+                            <td>{{ reservation.days }}</td>
+                            <td>{{ reservation.totalPrice }}</td>
+                            <td>{{ reservation.status }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            <div class="row">
+                <div class="col">
+                    <form>
+                        <div class="form-group">
+                            <label for="date-input">Choose Week</label>
+                            <input type="week" class="form-control" id="date-input">
+                          </div>
+                          <div class="button" class="btn btn-secondary">See Earnings</div>
+                    </form>
+                </div>
+                <div class="col mt-4">
+                    <p style="font-size: 32px;">Weekly Earnings: <b>60 $</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+            <div class="row">
+                <div class="col">
+                    <form>
+                        <div class="form-group">
+                            <label for="date-input">Choose Month</label>
+                            <input type="month" class="form-control" id="date-input">
+                          </div>
+                          <div class="button" class="btn btn-secondary">See Earnings</div>
+                    </form>
+                </div>
+                <div class="col mt-4">
+                    <p style="font-size: 32px;">Monthly Earnings: <b>60 $</b></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

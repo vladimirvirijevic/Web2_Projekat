@@ -1,0 +1,54 @@
+<div class="row mt-5">
+    <div class="col">
+        <h2>Reservations</h2>
+    </div>
+</div>
+
+<div *ngIf="showErrorMessage" class="row">
+    <div class="col">
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ errorMessage }}</strong>
+          </div>
+    </div>
+</div>
+
+<div *ngIf="showSuccessMessage" class="row">
+    <div class="col">
+        <div class="alert alert-success" role="alert">
+            <strong>Reservation finished successfully!</strong>
+          </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col">
+        <table class="table">
+            <thead class="thead">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Car</th>
+                <th scope="col">User</th>
+                <th scope="col">Pickup date</th>
+                <th scope="col">Dropoff date</th>
+                <th scope="col">Days</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let reservation of reservations; let i=index">
+                <th>{{ i+1 }}</th>
+                <td><a [routerLink]="'/car/'+reservation.car.id">{{ reservation.car.brand + " " + reservation.car.model}}</a></td>
+                <td>{{ reservation.user.firstName + " " + reservation.user.lastName }}</td>
+                <td>{{ reservation.pickupDate }}</td>
+                <td>{{ reservation.dropoffDate }}</td>
+                <td>{{ reservation.days }}</td>
+                <td>{{ reservation.totalPrice }}</td>
+                <td>{{ reservation.status }}</td>
+                <td><button *ngIf="reservation.status!='FINISHED'" (click)="finishReservations(reservation.id)" class="btn btn-success"><i class="fas fa-check mr-2"></i>Finish</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

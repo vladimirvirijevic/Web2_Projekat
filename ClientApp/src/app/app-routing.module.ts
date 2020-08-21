@@ -30,6 +30,8 @@ import { CarComponent } from './car/car.component';
 import { AdminAviocompanyComponent } from './admin-aviocompany/admin-aviocompany.component';
 import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-aviocompany-profile/admin-aviocompany-profile.component';
 import { AdminAviocompanyDestinationsComponent } from './admin-aviocompany/admin-aviocompany-destinations/admin-aviocompany-destinations.component';
+import { RentacarReservationsComponent } from './my-rentacar-company/rentacar-reservations/rentacar-reservations.component';
+import { RentacarEarningsComponent } from './my-rentacar-company/rentacar-earnings/rentacar-earnings.component';
 import { AdminAviocompanyFlightsComponent } from './admin-aviocompany/admin-aviocompany-flights/admin-aviocompany-flights.component';
 
 
@@ -45,6 +47,8 @@ const routes: Routes = [
     { path: 'profile', component: MyRentacarProfileComponent},
     { path: 'branches', component: RentacarBranchComponent},
     { path: 'cars', component: RentacarCarsComponent},
+    { path: 'reservations', component: RentacarReservationsComponent},
+    { path: 'earnings', component: RentacarEarningsComponent}
   ]},
   
   {path: 'app', component:RegisteredUserComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User]} },

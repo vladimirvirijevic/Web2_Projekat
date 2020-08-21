@@ -11,6 +11,8 @@ using WebProjekat.Data;
 using WebProjekat.Helpers;
 using WebProjekat.Models;
 using WebProjekat.Requests.RentacarAdmin;
+using WebProjekat.Responses.RentacarAdmin;
+using WebProjekat.Services.Date;
 
 namespace WebProjekat.Controllers
 {
@@ -20,11 +22,13 @@ namespace WebProjekat.Controllers
     {
         private readonly ApplicationDbContext _context;
         private IHttpContextAccessor _httpContextAccessor;
+        private IDateService _dateService;
 
-        public RentacarAdminController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public RentacarAdminController(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor, IDateService dateService)
         {
             _httpContextAccessor = httpContextAccessor;
             _context = context;
+            _dateService = dateService;
         }
 
         [HttpPut]
@@ -78,7 +82,6 @@ namespace WebProjekat.Controllers
             
             return Ok(branches);
         }
-
 
         [HttpPost]
         [Authorize]
@@ -261,5 +264,90 @@ namespace WebProjekat.Controllers
 
             return Ok();
         }
+
+        [HttpPut]
+        [Authorize]
+        [Route("branch/{branchId}")]
+        public async Task<IActionResult> EditBranch(int branchId, [FromBody] EditRentacarBranchRequest request)
+        {
+            if (branchId == 0)
+            {
+                return BadRequest();
+            }
+
+            var branch = await _context.RentacarBranches.FindAsync(branchId);
+
+            if (branch == null)
+            {
+                return NotFound();
+            }
+
+            // Proveri da li filijala pripada kompaniji ulogovanog admina
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (branch.Company.Admin.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            branch.Address = request.Address;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        [Route("dailyearnings/{day}")]
+        public async Task<ActionResult<GetEarningsResponse>> GetDailyEarnings(string day)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            DateTime dateEarnings = DateTime.ParseExact(day, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            var response = new GetEarningsResponse
+            {
+                TotalEarning = 0
+            };
+
+            var company = await _context.RentacarCompanies.Where(c => c.Admin.Id == currentUser.Id).FirstOrDefaultAsync();
+
+            if (company == null)
+            {
+                return BadRequest();
+            }
+
+            foreach (var branch in company.Branches)
+            {
+                foreach (var car in branch.Cars)
+                {
+                    foreach (var reservation in car.CarReservations)
+                    {
+                        DateTime reservationPickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime reservationDropoffDate = DateTime.ParseExact(reservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                        var reservedDates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                        if (reservedDates.Contains(dateEarnings))
+                        {
+                            response.TotalEarning += car.PricePerDay;
+                            response.Reservations.Add(reservation);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return Ok(response);
+        }
+        
     }
 }
+

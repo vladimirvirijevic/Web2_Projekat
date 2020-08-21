@@ -72,6 +72,9 @@ export class CarComponent implements OnInit {
           if (error.status == 404) {
             this.errorMessage = "Car is not available during that period!";
           }
+          if (error.status == 403) {
+            this.errorMessage = "You cant book date in past!";
+          }
         }
       )
   }

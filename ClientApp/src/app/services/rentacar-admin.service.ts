@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { Branch } from '../models/branch';
+import { RentacarEarning } from '../models/rentacarEarning';
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +65,16 @@ export class RentacarAdminService {
     .pipe(
         catchError(this.handleError)
     );
+  }
+
+  editBanch(branchId, editInfo) {
+    return this.http.put<any>(`${environment.api_url}/rentacaradmin/branch/${branchId}`, editInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  getDailyEarnings(day): Observable<RentacarEarning> {
+    return this.http.get<RentacarEarning>(`${environment.api_url}/rentacaradmin/dailyearnings/${day}`);
   }
 }

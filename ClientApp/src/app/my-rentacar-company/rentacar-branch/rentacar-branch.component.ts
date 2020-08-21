@@ -13,6 +13,10 @@ import { Branch } from 'src/app/models/branch';
 })
 export class RentacarBranchComponent implements OnInit {
   addBranchForm: FormGroup;
+  editBranchForm: FormGroup;
+
+  editBranchId = -1;
+
   company: RentacarCompany;
   branches: Branch[] = [];
 
@@ -27,6 +31,10 @@ export class RentacarBranchComponent implements OnInit {
   showSuccessMessage = false;
   showErrorMessage = false;
 
+  showEditErrorMessage = false;
+  showEditSuccessMessage = false;
+  errorEditMessageText = "There was an error!";
+
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
@@ -36,9 +44,14 @@ export class RentacarBranchComponent implements OnInit {
     this.addBranchForm = this.formBuilder.group({
       'address': ['', [Validators.required]]
     });
+
+    this.editBranchForm = this.formBuilder.group({
+      'address': ['', [Validators.required]]
+    });
    }
 
    get address() { return this.addBranchForm.get('address'); }
+   get addressEdit() { return this.editBranchForm.get('address'); }
 
   ngOnInit(): void {
     this.getCompany();
@@ -60,6 +73,30 @@ export class RentacarBranchComponent implements OnInit {
       .subscribe(
         data => {
           this.company = data;
+        }
+      )
+  }
+
+  onEdit() {
+    if (this.editBranchForm.invalid || this.editBranchId == -1) {
+      return;
+    }
+
+    const editInfo = {
+      address: this.addressEdit.value,
+    };
+
+    this.rentacarAdminService.editBanch(this.editBranchId, editInfo)
+      .subscribe(
+        data => {
+          this.showEditErrorMessage = false;
+          this.showEditSuccessMessage = true;
+
+          this.getCompany();
+        },
+        error => {
+          this.showEditErrorMessage = true;
+          this.showEditSuccessMessage = false;
         }
       )
   }
@@ -112,5 +149,17 @@ export class RentacarBranchComponent implements OnInit {
           }
         }
       );
+  }
+
+  editBranch(branchId) {
+    const branch = this.company.branches.filter(b => b.id == branchId)[0];
+    console.log(branch);
+
+    if (branch == null) {
+      return;
+    }
+
+    this.editBranchId = branchId;
+    this.editBranchForm.controls.address.setValue(branch.address);
   }
 }
