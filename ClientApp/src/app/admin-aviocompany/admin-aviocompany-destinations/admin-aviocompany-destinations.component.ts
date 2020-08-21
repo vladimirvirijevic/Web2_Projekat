@@ -131,6 +131,10 @@ export class AdminAviocompanyDestinationsComponent implements OnInit {
       {
        console.log("ne radi");
       }
+
+
+
+
     );
  }
 

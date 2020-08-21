@@ -30,6 +30,7 @@ import { CarComponent } from './car/car.component';
 import { AdminAviocompanyComponent } from './admin-aviocompany/admin-aviocompany.component';
 import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-aviocompany-profile/admin-aviocompany-profile.component';
 import { AdminAviocompanyDestinationsComponent } from './admin-aviocompany/admin-aviocompany-destinations/admin-aviocompany-destinations.component';
+import { AdminAviocompanyFlightsComponent } from './admin-aviocompany/admin-aviocompany-flights/admin-aviocompany-flights.component';
 
 
 
@@ -73,7 +74,8 @@ const routes: Routes = [
     children:
     [
       {path:'profile', component:AdminAviocompanyProfileComponent},
-      {path:'destinations', component:AdminAviocompanyDestinationsComponent}
+      {path:'destinations', component:AdminAviocompanyDestinationsComponent},
+      {path:'flights', component:AdminAviocompanyFlightsComponent}
     ],
   canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }}
 ];

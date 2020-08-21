@@ -17,6 +17,8 @@ namespace WebProjekat.Data
         public DbSet<RentacarBranch> RentacarBranches { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<CarReservation> CarReservations { get; set; }
+        
+        public DbSet<Flight> Flights { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

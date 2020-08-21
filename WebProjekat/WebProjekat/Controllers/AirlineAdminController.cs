@@ -149,5 +149,64 @@ namespace WebProjekat.Controllers
 
         }
 
+        //dodavanje letova
+        [HttpPost("addFlight/{companyId}")]
+        [Authorize]
+        public async Task<IActionResult> AddFlight(int companyId, [FromBody] AddFlightRequest request)
+        {
+            if (request.LocationFrom == "" 
+                || request.LocationTo==""
+                || request.DateOfTakingOff==""
+                || request.TimeOfTakingOff==""
+                || request.DateOfLanding==""
+                || request.TimeOfLanding==""
+                || request.DurationOfFlight==""
+                || request.DistanceOfFlight==""
+                || request.PriceOfTicketOfFlight==""
+                )
+            {
+                return BadRequest();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            
+            var company = await _context.AirplaneCompanies.FirstOrDefaultAsync(x => x.Id == companyId);
+
+            if (company.Admin.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            var flight = new Flight();
+            flight.LocationFrom = request.LocationFrom;
+            flight.LocationTo = request.LocationTo;
+            flight.DateOfTakingOff = request.DateOfTakingOff;
+            flight.TimeOfTakingOff = request.TimeOfTakingOff;
+            flight.DateOfLanding = request.DateOfLanding;
+            flight.TimeOfLanding = request.TimeOfLanding;
+            flight.DurationOfFlight = request.DurationOfFlight;
+            flight.DistanceOfFlight = request.DistanceOfFlight;
+            flight.NumberOfTransfers = request.NumberOfTransfers;
+            flight.LocationOfTransfers = request.LocationOfTransfers;
+            flight.PriceOfTicketOfFlight = request.PriceOfTicketOfFlight;
+            flight.Company = new AirplaneCompany();
+            flight.Company = company;
+
+            _context.Flights.Add(flight);
+            company.Flights.Add(flight);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+        }
+
+
     }
 }

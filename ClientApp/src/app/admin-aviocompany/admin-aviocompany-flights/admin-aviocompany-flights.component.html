@@ -1,0 +1,274 @@
+<div>
+    <br>
+    <br>
+    <h5><i class="fas fa-plane mr-2"></i>Flights <button data-toggle="modal" data-target="#addFlightModal" class="ml-4 btn btn-primary mb-3">
+        <i class="fas fa-plus mr-2"></i>
+        Add flight</button></h5>
+</div>
+  <div class="modal fade" id="addFlightModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header pl-4 pr-4">
+          <h5 class="modal-title" id="exampleModalLabel">Add flight</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4">
+            <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+                {{ errorMessageText }}
+            </div>
+            <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+               Flight created successfully!
+            </div>
+            <form [formGroup]="addFlightForm" (ngSubmit)="onSubmit()">
+
+                <!--div za biranje pocetne tacke leta-->
+                <div class="form-group">
+                    <label for="startPoint">Select starting point of flight</label>
+                    <select class="form-control" id="startPoint" (change)="selectStartPointChangeHandler($event)">
+                      <option value=" "></option>
+                      <option *ngFor="let location of locations" value={{location.name}}>{{location.name}}</option>
+                    </select>
+                </div>
+                <!--div za biranje krajnje tacke leta-->
+                <div class="form-group">
+                    <label for="endPoint">Select ending point of flight</label>
+                    <select class="form-control" id="endPoint" (change)="selectEndPointChangeHandler($event)">
+                      <option value=" "></option>
+                      <option *ngFor="let location of locations" value="{{location.name}}">{{location.name}}</option>
+                    </select>
+                </div>
+                <!--div za biranje datuma poletanja--> 
+                <label for="biranjeDatumaPoletanja">Choose date of taking off of the plane</label>
+                    <br/>
+                <div class="input-group form-group-no-border mb-4 mt-2">
+                  
+                    <div class="input-group-prepend"> 
+                        
+                        <span class="input-group-text">
+                            <i class="fas fa-plane-departure"></i>
+                        </span>
+                    </div>
+                         <input 
+                        type="date" 
+                        class="form-control" 
+                        id="datumPoletanja" 
+                        placeholder="Taking off Date"
+                        required
+                        formControlName="datumPoletanja">
+                    
+                    </div>
+                         <div *ngIf="datumPoletanja.invalid && (datumPoletanja.dirty || datumPoletanja.touched)" class="alert alert-danger">
+                        <div *ngIf="datumPoletanja.errors.required">
+                        Date of taking off of the plane is required.
+                        </div>
+                    </div>
+                    <!--div za biranje vremena poletanja--> 
+                    <label for="biranjeVremenaPoletanja">Choose time of taking off of the plane</label>
+                        <br/>
+                    <div class="input-group form-group-no-border mb-4 mt-2">
+                       
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-clock"></i>
+                            </span>
+                        </div>
+                        <input 
+                            type="time" 
+                            class="form-control" 
+                            id="vremePoletanja" 
+                            placeholder="Taking off Time"
+                            required
+                            formControlName="vremePoletanja">
+                    </div>
+                    <div *ngIf="vremePoletanja.invalid && (vremePoletanja.dirty || vremePoletanja.touched)" class="alert alert-danger">
+                        <div *ngIf="vremePoletanja.errors.required">
+                            Time of taking off of the plane is required.
+                        </div>
+                    </div>
+                    <!--div za biranje datuma sletanja--> 
+                    <label for="biranjeDatumaSletanja">Choose date of landing of the plane</label>
+                        <br/>
+                    <div class="input-group form-group-no-border mb-4 mt-2">
+                     
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-plane-arrival"></i>
+                            </span>
+                          </div>  
+                        <input 
+                            type="date" 
+                            class="form-control" 
+                            id="datumSletanja" 
+                            placeholder="Landing Date"
+                            required
+                            formControlName="datumSletanja">
+                        
+                    </div>
+                    <div *ngIf="datumSletanja.invalid && (datumSletanja.dirty || datumSletanja.touched)" class="alert alert-danger">
+                        <div *ngIf="datumSletanja.errors.required">
+                            Date of landing of the plane is required.
+                        </div>
+                    </div>
+                    <!--div za biranje vremena sletanja--> 
+                    <label for="biranjeVremenaSletanje">Choose time of landing of the plane</label>
+                        <br/>
+                    <div class="input-group form-group-no-border mb-4 mt-2">
+                       
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-clock"></i>
+                            </span>
+                        </div>
+                        <input 
+                            type="time" 
+                            class="form-control" 
+                            id="vremeSletanja" 
+                            placeholder="Landing time"
+                            required
+                            formControlName="vremeSletanja">
+                        
+                    </div>
+                    <div *ngIf="vremeSletanja.invalid && (vremeSletanja.dirty || vremeSletanja.touched)" class="alert alert-danger">
+                        <div *ngIf="vremeSletanja.errors.required">
+                            Date of taking off of the plane is required.
+                        </div>
+                    </div>
+                    <!--div za biranje vremena trajanja leta--> 
+                    <label for="biranjeVremenaTrajanjaLeta">Add time duration of the flight</label>
+                        <br/>
+                    <div class="input-group form-group-no-border mb-4 mt-2">
+                       
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-clock"></i>
+                            </span>
+                        </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="trajanjeLeta" 
+                            placeholder="Duration of flight"
+                            required
+                            formControlName="trajanjeLeta">h
+                        
+                    </div>
+                    <div *ngIf="trajanjeLeta.invalid && (trajanjeLeta.dirty || trajanjeLeta.touched)" class="alert alert-danger">
+                        <div *ngIf="trajanjeLeta.errors.required">
+                            Duration of flight is required.
+                        </div>
+                    </div>
+                    <!--div za biranje rastojanja leta-->  
+                    <label for="rastojanjeLeta">Add distance of the flight</label>
+                        <br/>
+                    <div class="input-group form-group-no-border mb-4 mt-2">
+                      
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-map-marker"></i>
+                            </span>
+                          </div>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                          id="udaljenostLeta" 
+                            placeholder="Distance of flight"
+                            required
+                            formControlName="udaljenostLeta"><p>km</p>
+                        
+                    </div>
+                    <div *ngIf="udaljenostLeta.invalid && (udaljenostLeta.dirty || udaljenostLeta.touched)" class="alert alert-danger">
+                        <div *ngIf="udaljenostLeta.errors.required">
+                            Distance of flight is required.
+                        </div>
+                    </div>
+
+                    <!--ukoliko avion ima presedanja-->
+                    <div class="form-check">  
+                        <label for="checkZaPresedanje">Transfers?</label>  
+                        <input type="checkbox" class="form-check-input" id="checkZaPresedanje" (click)="CheckedClicked()">
+                    </div>
+                    <br/>
+                    <!--biranje broja presedanja-->
+                    <div *ngIf="checkedZaTransfer">
+                        <div class="form-group">
+                            <select class="form-control" id="selectedNumber"  (change)="selectNumberOfFlightsChangeHandler($event)" >
+                              <option value=" "></option>
+                              <option value="1">1</option> 
+                              <option value="2">2</option> 
+                              <option value="3">3</option> 
+                            </select>
+                        </div>
+                    </div>
+                    <!--biranje destinacija-->
+                    <div *ngIf="checkedZaTransfer">
+                        <div class="form-group">
+                            <i class="fas fa-plane-departure"></i>
+                            <br>
+                            <br>
+                            <select class="form-control" id="selectedFirstDestination"  (change)="selectFirstDestinationOfTransferChangeHandler($event)" >
+                              <option value=" "></option>  
+                              <option *ngFor="let location of locations" value="{{location.name}}">{{location.name}}</option>
+                            </select>
+                        </div>
+                    <p>
+                       |  <i class="fas fa-plane mr-2"></i><br>
+                    </p>
+                        <div class="form-group">
+                            <select class="form-control" id="selectedSecondDestination"  (change)="selectSecondDestinationOfTransferChangeHandler($event)" >
+                                <option value=" "></option>
+                                <option *ngFor="let location of locations" value="{{location.name}}">{{location.name}}</option>
+                            </select>
+                        </div>
+                        <p>
+                            |  <i class="fas fa-plane mr-2"></i><br>
+                           
+                         </p>
+                        <div class="form-group">
+                            <select class="form-control" id="selectedThirdDestination"  (change)="selectThirdDestinationOfTransferChangeHandler($event)" >
+                                <option value=" "></option>
+                                <option *ngFor="let location of locations" value="{{location.name}}">{{location.name}}</option>
+                            </select>
+                            <br>
+                            <i class="fas fa-plane-arrival"></i>
+                        </div>
+                    </div>
+                    
+                    <!--div za cenu karte--> 
+                    <label for="zaCenuKarte">Add price of ticket</label>
+                        <br>
+                    <div class="input-group form-group-no-border mb-4 mt-2">
+                       
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="far fa-money-bill-alt"></i>
+                            </span>
+                        </div>
+                       
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="cenaKarte" 
+                            placeholder="Ticket price"
+                            required
+                            formControlName="cenaKarte"><p> euros</p>
+                        
+                    </div>
+                    <div *ngIf="cenaKarte.invalid && (cenaKarte.dirty || cenaKarte.touched)" class="alert alert-danger">
+                        <div *ngIf="cenaKarte.errors.required">
+                            Price for ticket for flight is required.
+                        </div>
+                    </div>
+
+      
+        
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button data-dismiss="modal" aria-label="Close" type="button" class="ml-3 btn btn-danger">Close</button>
+                 
+            </form>   
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -39,6 +39,7 @@ import { AviocompanyProfileComponent } from './aviocompany-profile/aviocompany-p
 import { AdminAviocompanyComponent } from './admin-aviocompany/admin-aviocompany.component';
 import { AdminAviocompanyProfileComponent } from './admin-aviocompany/admin-aviocompany-profile/admin-aviocompany-profile.component';
 import { AdminAviocompanyDestinationsComponent } from './admin-aviocompany/admin-aviocompany-destinations/admin-aviocompany-destinations.component';
+import { AdminAviocompanyFlightsComponent } from './admin-aviocompany/admin-aviocompany-flights/admin-aviocompany-flights.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { AdminAviocompanyDestinationsComponent } from './admin-aviocompany/admin
     AdminAviocompanyComponent,
     AdminAviocompanyProfileComponent ,
     CarComponent,
-    AdminAviocompanyDestinationsComponent
+    AdminAviocompanyDestinationsComponent,
+    AdminAviocompanyFlightsComponent
   ],
   imports: [
     BrowserModule,

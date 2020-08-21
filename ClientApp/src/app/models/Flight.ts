@@ -1,5 +1,9 @@
+import { AirplaneCompany } from './airplaneCompany';
+import { Time } from '@angular/common';
+
 export class Flight
 {
+    id:number;
     locationFrom:string;
     locationTo:string;
     dateOfTakingOff:string;
@@ -9,6 +13,7 @@ export class Flight
     durationOfFlight:string;
     distanceOfFlight:number;
     numberOfTransfers:number;
-    locationOfTransfers:string[];
-    priceOfTicket:number;
+    locationOfTransfers:string;
+    priceOfTicketOfFlight:number;
+    company:AirplaneCompany;
 }

@@ -13,6 +13,7 @@ namespace WebProjekat.Models
 
         public virtual List<Location> Destinations { get; set; }
         public virtual User Admin { get; set; }
+        public virtual List<Flight> Flights { get; set; }
 
         public AirplaneCompany() { }
 
