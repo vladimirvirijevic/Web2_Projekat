@@ -29,7 +29,7 @@
                     <p style="font-size: 32px;">Daily Earnings: <b>{{ dailyEarnings.totalEarning }} $</b></p>
                 </div>
             </div>
-            <div *ngIf="dailyEarnings.reservations.length > 0" class="row mt-5">
+            <div *ngIf="dailyEarnings.reservations.length > 0" class="row mt-5 mb-5">
                 <div class="col">
                     <h4>Reservations</h4>
                     <table class="table">
@@ -64,34 +64,99 @@
         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
             <div class="row">
                 <div class="col">
-                    <form>
+                    <div>
                         <div class="form-group">
                             <label for="date-input">Choose Week</label>
-                            <input type="week" class="form-control" id="date-input">
+                            <input [(ngModel)]="selectedWeek" type="week" class="form-control" id="date-input">
                           </div>
-                          <div class="button" class="btn btn-secondary">See Earnings</div>
-                    </form>
+                          <div (click)="getWeeklyEarnings()" class="button" class="btn btn-secondary">See Earnings</div>
+                    </div>
                 </div>
                 <div class="col mt-4">
-                    <p style="font-size: 32px;">Weekly Earnings: <b>60 $</b></p>
+                    <p style="font-size: 32px;">Weekly Earnings: <b>{{ weeklyEarnings.totalEarning }} $</b></p>
                 </div>
             </div>
+            <div *ngIf="weeklyEarnings.reservations.length > 0" class="row mt-5 mb-5">
+                <div class="col">
+                    <h4>Reservations</h4>
+                    <table class="table">
+                        <thead class="thead">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Car</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Pickup date</th>
+                            <th scope="col">Dropoff date</th>
+                            <th scope="col">Days</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let reservation of weeklyEarnings.reservations; let i=index">
+                            <th>{{ i+1 }}</th>
+                            <td><a [routerLink]="'/car/'+reservation.car.id">{{ reservation.car.brand + " " + reservation.car.model}}</a></td>
+                            <td>{{ reservation.user.firstName + " " + reservation.user.lastName }}</td>
+                            <td>{{ reservation.pickupDate }}</td>
+                            <td>{{ reservation.dropoffDate }}</td>
+                            <td>{{ reservation.days }}</td>
+                            <td>{{ reservation.totalPrice }}</td>
+                            <td>{{ reservation.status }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
             <div class="row">
                 <div class="col">
-                    <form>
+                    <div>
                         <div class="form-group">
                             <label for="date-input">Choose Month</label>
-                            <input type="month" class="form-control" id="date-input">
+                            <input [(ngModel)]="selectedMonth" type="month" class="form-control" id="date-input">
                           </div>
-                          <div class="button" class="btn btn-secondary">See Earnings</div>
-                    </form>
+                          <div (click)="getMonthlyEarnings()" class="button" class="btn btn-secondary">See Earnings</div>
+                    </div>
                 </div>
                 <div class="col mt-4">
-                    <p style="font-size: 32px;">Monthly Earnings: <b>60 $</b></p>
+                    <p style="font-size: 32px;">Monthly Earnings: <b>{{ monthlyEarnings.totalEarning }} $</b></p>
                 </div>
             </div>
+
+            <div *ngIf="monthlyEarnings.reservations.length > 0" class="row mt-5 mb-5">
+                <div class="col">
+                    <h4>Reservations</h4>
+                    <table class="table">
+                        <thead class="thead">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Car</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Pickup date</th>
+                            <th scope="col">Dropoff date</th>
+                            <th scope="col">Days</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let reservation of monthlyEarnings.reservations; let i=index">
+                            <th>{{ i+1 }}</th>
+                            <td><a [routerLink]="'/car/'+reservation.car.id">{{ reservation.car.brand + " " + reservation.car.model}}</a></td>
+                            <td>{{ reservation.user.firstName + " " + reservation.user.lastName }}</td>
+                            <td>{{ reservation.pickupDate }}</td>
+                            <td>{{ reservation.dropoffDate }}</td>
+                            <td>{{ reservation.days }}</td>
+                            <td>{{ reservation.totalPrice }}</td>
+                            <td>{{ reservation.status }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
       </div>
     </div>

@@ -74,7 +74,7 @@ import { RentacarEarningsComponent } from './my-rentacar-company/rentacar-earnin
     CarComponent,
     AdminAviocompanyDestinationsComponent,
     RentacarReservationsComponent,
-    RentacarEarningsComponent
+    RentacarEarningsComponent,
     AdminAviocompanyDestinationsComponent,
     AdminAviocompanyFlightsComponent
   ],
