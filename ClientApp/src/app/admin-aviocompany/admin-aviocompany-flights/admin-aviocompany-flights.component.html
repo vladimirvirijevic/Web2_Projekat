@@ -17,6 +17,7 @@
      <i class="far fa-money-bill-alt"></i> <b>Ticket price: </b>{{flight.priceOfTicketOfFlight}} euros
     </p>
           <button  class="btn btn-danger" (click)="deleteFlight(flight.id)"><i class="fas fa-trash-alt mr-2"></i>Delete</button>
+       <!-- <button  class="btn btn-primary" (click)="deleteFlight(flight.id)"><i class="fas fa-tools mr-2"></i>Configure airplane seats</button>-->
   </div>
 
   <div class="modal fade" id="addFlightModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -180,7 +181,7 @@
                       
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fas fa-map-marker"></i>
+                                <i class="fas fa-route"></i>
                             </span>
                           </div>
                         <input 

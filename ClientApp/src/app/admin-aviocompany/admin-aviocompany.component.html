@@ -1,7 +1,9 @@
+
 <nav *ngIf="avioCompanyExists" class="nav nav-pills nav-justified">
     <a class="nav-link" routerLink="/avioAdmin/company/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-id-card mr-2"></i>Company Profile</a>
     <a class="nav-link" routerLink="/avioAdmin/company/destinations" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-globe-europe mr-2"></i>All business destinations</a>
     <a class="nav-link" routerLink="/avioAdmin/company/flights" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-plane mr-2"></i>Flights</a>
+    <a class="nav-link" routerLink="/avioAdmin/company/seats" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-tools mr-2"></i>Configure airplane seats</a>
     <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-list-alt mr-2"></i>Tickets with discount</a>
     <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class=" fas fa-suitcase-rolling mr-2"></i>Baggage</a>
 </nav>

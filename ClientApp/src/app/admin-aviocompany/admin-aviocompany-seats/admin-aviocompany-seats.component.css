@@ -1,0 +1,182 @@
+canvas{
+    margin-left:20%;
+    position: absolute;
+}
+
+canvas-container
+{
+    position: relative;
+    width: 700px;
+    height: 700px;
+}
+#button1
+{
+    position:absolute;
+    left:655px;
+    top:450px;
+    width:45px;
+    height: 45px;
+
+}
+#button2
+{
+    position:absolute;
+    left:715px;
+    top:450px;
+    width:45px;
+    height: 45px;
+
+}
+#button3
+{
+    position:absolute;
+    left:775px;
+    top:450px;
+    width:45px;
+    height: 45px;
+
+}
+
+
+#button4
+{
+    position:absolute;
+    left:655px;
+    top:500px;
+    width:45px;
+    height: 45px;
+
+}
+#button5
+{
+    position:absolute;
+    left:715px;
+    top:500px;
+    width:45px;
+    height: 45px;
+
+}
+#button6
+{
+    position:absolute;
+    left:775px;
+    top:500px;
+    width:45px;
+    height: 45px;
+
+}
+
+
+#button7
+{
+    position:absolute;
+    left:655px;
+    top:550px;
+    width:45px;
+    height: 45px;
+
+}
+#button8
+{
+    position:absolute;
+    left:715px;
+    top:550px;
+    width:45px;
+    height: 45px;
+
+}
+#button9
+{
+    position:absolute;
+    left:775px;
+    top:550px;
+    width:45px;
+    height: 45px;
+}
+
+
+
+#button10
+{
+    position:absolute;
+    left:655px;
+    top:600px;
+    width:45px;
+    height: 45px;
+
+}
+#button11
+{
+    position:absolute;
+    left:715px;
+    top:600px;
+    width:45px;
+    height: 45px;
+
+}
+#button12
+{
+    position:absolute;
+    left:775px;
+    top:600px;
+    width:45px;
+    height: 45px;
+}
+
+
+
+#button13
+{
+    position:absolute;
+    left:655px;
+    top:650px;
+    width:45px;
+    height: 45px;
+
+}
+#button14
+{
+    position:absolute;
+    left:715px;
+    top:650px;
+    width:45px;
+    height: 45px;
+
+}
+#button15
+{
+    position:absolute;
+    left:775px;
+    top:650px;
+    width:45px;
+    height: 45px;
+}
+
+#button16
+{
+    position:absolute;
+    left:655px;
+    top:700px;
+    width:45px;
+    height: 45px;
+
+}
+#button17
+{
+    position:absolute;
+    left:715px;
+    top:700px;
+    width:45px;
+    height: 45px;
+
+}
+#button18
+{
+    position:absolute;
+    left:775px;
+    top:700px;
+    width:45px;
+    height: 45px;
+}
+
+

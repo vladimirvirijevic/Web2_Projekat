@@ -42,6 +42,7 @@ import { AdminAviocompanyDestinationsComponent } from './admin-aviocompany/admin
 import { AdminAviocompanyFlightsComponent } from './admin-aviocompany/admin-aviocompany-flights/admin-aviocompany-flights.component';
 import { RentacarReservationsComponent } from './my-rentacar-company/rentacar-reservations/rentacar-reservations.component';
 import { RentacarEarningsComponent } from './my-rentacar-company/rentacar-earnings/rentacar-earnings.component';
+import { AdminAviocompanySeatsComponent } from './admin-aviocompany/admin-aviocompany-seats/admin-aviocompany-seats.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { RentacarEarningsComponent } from './my-rentacar-company/rentacar-earnin
     RentacarReservationsComponent,
     RentacarEarningsComponent,
     AdminAviocompanyDestinationsComponent,
-    AdminAviocompanyFlightsComponent
+    AdminAviocompanyFlightsComponent,
+    AdminAviocompanySeatsComponent
   ],
   imports: [
     BrowserModule,

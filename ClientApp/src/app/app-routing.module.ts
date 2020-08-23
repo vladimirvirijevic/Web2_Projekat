@@ -33,7 +33,7 @@ import { AdminAviocompanyDestinationsComponent } from './admin-aviocompany/admin
 import { RentacarReservationsComponent } from './my-rentacar-company/rentacar-reservations/rentacar-reservations.component';
 import { RentacarEarningsComponent } from './my-rentacar-company/rentacar-earnings/rentacar-earnings.component';
 import { AdminAviocompanyFlightsComponent } from './admin-aviocompany/admin-aviocompany-flights/admin-aviocompany-flights.component';
-
+import { AdminAviocompanySeatsComponent } from './admin-aviocompany/admin-aviocompany-seats/admin-aviocompany-seats.component';
 
 
 const routes: Routes = [
@@ -79,7 +79,8 @@ const routes: Routes = [
     [
       {path:'profile', component:AdminAviocompanyProfileComponent},
       {path:'destinations', component:AdminAviocompanyDestinationsComponent},
-      {path:'flights', component:AdminAviocompanyFlightsComponent}
+      {path:'flights', component:AdminAviocompanyFlightsComponent},
+      {path: 'seats', component:AdminAviocompanySeatsComponent }
     ],
   canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }}
 ];
