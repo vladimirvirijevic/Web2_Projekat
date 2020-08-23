@@ -347,7 +347,126 @@ namespace WebProjekat.Controllers
 
             return Ok(response);
         }
-        
+
+
+        [Authorize]
+        [HttpGet]
+        [Route("weeklyearnings/{week}")]
+        public async Task<ActionResult<GetEarningsResponse>> GetWeeklyEarnings(string week)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            // "2020-W35"
+            // "2020-W02"
+            int weekNumber = int.Parse(week.Split('-')[1].Remove(0, 1));
+            int year = int.Parse(week.Split('-')[0]);
+
+            var response = new GetEarningsResponse
+            {
+                TotalEarning = 0
+            };
+
+            var company = await _context.RentacarCompanies.Where(c => c.Admin.Id == currentUser.Id).FirstOrDefaultAsync();
+
+            if (company == null)
+            {
+                return BadRequest();
+            }
+
+            foreach (var branch in company.Branches)
+            {
+                foreach (var car in branch.Cars)
+                {
+                    foreach (var reservation in car.CarReservations)
+                    {
+                        DateTime reservationPickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime reservationDropoffDate = DateTime.ParseExact(reservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                        List<DateTime> dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                        foreach (var date in dates)
+                        {
+                            var dateWeek = _dateService.GetWeekOfYear(date);
+                            var dateYear = date.Year;
+
+                            if (dateWeek == weekNumber && dateYear == year)
+                            {
+                                if (!response.Reservations.Contains(reservation))
+                                {
+                                    response.Reservations.Add(reservation);
+                                }
+                                response.TotalEarning += reservation.Car.PricePerDay;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return Ok(response);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("monthlyearnings/{month}")]
+        public async Task<ActionResult<GetEarningsResponse>> GetMonthlyEarnings(string month)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            // "2020-07"
+            int monthNumber = int.Parse(month.Split('-')[1]);
+            int year = int.Parse(month.Split('-')[0]);
+
+            var response = new GetEarningsResponse
+            {
+                TotalEarning = 0
+            };
+
+            var company = await _context.RentacarCompanies.Where(c => c.Admin.Id == currentUser.Id).FirstOrDefaultAsync();
+
+            if (company == null)
+            {
+                return BadRequest();
+            }
+
+            foreach (var branch in company.Branches)
+            {
+                foreach (var car in branch.Cars)
+                {
+                    foreach (var reservation in car.CarReservations)
+                    {
+                        DateTime reservationPickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime reservationDropoffDate = DateTime.ParseExact(reservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                        List<DateTime> dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                        foreach (var date in dates)
+                        {
+                            if (date.Year == year && date.Month == monthNumber)
+                            {
+                                if (!response.Reservations.Contains(reservation))
+                                {
+                                    response.Reservations.Add(reservation);
+                                }
+
+                                response.TotalEarning += reservation.Car.PricePerDay;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return Ok(response);
+        }
     }
 }
 

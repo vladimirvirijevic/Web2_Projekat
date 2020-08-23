@@ -77,4 +77,12 @@ export class RentacarAdminService {
   getDailyEarnings(day): Observable<RentacarEarning> {
     return this.http.get<RentacarEarning>(`${environment.api_url}/rentacaradmin/dailyearnings/${day}`);
   }
+
+  getWeeklyEarnings(week): Observable<RentacarEarning> {
+    return this.http.get<RentacarEarning>(`${environment.api_url}/rentacaradmin/weeklyearnings/${week}`);
+  }
+
+  getMonthlyEarnings(month): Observable<RentacarEarning> {
+    return this.http.get<RentacarEarning>(`${environment.api_url}/rentacaradmin/monthlyearnings/${month}`);
+  }
 }

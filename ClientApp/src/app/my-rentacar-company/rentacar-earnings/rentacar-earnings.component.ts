@@ -9,13 +9,24 @@ import { RentacarEarning } from 'src/app/models/rentacarEarning';
 })
 export class RentacarEarningsComponent implements OnInit {
   selectedDay: string = "";
+  selectedWeek: string = "";
+  selectedMonth: string = "";
+
   dailyEarnings: RentacarEarning = new RentacarEarning();
+  weeklyEarnings: RentacarEarning = new RentacarEarning();
+  monthlyEarnings: RentacarEarning = new RentacarEarning();
 
   constructor(
     private rentacarAdminService: RentacarAdminService
   ) {
     this.dailyEarnings.totalEarning = 0;
     this.dailyEarnings.reservations = [];
+
+    this.weeklyEarnings.totalEarning = 0;
+    this.weeklyEarnings.reservations = [];
+
+    this.monthlyEarnings.totalEarning = 0;
+    this.monthlyEarnings.reservations = [];
    }
 
   ngOnInit(): void {
@@ -30,6 +41,34 @@ export class RentacarEarningsComponent implements OnInit {
       .subscribe(
         data => {
           this.dailyEarnings = data;
+          console.log(data);
+        }
+      )
+  }
+
+  getWeeklyEarnings() {
+    if (this.selectedWeek == "") {
+      return;
+    }
+
+    this.rentacarAdminService.getWeeklyEarnings(this.selectedWeek)
+      .subscribe(
+        data => {
+          this.weeklyEarnings = data;
+          console.log(data);
+        }
+      )
+  }
+
+  getMonthlyEarnings() {
+    if (this.selectedMonth == "") {
+      return;
+    }
+
+    this.rentacarAdminService.getMonthlyEarnings(this.selectedMonth)
+      .subscribe(
+        data => {
+          this.monthlyEarnings = data;
           console.log(data);
         }
       )
