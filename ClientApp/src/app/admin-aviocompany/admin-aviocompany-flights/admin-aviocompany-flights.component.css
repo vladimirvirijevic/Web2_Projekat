@@ -1,3 +1,13 @@
 input{
     width: 200px;
 }
+
+.card-text
+{
+    box-shadow: 0 0 .6rem rgb(180, 179, 179);
+}
+.card-title
+{
+    box-shadow: 0 0 .6rem rgb(255, 102, 102);
+    font-style: italic;
+}

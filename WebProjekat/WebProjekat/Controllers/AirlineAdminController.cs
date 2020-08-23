@@ -206,7 +206,42 @@ namespace WebProjekat.Controllers
             return Ok();
 
         }
+        //dobavlja letove
+        [HttpGet("getFlights/{companyId}")]
+        [Authorize]
+        public async Task<IEnumerable<Flight>> GetFlights(int companyId)
+        {
+
+            return await _context.Flights.Where(x => x.Company.Id == companyId).ToListAsync();
+        }
+        [HttpDelete("deleteFlight/{flightId}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteFlight(int flightId)
+        {
+            if (flightId == 0)
+            {
+                return BadRequest();
+            }
+
+            var flight = await _context.Flights.FindAsync(flightId);
+            if (flight== null)
+            {
+                return NotFound();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (flight.Company.Admin.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            _context.Flights.Remove(flight);
+            await _context.SaveChangesAsync();
+
+            return Ok();
 
 
+        }
     }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Flight } from '../models/Flight';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,14 @@ export class AirlineAdminService {
   {
     return this.http.post<any>(`${environment.api_url}/airlineadmin/addFlight/${companyId}`, flightInfo);
   }
-
-
+  //dobavljanje letova za prikaz
+  getFlights(companyId)
+  {
+    return this.http.get<Flight[]>(`${environment.api_url}/airlineadmin/getFlights/${companyId}`);
+  }
+  deleteFlight(flightId):Observable<Flight[]>
+  {
+    return this.http.delete<any>(`${environment.api_url}/airlineadmin/deleteFlight/${flightId}`);
+  }
 
 }

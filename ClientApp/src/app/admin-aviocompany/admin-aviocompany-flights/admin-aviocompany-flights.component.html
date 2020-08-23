@@ -5,6 +5,20 @@
         <i class="fas fa-plus mr-2"></i>
         Add flight</button></h5>
 </div>
+
+<div  class="card-body" *ngFor="let flight of flights; let i=index">
+    <i class="fas fa-plane mr-2"></i>
+    <h5 class="card-title">{{i+1}}. {{flight.locationFrom}}----->{{flight.locationTo}}</h5>
+    <p class="card-text">
+     <i class="fas fa-calendar-alt"></i> <b> Date taking off:</b> {{flight.dateOfTakingOff}}<br/>
+     <i class="fas fa-clock"></i> <b> Time taking off:</b> {{flight.timeOfTakingOff}}<br/>
+     <i class="fas fa-calendar-alt"></i> <b> Date of landing:</b>  {{flight.dateOfLanding}}<br/>
+     <i class="fas fa-clock"></i>  <b> Time of landing:</b> {{flight.timeOfLanding}} <br/>
+     <i class="far fa-money-bill-alt"></i> <b>Ticket price: </b>{{flight.priceOfTicketOfFlight}} euros
+    </p>
+          <button  class="btn btn-danger" (click)="deleteFlight(flight.id)"><i class="fas fa-trash-alt mr-2"></i>Delete</button>
+  </div>
+
   <div class="modal fade" id="addFlightModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

@@ -4,6 +4,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AirlineAdminService } from 'src/app/services/airline-admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AirplaneCompany } from 'src/app/models/airplaneCompany';
+import { Flight } from 'src/app/models/Flight';
 
 @Component({
   selector: 'app-admin-aviocompany-flights',
@@ -22,6 +23,7 @@ export class AdminAviocompanyFlightsComponent implements OnInit {
   public selectedFirstDestination:string="";
   public selectedSecondDestination:string="";
   public selectedThirdDestination:string="";
+  public flights:Flight[];
 
   errorMessageText = "";
 
@@ -92,6 +94,8 @@ export class AdminAviocompanyFlightsComponent implements OnInit {
             console.log("kompanija");
             console.log(this.company);
             this.getLocations();
+            this.getFlights();
+          
 
           }
         });
@@ -177,5 +181,38 @@ export class AdminAviocompanyFlightsComponent implements OnInit {
   {
     this.selectedThirdDestination=event.target.value;
   }
+//get flights
+ getFlights()
+ {
+  this.adminAirlineService.getFlights(this.company.id).subscribe
+  (
+      data=>
+      {
+        console.log(data);
+        this.flights=data;
+        console.log("Letovi");
+        console.log(this.flights);
+      },
+      error => {
+        console.log("ne radi");
+       }
+  );
+ }
+
+ deleteFlight(flightId)
+ {
+    this.adminAirlineService.deleteFlight(flightId).subscribe
+    (
+      data=>
+      {
+        this.getFlights();
+      },
+      err=>
+      {
+       console.log("ne radi");
+      }
+    );
+ }
+
 
 }
