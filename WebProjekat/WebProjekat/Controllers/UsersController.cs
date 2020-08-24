@@ -107,7 +107,7 @@ namespace WebProjekat.Controllers
                 Phone = model.Phone,
                 City = model.City,
                 Email = model.Email,
-                Confirmed = true,
+                Confirmed = false,
                 PasswordChanged = false,
                 IsCompanyAdmin = false,
                 Role = "User"
@@ -116,11 +116,13 @@ namespace WebProjekat.Controllers
             try
             {
                 var emailLink = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+
                 var result = await _userService.CreateAsync(user, model.Password, emailLink);
 
                 if (result == null)
                 {
                     // email postoji vec, vracamo 409 - Conflict
+                    
                     return Conflict();
                 }
 

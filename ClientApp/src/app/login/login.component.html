@@ -3,7 +3,7 @@
     <h1>Login</h1>
     
     <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
-        Invalid login!
+        {{ errorMessage }}
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="input-group form-group-no-border mb-2 mt-2">

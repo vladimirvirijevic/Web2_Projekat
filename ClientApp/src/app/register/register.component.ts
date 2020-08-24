@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(registerInfo)
       .subscribe(
         data => {
-          this.router.navigate(['/login'])
+          //this.router.navigate(['/login'])
           this.showConfirmation = true;
           this.showErrorMessage = false;
         },

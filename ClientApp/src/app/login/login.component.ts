@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   showErrorMessage = false;
+  errorMessage = "Wrong login information or account has not been activated yet!";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,13 +59,7 @@ export class LoginComponent implements OnInit {
             }
           },
           error => {
-            if (error.status == 400) {
-              this.showErrorMessage = true;
-              console.log('radi');
-            }
-            else {
-              console.log('ne radi');
-            }
+            this.showErrorMessage = true;
           }
         );
 

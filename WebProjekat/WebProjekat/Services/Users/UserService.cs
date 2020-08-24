@@ -45,8 +45,10 @@ namespace WebProjekat.Services.Users
                 return null;
 
             // Check if user confirmed his account
+            /*
             if (user.Confirmed == false)
                 return null;
+            */
 
             // authentication successful
             return user;
