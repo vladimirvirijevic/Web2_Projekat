@@ -1,0 +1,58 @@
+<div class="row text-center mt-5 mb-3">
+    <div class="col">
+        <h3>Search Airline Companies</h3>
+        <p>Please enter company name or location</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <form class="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Service Name</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Enter service name"
+                            formControlName="name">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Service Location</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Enter service location"
+                            formControlName="location">
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button (click)="resetSearch()" type="button" class="ml-3 btn btn-secondary">Reset Search</button>
+        </form>
+    </div>
+</div>
+
+<div class="row text-center mt-5 mb-3">
+    <div class="col">
+        <h3>Airline Companies</h3>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col">
+        <div class="profiles-overview">
+            <div class="company-overview" *ngFor="let company of airplaneCompanies">
+                <h4>{{ company.name }}</h4>
+                <p class="company-address">{{ company.address }}</p>
+                <p class="company-description">{{ company.description }}</p>
+                <p class="company-grade"><b>Grade: </b>{{ company.grade }}</p>
+                <button (click)="viewCompany(company.id)" class="btn btn-primary">View More</button>
+            </div>
+        </div>
+    </div>
+</div>

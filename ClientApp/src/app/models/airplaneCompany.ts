@@ -9,6 +9,5 @@ export class AirplaneCompany {
     grade: number;
     destinations:Location[];
     admin:AuthUser;
-    
-   
+    flights: Flight[];
 }

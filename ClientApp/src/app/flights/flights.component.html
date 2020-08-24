@@ -1,74 +1,90 @@
 <div class="container">
-    <div class="row mt-5">
+    <div class="row text-center mt-5 mb-3">
         <div class="col">
-            <form class="search-flights">
+            <h3>Search Flights</h3>
+            <p>All fields are required</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <form class="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
                 <div class="row">
-                    <div class="col mb-4">
-                        <h3 style="text-align: center;"> Search Flights</h3>
-                    </div>
-                </div>
-                <div class="row mb-4">
                     <div class="col">
-                        <label class="my-1 mb-2">Type</label>
-                        <select class="custom-select">
-                          <option selected value="Round Trip">Round Trip</option>
-                          <option value="One Way">One Way</option>
-                        </select>
-                    </div> 
-                    <div class="col">
-                        <label class="my-1 mb-2">Seat</label>
-                        <select class="custom-select">
-                          <option value="Adult">Adult</option>
-                          <option value="Child">Child</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label class="my-1 mb-2">Cabin</label>
-                        <select class="custom-select">
-                          <option value="Economy" selected>Economy</option>
-                          <option value="Business">Business</option>
-                          <option value="Mixed">Mixed</option>
-                        </select>
-                    </div>
-                  </div>
-                <div class="row">
-                    <div class="col-auto">
-                      <input type="text" class="form-control" placeholder="From">
-                    </div> -
-                    <div class="col-auto">
-                      <input type="text" class="form-control" placeholder="To">
-                    </div>
-                    <div class="col-auto">
-                        <div class="form-group form-inline">                            
-                            <label class="mr-3">Depart</label>
-                            <input type="date" class="form-control">
+                        <div class="form-group">
+                            <label>From</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Enter starting location"
+                                formControlName="from">
                         </div>
                     </div>
-                    <div class="col-auto">
-                        <div class="form-group form-inline">                            
-                            <label class="mr-3">Return</label>
-                            <input type="date" class="form-control">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>To</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Enter end location"
+                                formControlName="to">
                         </div>
                     </div>
                     
-                  </div>
-                  <div class="row">
-                      <div class="col">
-                          <button type="submit" class="btn btn-primary mt-4 search-btn">Seach</button>
-                      </div>
-                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Take Off Date</label>
+                            <input 
+                                type="date" 
+                                class="form-control" 
+                                placeholder="Enter take off date"
+                                formControlName="takeoffDate">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Landing Date</label>
+                            <input 
+                                type="date" 
+                                class="form-control" 
+                                placeholder="Enter end location"
+                                formControlName="landingDate">
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <button [disabled]="searchForm.invalid" type="submit" class="btn btn-primary">Search</button>
+                <button (click)="resetSearch()" type="button" class="ml-3 btn btn-secondary">Reset Search</button>
             </form>
         </div>
+    </div> 
+    
+    <div class="row text-center mt-5 mb-3">
+        <div class="col">
+            <h3>Flights</h3>
+        </div>
     </div>
-    <h3 style="text-align: center;" class="center mt-5 mb-5">Airline Services</h3>
-    <div class="profiles-overview">
-        <div class="company-overview" *ngFor="let company of airplaneCompanies">
-            <h4>{{ company.name }}</h4>
-            <p class="company-address">{{ company.address }}</p>
-            <p class="company-description">{{ company.description }}</p>
-            <p class="company-grade"><b>Grade: </b>{{ company.grade }}</p>
-            <button class="btn btn-primary">View More</button>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4" *ngFor="let flight of flights; let i=index">
+                <div class="card-header">
+                    <h5 class="card-title">{{i+1}}. {{flight.locationFrom}}----->{{flight.locationTo}}</h5>
+                </div>
+                <div  class="card-body" >
+                     <p><i class="fas fa-calendar-alt"></i> <b> Date taking off:</b> {{flight.dateOfTakingOff}}</p>
+                    <p><i class="fas fa-clock"></i> <b> Time taking off:</b> {{flight.timeOfTakingOff}}</p>
+                    <p><i class="fas fa-calendar-alt"></i> <b> Date of landing:</b>  {{flight.dateOfLanding}}</p>
+                    <p><i class="fas fa-clock"></i>  <b> Time of landing:</b> {{flight.timeOfLanding}} </p>
+                    <p><i class="far fa-money-bill-alt"></i> <b>Ticket price: </b>{{flight.priceOfTicketOfFlight}} euros</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
 

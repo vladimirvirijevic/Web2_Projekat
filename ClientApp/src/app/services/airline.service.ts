@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
+import { Flight } from '../models/Flight';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,30 @@ export class AirlineService {
     return this.http.get<AirplaneCompany[]>(`${environment.api_url}/airline/getCompanies`);
   }
 
+  getCompany(companyId): Observable<AirplaneCompany> {
+    return this.http.get<AirplaneCompany>(`${environment.api_url}/airline/companies/${companyId}`);
+  }
+
+  getFlights(): Observable<Flight[]> {
+    return this.http.get<Flight[]>(`${environment.api_url}/airline/flights`);
+  }
+
   createCompany(companyInfo) {
     return this.http.post<any>(`${environment.api_url}/airline/companies`, companyInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  searchCompanies(searchInfo) {
+    return this.http.post<any>(`${environment.api_url}/airline/searchcompanies`, searchInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  searchFlights(searchInfo) {
+    return this.http.post<any>(`${environment.api_url}/airline/searchflights`, searchInfo)
     .pipe(
         catchError(this.handleError)
     );

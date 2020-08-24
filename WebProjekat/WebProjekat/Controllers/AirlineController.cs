@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Ocsp;
 using WebProjekat.Data;
 using WebProjekat.Helpers;
 using WebProjekat.Models;
+using WebProjekat.Requests.Airline;
 using WebProjekat.Requests.AirlineAdmin;
 using WebProjekat.Services.Users;
 
@@ -30,12 +32,6 @@ namespace WebProjekat.Controllers
             _httpContextAccessor = httpContextAccessor;
 
             var user = _httpContextAccessor.HttpContext.Items["User"];
-            //var user2 = (User)HttpContext.Items["User"];
-            //var prinicpal = (ClaimsPrincipal)Thread.CurrentPrincipal;
-            //var user = _userService.GetCurrentUser(prinicpal);
-
-            // Seed Dummy Data
-            //SeedCompanies();
         }
 
         [HttpPost]
@@ -98,58 +94,58 @@ namespace WebProjekat.Controllers
             return await _context.AirplaneCompanies.ToListAsync();
         }
 
-      /*  private void SeedCompanies()
+        [HttpGet("companies/{companyId}")]
+        public async Task<ActionResult<AirplaneCompany>> GetCompany(int companyId)
         {
-            if (_context.AirplaneCompanies.Count() == 0)
+            var result = await _context.AirplaneCompanies.FindAsync(companyId);
+
+            return Ok(result);
+        }
+
+        [HttpGet("flights")]
+        public async Task<IEnumerable<Flight>> GetFlights()
+        {
+            return await _context.Flights.ToListAsync();
+        }
+
+        [HttpPost("searchcompanies")]
+        public async Task<ActionResult<IEnumerable<AirplaneCompany>>> SearchCompanies([FromBody] SearchAirlineCompanyRequest request)
+        {
+            List<AirplaneCompany> companies = new List<AirplaneCompany>();
+
+            if (request.Location == "" && request.Name == "")
             {
-                AirplaneCompany company1 = new AirplaneCompany
-                {
-                    Name = "Air Serbia",
-                    Address = "Belgrade Nikola Tesla Airport",
-                    Description = "Best Airplane Company in Serbia",
-                    Grade = 9,
-                    Destinations = new List<Location>
-                    {
-                        new Location { Name = "Serbia", Lat = 12, Long = 13 },
-                        new Location { Name = "Spain", Lat = 11, Long = 1 },
-                        new Location { Name = "France", Lat = 10, Long = 6 }
-                    }
-                };
-
-                AirplaneCompany company2 = new AirplaneCompany
-                {
-                    Name = "Air France",
-                    Address = "Paris Airport",
-                    Description = "Best Airplane Company in France",
-                    Grade = 9,
-                    Destinations = new List<Location>
-                    {
-                        new Location { Name = "Serbia", Lat = 12, Long = 13 },
-                        new Location { Name = "Croatia", Lat = 11, Long = 1 },
-                        new Location { Name = "Spain", Lat = 10, Long = 6 }
-                    }
-                };
-
-                AirplaneCompany company3 = new AirplaneCompany
-                {
-                    Name = "Air Spain",
-                    Address = "Madrid Airport",
-                    Description = "Best Airplane Company in Spain",
-                    Grade = 9,
-                    Destinations = new List<Location>
-                    {
-                        new Location { Name = "USA", Lat = 12, Long = 13 },
-                        new Location { Name = "China", Lat = 11, Long = 1 },
-                        new Location { Name = "France", Lat = 10, Long = 6 }
-                    }
-                };
-
-                _context.AirplaneCompanies.Add(company1);
-                _context.AirplaneCompanies.Add(company2);
-                _context.AirplaneCompanies.Add(company3);
-
-                _context.SaveChanges();
+                companies = await _context.AirplaneCompanies.ToListAsync();
             }
-        }*/
+            else if (request.Location == "")
+            {
+                companies = await _context.AirplaneCompanies.Where(x => x.Name.Contains(request.Name)).ToListAsync();
+            }
+            else if (request.Name == "")
+            {
+                companies = await _context.AirplaneCompanies.Where(x => x.Address.Contains(request.Location)).ToListAsync();
+            }
+            else
+            {
+                companies = await _context.AirplaneCompanies.Where(x => x.Address.Contains(request.Location) && x.Name.Contains(request.Name)).ToListAsync();
+            }
+
+            return Ok(companies);
+        }
+
+        [HttpPost("searchflights")]
+        public async Task<ActionResult<IEnumerable<Flight>>> SearchFlights([FromBody] SearchFlightsRequest request)
+        {
+            List<Flight> flights = new List<Flight>();
+
+            flights = await _context.Flights.Where(f => 
+                    f.LocationFrom.Contains(request.From) && 
+                    f.LocationTo.Contains(request.To) &&
+                    f.DateOfTakingOff == request.TakeoffDate &&
+                    f.DateOfLanding == request.LandingDate
+                ).ToListAsync();
+
+            return Ok(flights);
+        }
     }
 }

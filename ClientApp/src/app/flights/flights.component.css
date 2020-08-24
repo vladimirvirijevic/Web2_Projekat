@@ -1,43 +1,4 @@
-.search-flights {
+.search-form {
     padding: 30px;
     box-shadow: 0 0 .6rem rgb(180, 179, 179);
-}
-
-.search-btn {
-    padding: 10px 34px;
-}
-
-.home {
-    margin-top: 50px;
-}
-
-.company {
-    margin: 0 0 50px 0;
-    max-width: 400px;
-}
-
-.home-tab {
-    display: block;
-    font-weight: bold;
-    padding: 20px;
-}
-
-.home-profiles {
-    margin: 30px 0;
-}
-
-.company-overview {
-    box-shadow: 0 0 .6rem rgb(180, 179, 179);
-    padding: 30px;
-    margin: 20px 0;
-}
-
-.company-address {
-    color: rgb(165, 165, 165);
-    font-style: italic;
-}
-
-.filter-btn {
-    width: 100px;
-    margin: 20px 0;
 }

@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col">
+        <div *ngIf="company" class="col">
+            <h2 class="mb-3">{{ company.name }}</h2>
+            <p><b>Address: </b> {{ company.address }}</p>
+            <p><b>Description: </b> {{ company.description }}</p>
+            <p><b>Grade: </b> {{ company.grade }}</p>
+            <p><b>Destinations</b></p>
+            <ul>
+                <li *ngFor="let destination of company.destinations; let i = index;">{{ destination.name }}</li>
+            </ul>
+        </div>
+    </div>
+    
+</div>
+
+<div *ngIf="company.flights.length > 0" class="row mt-5 mb-3">
+    <div class="col">
+        <h3>Flights</h3>
+    </div>
+</div>
+
+<div *ngIf="company.flights.length > 0">
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4" *ngFor="let flight of company.flights; let i=index">
+                <div class="card-header">
+                    <h5 class="card-title">{{i+1}}. {{flight.locationFrom}}----->{{flight.locationTo}}</h5>
+                </div>
+                <div  class="card-body" >
+                     <p><i class="fas fa-calendar-alt"></i> <b> Date taking off:</b> {{flight.dateOfTakingOff}}</p>
+                    <p><i class="fas fa-clock"></i> <b> Time taking off:</b> {{flight.timeOfTakingOff}}</p>
+                    <p><i class="fas fa-calendar-alt"></i> <b> Date of landing:</b>  {{flight.dateOfLanding}}</p>
+                    <p><i class="fas fa-clock"></i>  <b> Time of landing:</b> {{flight.timeOfLanding}} </p>
+                    <p><i class="far fa-money-bill-alt"></i> <b>Ticket price: </b>{{flight.priceOfTicketOfFlight}} euros</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col">
+        <button (click)="goBack()" class="btn btn-secondary mt-3">Go Back</button>
+    </div>
+</div>

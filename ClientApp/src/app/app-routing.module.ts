@@ -34,10 +34,14 @@ import { RentacarReservationsComponent } from './my-rentacar-company/rentacar-re
 import { RentacarEarningsComponent } from './my-rentacar-company/rentacar-earnings/rentacar-earnings.component';
 import { AdminAviocompanyFlightsComponent } from './admin-aviocompany/admin-aviocompany-flights/admin-aviocompany-flights.component';
 import { AdminAviocompanySeatsComponent } from './admin-aviocompany/admin-aviocompany-seats/admin-aviocompany-seats.component';
+import { AirlineServicesComponent } from './airline-services/airline-services.component';
+import { AirlineCompanyComponent } from './airline-services/airline-company/airline-company.component';
 
 
 const routes: Routes = [
   { path: '', component: FlightsComponent, pathMatch: 'full' },
+  { path: 'airline-companies', component: AirlineServicesComponent, pathMatch: 'full' },
+  { path: 'airline-companies/:id', component: AirlineCompanyComponent },
   { path: 'rentacar/:id', component: RentacarProfileComponent },
   { path: 'rentacar', component: CarsComponent },
   { path: 'register', component: RegisterComponent },
