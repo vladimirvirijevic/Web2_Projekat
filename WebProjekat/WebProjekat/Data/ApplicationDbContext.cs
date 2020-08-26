@@ -19,7 +19,7 @@ namespace WebProjekat.Data
         public DbSet<CarReservation> CarReservations { get; set; }
         
         public DbSet<Flight> Flights { get; set; }
-
+        public DbSet<Seat> Seats { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();

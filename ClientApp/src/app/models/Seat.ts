@@ -5,13 +5,13 @@ import { Flight } from './Flight';
 export class Seat {
 
     id:number;
-    nameOfNonUser:string; 
-    firstNameofNonUser: string;
-    lastNameofNonUser: string;
+    firstNameofUser: string;
+    lastNameofUser: string;
     cityofNonUser:string;
     phoneofNonUser:string
     isItReserved:Boolean;
-    doesItExsists:Boolean;
+    doesItExists:Boolean;
+    isItAvailable:Boolean;
     whoReservedIt:AuthUser;
     whoCreatedIt:AirplaneCompany;
     flightBelonging:Flight;

@@ -5,6 +5,7 @@ import { AirlineAdminService } from 'src/app/services/airline-admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AirplaneCompany } from 'src/app/models/airplaneCompany';
 import { Flight } from 'src/app/models/Flight';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin-aviocompany-flights',
@@ -40,6 +41,7 @@ export class AdminAviocompanyFlightsComponent implements OnInit {
     public authenticateService: AuthenticationService,
     public adminAirlineService: AirlineAdminService,
     public formBuilder: FormBuilder,
+    public router:Router
 
   ) { 
     this.addFlightForm = this.formBuilder.group({
@@ -214,5 +216,9 @@ export class AdminAviocompanyFlightsComponent implements OnInit {
     );
  }
 
+ seatsManage(flightId)
+ {
+   this.router.navigate([`/avioAdmin/company/seats/${flightId}`]);
+ }
 
 }

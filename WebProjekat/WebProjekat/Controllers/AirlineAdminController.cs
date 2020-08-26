@@ -243,5 +243,53 @@ namespace WebProjekat.Controllers
 
 
         }
+        [HttpPost("createSeat/{flightId}")]
+        [Authorize]
+        public async Task<IActionResult> CreateSeat(int flightId, [FromBody] CreateSeatRequest request)
+        {
+            if (request.NumberOfSeat == 0)
+            {
+                return BadRequest();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            bool seatExists = await _context.Seats.FirstOrDefaultAsync(x => x.NumberOfSeat == request.NumberOfSeat && x.FlightBelonging.Id==flightId ) != null;
+
+            if (seatExists)
+            {
+                return Conflict();
+            }
+
+            var flight = await _context.Flights.FirstOrDefaultAsync(x => x.Id == flightId);
+
+            if (flight.Company.Admin.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            var seat = new Seat();
+            seat.NumberOfSeat = request.NumberOfSeat;
+            seat.IsItReserved = false;
+            seat.IsItAvailable = true;
+            seat.DoesItExist = true;
+            seat.WhoCreatedIt = flight.Company;
+            seat.FlightBelonging = flight;
+
+            _context.Seats.Add(seat);
+            flight.Seats.Add(seat);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+        }
+
+
     }
 }

@@ -21,6 +21,7 @@ namespace WebProjekat.Models
         public string LocationOfTransfers { get; set; }
         public string PriceOfTicketOfFlight { get; set; }
         public virtual AirplaneCompany Company { get; set; }
+        public virtual List<Seat> Seats { get; set; } = new List<Seat>();
 
 
     }

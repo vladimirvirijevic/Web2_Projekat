@@ -50,4 +50,14 @@ export class AirlineAdminService {
     return this.http.delete<any>(`${environment.api_url}/airlineadmin/deleteFlight/${flightId}`);
   }
 
+  //za sedista
+  //kreiranje sedista
+  createSeat(flightId, seatInfo)
+  {
+    return this.http.post<any>(`${environment.api_url}/airlineadmin/createSeat/${flightId}`,seatInfo);
+  }
+
+
+
+
 }

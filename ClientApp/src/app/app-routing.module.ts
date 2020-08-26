@@ -36,7 +36,7 @@ import { AdminAviocompanyFlightsComponent } from './admin-aviocompany/admin-avio
 import { AdminAviocompanySeatsComponent } from './admin-aviocompany/admin-aviocompany-seats/admin-aviocompany-seats.component';
 import { AirlineServicesComponent } from './airline-services/airline-services.component';
 import { AirlineCompanyComponent } from './airline-services/airline-company/airline-company.component';
-
+import { SeatComponent } from './seat/seat.component';
 
 const routes: Routes = [
   { path: '', component: FlightsComponent, pathMatch: 'full' },
@@ -76,7 +76,9 @@ const routes: Routes = [
   { path: 'admin/rentacar', component: AdminRentacarComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
 
   { path: 'car/:id', component: CarComponent },
+
   
+  {path:'seat/:flightId/:numberOfSeat', component:SeatComponent},
   //route za avioAdmina
   {path: 'avioAdmin/company', component:AdminAviocompanyComponent,
     children:
@@ -84,9 +86,10 @@ const routes: Routes = [
       {path:'profile', component:AdminAviocompanyProfileComponent},
       {path:'destinations', component:AdminAviocompanyDestinationsComponent},
       {path:'flights', component:AdminAviocompanyFlightsComponent},
-      {path: 'seats', component:AdminAviocompanySeatsComponent }
+      {path: 'seats/:id', component:AdminAviocompanySeatsComponent}
     ],
   canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }}
+  
 ];
 
 @NgModule({

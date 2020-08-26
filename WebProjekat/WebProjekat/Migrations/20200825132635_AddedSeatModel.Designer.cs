@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebProjekat.Data;
 
 namespace WebProjekat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200825132635_AddedSeatModel")]
+    partial class AddedSeatModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,9 +287,6 @@ namespace WebProjekat.Migrations
                     b.Property<string>("LastNameOfUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfSeat")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneOfNonUser")
                         .HasColumnType("nvarchar(max)");
 
@@ -412,7 +411,7 @@ namespace WebProjekat.Migrations
             modelBuilder.Entity("WebProjekat.Models.Seat", b =>
                 {
                     b.HasOne("WebProjekat.Models.Flight", "FlightBelonging")
-                        .WithMany("Seats")
+                        .WithMany()
                         .HasForeignKey("FlightBelongingId");
 
                     b.HasOne("WebProjekat.Models.AirplaneCompany", "WhoCreatedIt")

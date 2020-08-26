@@ -45,6 +45,7 @@ import { RentacarEarningsComponent } from './my-rentacar-company/rentacar-earnin
 import { AdminAviocompanySeatsComponent } from './admin-aviocompany/admin-aviocompany-seats/admin-aviocompany-seats.component';
 import { AirlineServicesComponent } from './airline-services/airline-services.component';
 import { AirlineCompanyComponent } from './airline-services/airline-company/airline-company.component';
+import { SeatComponent } from './seat/seat.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,9 @@ import { AirlineCompanyComponent } from './airline-services/airline-company/airl
     AdminAviocompanyFlightsComponent,
     AdminAviocompanySeatsComponent,
     AirlineServicesComponent,
-    AirlineCompanyComponent
+    AirlineCompanyComponent,
+    SeatComponent,
+    
   ],
   imports: [
     BrowserModule,

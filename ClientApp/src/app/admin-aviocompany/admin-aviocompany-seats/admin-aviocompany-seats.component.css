@@ -1,6 +1,9 @@
 canvas{
     margin-left:20%;
     position: absolute;
+    box-shadow: 0 0 .6rem rgb(180, 179, 179);
+    background-color: skyblue;
+
 }
 
 canvas-container
@@ -42,7 +45,7 @@ canvas-container
 {
     position:absolute;
     left:655px;
-    top:500px;
+    top:510px;
     width:45px;
     height: 45px;
 
@@ -51,7 +54,7 @@ canvas-container
 {
     position:absolute;
     left:715px;
-    top:500px;
+    top:510px;
     width:45px;
     height: 45px;
 
@@ -60,7 +63,7 @@ canvas-container
 {
     position:absolute;
     left:775px;
-    top:500px;
+    top:510px;
     width:45px;
     height: 45px;
 
@@ -71,7 +74,7 @@ canvas-container
 {
     position:absolute;
     left:655px;
-    top:550px;
+    top:565px;
     width:45px;
     height: 45px;
 
@@ -80,7 +83,7 @@ canvas-container
 {
     position:absolute;
     left:715px;
-    top:550px;
+    top:565px;
     width:45px;
     height: 45px;
 
@@ -89,7 +92,7 @@ canvas-container
 {
     position:absolute;
     left:775px;
-    top:550px;
+    top:565px;
     width:45px;
     height: 45px;
 }
@@ -100,7 +103,7 @@ canvas-container
 {
     position:absolute;
     left:655px;
-    top:600px;
+    top:620px;
     width:45px;
     height: 45px;
 
@@ -109,7 +112,7 @@ canvas-container
 {
     position:absolute;
     left:715px;
-    top:600px;
+    top:620px;
     width:45px;
     height: 45px;
 
@@ -118,7 +121,7 @@ canvas-container
 {
     position:absolute;
     left:775px;
-    top:600px;
+    top:620px;
     width:45px;
     height: 45px;
 }
@@ -129,7 +132,7 @@ canvas-container
 {
     position:absolute;
     left:655px;
-    top:650px;
+    top:675px;
     width:45px;
     height: 45px;
 
@@ -138,7 +141,7 @@ canvas-container
 {
     position:absolute;
     left:715px;
-    top:650px;
+    top:675px;
     width:45px;
     height: 45px;
 
@@ -147,36 +150,10 @@ canvas-container
 {
     position:absolute;
     left:775px;
-    top:650px;
+    top:675px;
     width:45px;
     height: 45px;
 }
 
-#button16
-{
-    position:absolute;
-    left:655px;
-    top:700px;
-    width:45px;
-    height: 45px;
-
-}
-#button17
-{
-    position:absolute;
-    left:715px;
-    top:700px;
-    width:45px;
-    height: 45px;
-
-}
-#button18
-{
-    position:absolute;
-    left:775px;
-    top:700px;
-    width:45px;
-    height: 45px;
-}
 
 
