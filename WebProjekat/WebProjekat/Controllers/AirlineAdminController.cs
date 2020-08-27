@@ -24,7 +24,7 @@ namespace WebProjekat.Controllers
             _httpContextAccessor = httpContextAccessor;
             _context = context;
         }
-
+        //editovanje kompanije
         [HttpPut("editCompany/{companyId}")]
         [Authorize]
         public async Task<IActionResult> EditCompany(int companyId, [FromBody] EditAirlineCompanyRequest request)
@@ -70,11 +70,11 @@ namespace WebProjekat.Controllers
         public async Task<IEnumerable<Location>> GetLocations(int companyId)
         {
            
-
             return  await _context.Locations.Where(x => x.Comapny.Id == companyId).ToListAsync();
-
             
         }
+
+        //dodavanje lokacije
         [HttpPost("addLocation/{companyId}")]
         [Authorize]
         public async Task<IActionResult> AddLocation(int companyId, [FromBody] AddLocationRequest request)
@@ -119,6 +119,8 @@ namespace WebProjekat.Controllers
             return Ok();
 
         }
+
+        //brisanje lokacije
         [HttpDelete("deleteLocation/{locationId}")]
         [Authorize]
         public async Task<IActionResult> DeleteLocation(int locationId)
@@ -206,6 +208,8 @@ namespace WebProjekat.Controllers
             return Ok();
 
         }
+
+
         //dobavlja letove
         [HttpGet("getFlights/{companyId}")]
         [Authorize]
@@ -214,6 +218,8 @@ namespace WebProjekat.Controllers
 
             return await _context.Flights.Where(x => x.Company.Id == companyId).ToListAsync();
         }
+
+        //brisanje letova
         [HttpDelete("deleteFlight/{flightId}")]
         [Authorize]
         public async Task<IActionResult> DeleteFlight(int flightId)
@@ -243,6 +249,8 @@ namespace WebProjekat.Controllers
 
 
         }
+
+
         //kreiranje sedista
         [HttpPost("createSeat/{flightId}")]
         [Authorize]
@@ -335,7 +343,50 @@ namespace WebProjekat.Controllers
 
             return Ok();
 
+        }
 
+        //editovanje sedista
+        [HttpPut("editSeat/{flightId}")]
+        [Authorize]
+        public async Task<IActionResult> EditFlight(int flightId, [FromBody] EditSeatRequest request)
+        {
+            if (request.NumberOfSeat==0)
+            {
+                return BadRequest();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser == null)
+            {
+                return BadRequest();
+            }
+
+            var flight = await _context.Flights.FirstOrDefaultAsync(x => x.Id == flightId);
+
+            if (flight.Company.Admin.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            var seat = await _context.Seats.FirstOrDefaultAsync(x => x.NumberOfSeat == request.NumberOfSeat && x.FlightBelonging.Id == flightId);
+
+            if(seat==null)
+            {
+                return BadRequest();
+            }
+            
+            if(seat.IsItReserved)
+            {
+                return BadRequest();
+            }
+
+            seat.IsItAvailable = request.IsItAvailable;
+            seat.DoesItExist = request.DoesItExist;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
 
     }

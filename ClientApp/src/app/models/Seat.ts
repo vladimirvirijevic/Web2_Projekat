@@ -11,7 +11,7 @@ export class Seat {
     cityofNonUser:string;
     phoneofNonUser:string
     isItReserved:Boolean;
-    doesItExists:Boolean;
+    doesItExist:Boolean;
     isItAvailable:Boolean;
     whoReservedIt:AuthUser;
     whoCreatedIt:AirplaneCompany;

@@ -16,8 +16,7 @@ import { Seat } from '../models/Seat';
 export class SeatComponent implements OnInit {
   public flightId:number;
   public seatFlight:number;
-  public flights:Flight[];
-  public flight:Flight;
+
   public company:AirplaneCompany;
   public companies:AirplaneCompany[];
   public seatDodat:Boolean=false;
@@ -28,7 +27,16 @@ export class SeatComponent implements OnInit {
   public seatObrisan:Boolean=false;
   public seatNijeObrisan:Boolean=false;
   public deleteErrorMessage:string;
-  public seatAvailable:Boolean=false;
+  public seatCreated:Boolean=false;
+  public checkedClickedNon:Boolean=false;
+  public checkedClicked:Boolean=false;
+  public seatEditovan:Boolean=false;
+  public seatNijeEditovan:Boolean=false;
+  public editErrorMessage:string;
+  public isItAvailable:Boolean=false;
+  public isItExistiable:Boolean=false;
+  public status:Boolean;
+
   constructor(
     private route: ActivatedRoute,
     public airlineService:AirlineService,
@@ -41,30 +49,27 @@ export class SeatComponent implements OnInit {
     this.seatFlight=Number(this.route.snapshot.paramMap.get("numberOfSeat"));
     this.getSeats();
     
-    
   }
 
  createSeat()
  {
-   const flightInfo=
+   const seatInfo=
   {
     numberOfSeat:this.seatFlight
   };
 
-  this.adminAirlineService.createSeat(this.flightId, flightInfo)
+  this.adminAirlineService.createSeat(this.flightId, seatInfo)
   .subscribe(
     data => {
       console.log(data);
       this.seatDodat=true;
       this.seatNijeDodat=false;
-       
     },
     error => {
       this.errorMessage = "There was an error.";
       this.seatDodat = false;
       this.seatNijeDodat = true;
-        
-     console.log("ne radi");
+      console.log("ne radi");
     }
   );
  }
@@ -91,7 +96,12 @@ export class SeatComponent implements OnInit {
       this.seat=element; 
       console.log("sediste");
       console.log(this.seat);
-      this.seatAvailable=true;
+      this.seatCreated=true;
+      if(this.seat.isItAvailable)
+      {
+        this.status=true;
+      }
+    
     }
   });
  }
@@ -114,10 +124,47 @@ export class SeatComponent implements OnInit {
        this.seatNijeObrisan = true;
       }
     );
-
-
   }
 
-
+  CheckedClickedForNonExistance()
+  {
+    this.checkedClickedNon=true;
+    this.isItAvailable=false;
+    this.isItExistiable=false;
+  }
+  CheckedClickedForExistance()
+  {
+    this.checkedClicked=true;
+    this.isItAvailable=true;
+    this.isItExistiable=true;
+  }
+  editSeat()
+  {
+    
+    const seatEditInfo=
+    {
+      numberOfSeat:this.seatFlight,
+      isItAvailable:this.isItAvailable,
+      doesItExist:this.isItExistiable
+    };
+  
+  
+    this.adminAirlineService.editSeat(this.flightId, seatEditInfo)
+    .subscribe(
+      data => {
+        console.log(data); 
+        this.getSeats();
+        this.seatEditovan=true;
+        this.seatNijeEditovan=false;
+         
+      },
+      error => {   
+       console.log("ne radi");
+       this.editErrorMessage="Seat cannot be edited!";
+       this.seatEditovan = false;
+       this.seatNijeEditovan = true;
+      }
+    );
+}
 
 }

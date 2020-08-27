@@ -68,7 +68,11 @@ export class AirlineAdminService {
     return this.http.delete<any>(`${environment.api_url}/airlineadmin/deleteSeat/${seatId}`);
 
  }
-  
+ editSeat(flightId, seatInfo)
+ {
+    return this.http.put<any>(`${environment.api_url}/airlineadmin/editSeat/${flightId}`, seatInfo);
+ }
+
 
 
 }
