@@ -243,6 +243,7 @@ namespace WebProjekat.Controllers
 
 
         }
+        //kreiranje sedista
         [HttpPost("createSeat/{flightId}")]
         [Authorize]
         public async Task<IActionResult> CreateSeat(int flightId, [FromBody] CreateSeatRequest request)
@@ -290,6 +291,52 @@ namespace WebProjekat.Controllers
 
         }
 
+
+        //dobavljanje svih sedista iz jednog leta
+        [HttpGet("getSeats/{flightId}")]
+        [Authorize]
+        public async Task<IEnumerable<Seat>> GetSeats(int flightId)
+        {
+
+            return await _context.Seats.Where(x => x.FlightBelonging.Id == flightId).ToListAsync();
+
+        }
+
+
+        //brisanje sedista
+        [HttpDelete("deleteSeat/{seatId}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteSeat(int seatId)
+        {
+            if (seatId == 0)
+            {
+                return BadRequest();
+            }
+
+            var seat = await _context.Seats.FindAsync(seatId);
+            if (seat == null)
+            {
+                return NotFound();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (seat.WhoCreatedIt.Admin.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            if(seat.IsItReserved)
+            {
+                return BadRequest();
+            }
+            _context.Seats.Remove(seat);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+
+        }
 
     }
 }

@@ -5,6 +5,7 @@ import { Flight } from './Flight';
 export class Seat {
 
     id:number;
+    numberOfSeat:number;
     firstNameofUser: string;
     lastNameofUser: string;
     cityofNonUser:string;

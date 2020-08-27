@@ -5,6 +5,8 @@ import { AuthenticationService } from '../services/authentication.service';
 import { AirlineAdminService } from '../services/airline-admin.service';
 import { Flight } from '../models/Flight';
 import { AirplaneCompany } from '../models/airplaneCompany';
+import { Seat } from '../models/Seat';
+
 
 @Component({
   selector: 'app-seat',
@@ -21,6 +23,12 @@ export class SeatComponent implements OnInit {
   public seatDodat:Boolean=false;
   public seatNijeDodat:Boolean=false;
   public errorMessage:string;
+  public seats:Seat[];
+  public seat:Seat;
+  public seatObrisan:Boolean=false;
+  public seatNijeObrisan:Boolean=false;
+  public deleteErrorMessage:string;
+  public seatAvailable:Boolean=false;
   constructor(
     private route: ActivatedRoute,
     public airlineService:AirlineService,
@@ -31,6 +39,8 @@ export class SeatComponent implements OnInit {
   ngOnInit(): void {
     this.flightId=Number(this.route.snapshot.paramMap.get("flightId"));
     this.seatFlight=Number(this.route.snapshot.paramMap.get("numberOfSeat"));
+    this.getSeats();
+    
     
   }
 
@@ -57,10 +67,56 @@ export class SeatComponent implements OnInit {
      console.log("ne radi");
     }
   );
-
-
-
  }
+ getSeats()
+ {
+    this.adminAirlineService.getSeats(this.flightId)
+    .subscribe(
+      data => {
+        console.log(data); 
+        this.seats=data;
+        this.getSeat();
+      },
+      error => {   
+       console.log("ne radi");
+      }
+    );
+ }
+
+ getSeat()
+ {
+  this.seats.forEach(element => {
+    if(element.numberOfSeat==this.seatFlight)
+    {
+      this.seat=element; 
+      console.log("sediste");
+      console.log(this.seat);
+      this.seatAvailable=true;
+    }
+  });
+ }
+  
+  deleteSeat()
+  {
+    this.adminAirlineService.deleteSeat(this.seat.id)
+    .subscribe(
+      data => {
+        console.log(data); 
+        this.getSeats();
+        this.seatObrisan=true;
+        this.seatNijeObrisan=false;
+         
+      },
+      error => {   
+       console.log("ne radi");
+       this.deleteErrorMessage="Seat cannot be deleted!";
+       this.seatObrisan = false;
+       this.seatNijeObrisan = true;
+      }
+    );
+
+
+  }
 
 
 

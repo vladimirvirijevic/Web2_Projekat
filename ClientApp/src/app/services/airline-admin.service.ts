@@ -3,6 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Flight } from '../models/Flight';
+import { Seat } from '../models/Seat';
 
 @Injectable({
   providedIn: 'root'
@@ -56,8 +57,18 @@ export class AirlineAdminService {
   {
     return this.http.post<any>(`${environment.api_url}/airlineadmin/createSeat/${flightId}`,seatInfo);
   }
+  //getSeats sediste
+  getSeats(flightId)
+  {
+    return this.http.get<Seat[]>(`${environment.api_url}/airlineadmin/getSeats/${flightId}`);
+  } 
+ //obrisi seat
+ deleteSeat(seatId)
+ {
+    return this.http.delete<any>(`${environment.api_url}/airlineadmin/deleteSeat/${seatId}`);
 
-
+ }
+  
 
 
 }

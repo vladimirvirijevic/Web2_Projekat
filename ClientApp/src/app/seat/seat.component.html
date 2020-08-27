@@ -1,11 +1,24 @@
 <div class="card p-4">
+    <h5>Sediste <b>{{seatFlight}}</b></h5>
+    <div *ngIf="seatAvailable">
+        <p>This seat is available!</p>
+    </div>
+    <div *ngIf="!seatAvailable">
+        <p>This seat isn't available yet!</p>
+    </div>
     <h5>What do you want to do?</h5>
-    <button type="button" id="button1" class="btn btn-success" (click)="createSeat()">Make seat existing</button><br>
+    <button type="button" id="button1" class="btn btn-success" (click)="createSeat()">Make seat available</button><br>
     <button type="button" id="button2" class="btn btn-primary" data-toggle="modal" data-target="#editSeatModal"><i class="fas fa-edit"></i>Edit seat</button><br>
-    <button type="button" id="button3" class="btn-danger"><i class="fas fa-trash-alt mr-2"></i>Delete seat</button><br>
+    <button type="button" id="button3" class="btn-danger" (click)="deleteSeat()"><i class="fas fa-trash-alt mr-2"></i>Delete seat</button><br>
 </div>
 <div *ngIf="seatNijeDodat" class="alert alert-danger" role="alert">
   {{ errorMessage }}
+</div>
+<div *ngIf="seatObrisan" class="alert alert-success" role="alert">
+ Seat deleted successfully!
+</div>
+<div *ngIf="seatNijeObrisan" class="alert alert-danger" role="alert">
+  {{ deleteErrorMessage }}
 </div>
 <div *ngIf="seatDodat" class="alert alert-success" role="alert">
  Seat created successfully!
@@ -20,19 +33,18 @@
           </button>
         </div>
         <div class="modal-body">
+         
             <label>Make this seat:</label>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox"  id="AvailableCheck">
-                <label class="form-check-label">
-                  Available
-                </label>
-              </div>
-              <div class="form-check">
+              <div  class="form-check">
                 <input class="form-check-input" type="checkbox"  id="UnAvailableCheck">
                 <label class="form-check-label">
-                  Unavailable
+                  Nonexistent
                 </label>
               </div>
+              <br>
+              <button type="submit" class="btn btn-primary">Save</button>
+              <button data-dismiss="modal" aria-label="Close" type="button" class="ml-3 btn btn-danger">Close</button>
+              
         </div>
     </div>
 </div>
