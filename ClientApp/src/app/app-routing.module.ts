@@ -37,6 +37,7 @@ import { AdminAviocompanySeatsComponent } from './admin-aviocompany/admin-avioco
 import { AirlineServicesComponent } from './airline-services/airline-services.component';
 import { AirlineCompanyComponent } from './airline-services/airline-company/airline-company.component';
 import { SeatComponent } from './seat/seat.component';
+import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availability/cars-availability.component';
 
 const routes: Routes = [
   { path: '', component: FlightsComponent, pathMatch: 'full' },
@@ -52,7 +53,8 @@ const routes: Routes = [
     { path: 'branches', component: RentacarBranchComponent},
     { path: 'cars', component: RentacarCarsComponent},
     { path: 'reservations', component: RentacarReservationsComponent},
-    { path: 'earnings', component: RentacarEarningsComponent}
+    { path: 'earnings', component: RentacarEarningsComponent},
+    { path: 'cars-availability', component: CarsAvailabilityComponent}
   ]},
   
   {path: 'app', component:RegisteredUserComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User]} },

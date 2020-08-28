@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace WebProjekat.Services.Date
 {
@@ -72,6 +73,19 @@ namespace WebProjekat.Services.Date
             }
 
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        }
+
+        public List<DateTime> GetDaysOfWeek(int year, int weekNumber)
+        {
+            CultureInfo customCulture = new CultureInfo("en-US");
+            var firstDayOfWeek = FirstDateOfWeek(year, weekNumber, customCulture);
+            firstDayOfWeek = firstDayOfWeek.AddDays(1);
+
+            List<DateTime> daysThisWeek = Enumerable.Range(0, 7)
+                .Select(d => firstDayOfWeek.AddDays(d))
+                .ToList();
+
+            return daysThisWeek;
         }
     }
 }
