@@ -7,6 +7,8 @@ import { catchError } from 'rxjs/operators';
 import { Branch } from '../models/branch';
 import { RentacarEarning } from '../models/rentacarEarning';
 import { Stats } from '../models/stats';
+import { Car } from '../models/car';
+import { CarDiscount } from '../models/carDiscount';
 
 @Injectable({
   providedIn: 'root'
@@ -45,8 +47,22 @@ export class RentacarAdminService {
     );
   }
 
+  deleteDiscount(discountId) {
+    return this.http.delete<any>(`${environment.api_url}/rentacaradmin/discount/${discountId}`)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
   createCar(carInfo) {
     return this.http.post<any>(`${environment.api_url}/rentacaradmin/car`, carInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  createDiscount(discountInfo) {
+    return this.http.post<any>(`${environment.api_url}/rentacaradmin/discount`, discountInfo)
     .pipe(
         catchError(this.handleError)
     );
@@ -97,5 +113,13 @@ export class RentacarAdminService {
 
   getMonthlyStats(month): Observable<Stats> {
     return this.http.get<Stats>(`${environment.api_url}/rentacaradmin/monthlystats/${month}`);
+  }
+
+  getCompanyCars(): Observable<Car[]> {
+    return this.http.get<Car[]>(`${environment.api_url}/rentacaradmin/cars`);
+  }
+
+  getDiscounts(): Observable<CarDiscount[]> {
+    return this.http.get<CarDiscount[]>(`${environment.api_url}/rentacaradmin/discounts`);
   }
 }

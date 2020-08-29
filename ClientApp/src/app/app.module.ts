@@ -51,6 +51,7 @@ import { SeatComponent } from './seat/seat.component';
 import { ChartsModule } from 'ng2-charts';
 import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availability/cars-availability.component';
 import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
+import { CarDiscountsComponent } from './my-rentacar-company/car-discounts/car-discounts.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
     SeatComponent,
     CarsAvailabilityComponent,
     AdminBonusComponent,
+    CarDiscountsComponent,
     
   ],
   imports: [

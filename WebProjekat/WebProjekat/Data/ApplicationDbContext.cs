@@ -18,6 +18,7 @@ namespace WebProjekat.Data
         public DbSet<User> Users { get; set; }
         public DbSet<CarReservation> CarReservations { get; set; }
         public DbSet<BonusInfo> BonusInfo { get; set; }
+        public DbSet<CarDiscount> CarDiscounts { get; set; }
         
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Seat> Seats { get; set; }
