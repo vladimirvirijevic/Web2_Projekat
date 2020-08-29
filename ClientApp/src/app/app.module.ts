@@ -46,6 +46,8 @@ import { AdminAviocompanySeatsComponent } from './admin-aviocompany/admin-avioco
 import { AirlineServicesComponent } from './airline-services/airline-services.component';
 import { AirlineCompanyComponent } from './airline-services/airline-company/airline-company.component';
 import { SeatComponent } from './seat/seat.component';
+import { AvioCompanyFromListComponent } from './list-of-avio-companies/avio-company-from-list/avio-company-from-list.component';
+import { ReserveFlightComponent } from './reserve-flight/reserve-flight.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +87,8 @@ import { SeatComponent } from './seat/seat.component';
     AirlineServicesComponent,
     AirlineCompanyComponent,
     SeatComponent,
+    AvioCompanyFromListComponent,
+    ReserveFlightComponent,
     
   ],
   imports: [
