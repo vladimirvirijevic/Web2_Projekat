@@ -11,5 +11,6 @@ namespace WebProjekat.Services.Date
         List<string> DaysListBetweenDatesAsString(DateTime from, DateTime until);
         int GetWeekOfYear(DateTime time);
         List<DateTime> GetDaysOfWeek(int year, int weekNumber);
+        List<DateTime> GetDatesOfMonth(int year, int month);
     }
 }

@@ -17,6 +17,8 @@ export class CarsAvailabilityComponent implements OnInit {
   selectedMonth: string = "";
 
   weeklyStats: Stats;
+  monthlyStats: Stats;
+  dailyStats: Stats;
 
   constructor(
     private rentacarAdminService: RentacarAdminService
@@ -35,14 +37,43 @@ export class CarsAvailabilityComponent implements OnInit {
     this.rentacarAdminService.getWeeklyStats(this.selectedWeek)
       .subscribe(
         data => {
-          console.log(data);
           this.weeklyStats = data;
-          this.setWeeklyChart(this.weeklyStats);
+          this.setGraphData(this.weeklyStats);
         }
       )
   }
 
-  setWeeklyChart(data) {
+  getMonthlyStats() {
+    if (this.selectedMonth == "") {
+      return;
+    }
+
+    this.rentacarAdminService.getMonthlyStats(this.selectedMonth)
+      .subscribe(
+        data => {
+          this.monthlyStats = data;
+          this.setGraphData(this.monthlyStats);
+        }
+      )
+  }
+
+  getDailyStats() {
+    if (this.selectedDay == "") {
+      return;
+    }
+
+    this.rentacarAdminService.getDailyStats(this.selectedDay)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.dailyStats = data;
+          this.setGraphData(this.dailyStats);
+        }
+      )
+  }
+
+  setGraphData(data) {
+    console.log(data);
     this.barChartOptions = {
       responsive: true,
       // We use these empty structures as placeholders for dynamic theming.

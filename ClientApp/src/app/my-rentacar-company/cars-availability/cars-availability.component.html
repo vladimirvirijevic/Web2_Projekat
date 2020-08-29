@@ -37,17 +37,47 @@
             </div>
         </div>
         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col">
-                    Monthly
+
+                        <div class="form-group" style="width: 400px;">
+                            <label for="date-input">Choose Month</label>
+                            <input [(ngModel)]="selectedMonth" type="month" class="form-control" id="date-input">
+                        </div>
+                        <div (click)="getMonthlyStats()" class="button" class="btn btn-secondary">See Stats</div>
+                
+                        <div *ngIf="barChartOptions" style="display: block;" class="mt-4">
+                            <canvas baseChart
+                                [datasets]="barChartData"
+                                [labels]="barChartLabels"
+                                [options]="barChartOptions"
+                                [legend]="barChartLegend"
+                                [chartType]="barChartType">
+                            </canvas>
+                        </div>
                 </div>
             </div>
 
         </div>
         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col">
-                    Yearly
+
+                        <div class="form-group" style="width: 400px;">
+                            <label for="date-input">Choose Day</label>
+                            <input [(ngModel)]="selectedDay" type="date" class="form-control" id="date-input">
+                        </div>
+                        <div (click)="getDailyStats()" class="button" class="btn btn-secondary">See Stats</div>
+                
+                        <div *ngIf="barChartOptions" style="display: block;" class="mt-4">
+                            <canvas baseChart
+                                [datasets]="barChartData"
+                                [labels]="barChartLabels"
+                                [options]="barChartOptions"
+                                [legend]="barChartLegend"
+                                [chartType]="barChartType">
+                            </canvas>
+                        </div>
                 </div>
             </div>
         </div>
