@@ -39,6 +39,8 @@ import { AirlineCompanyComponent } from './airline-services/airline-company/airl
 import { SeatComponent } from './seat/seat.component';
 import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availability/cars-availability.component';
 import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
+import { AvioCompanyFromListComponent } from './list-of-avio-companies/avio-company-from-list/avio-company-from-list.component';
+import { ReserveFlightComponent } from './reserve-flight/reserve-flight.component';
 import { CarDiscountsComponent } from './my-rentacar-company/car-discounts/car-discounts.component';
 
 const routes: Routes = [
@@ -61,7 +63,13 @@ const routes: Routes = [
   ]},
   
   {path: 'app', component:RegisteredUserComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User]} },
-  {path:'app/listOfAircompanies', component:ListOfAvioCompaniesComponent},
+  //korinsik moze da vidi sve aviokompanije i da ih poseti
+  {path:'app/listOfAircompanies', component:ListOfAvioCompaniesComponent, pathMatch:'full'},
+  {path:'app/listOfAircompanies/:id', component:AvioCompanyFromListComponent},
+ 
+ { path:'app/reserveFlight/:id', component: ReserveFlightComponent},
+
+
   {path:'app/listOfRentACarcompanies', component: ListOfRentacarCompaniesComponent},
   {path:'app/listOfInvitations', component:ListOfInvitationsComponent},
   {path:'app/reservedList', component:ReservedListComponent},
@@ -83,7 +91,7 @@ const routes: Routes = [
 
   { path: 'car/:id', component: CarComponent },
 
-  
+  //path za avioAdmina
   {path:'seat/:flightId/:numberOfSeat', component:SeatComponent},
   //route za avioAdmina
   {path: 'avioAdmin/company', component:AdminAviocompanyComponent,
@@ -95,7 +103,7 @@ const routes: Routes = [
       {path: 'seats/:id', component:AdminAviocompanySeatsComponent}
     ],
   canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }}
-  
+  //path za korisnika ka sedistima
 ];
 
 @NgModule({

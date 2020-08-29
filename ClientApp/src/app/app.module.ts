@@ -46,6 +46,8 @@ import { AdminAviocompanySeatsComponent } from './admin-aviocompany/admin-avioco
 import { AirlineServicesComponent } from './airline-services/airline-services.component';
 import { AirlineCompanyComponent } from './airline-services/airline-company/airline-company.component';
 import { SeatComponent } from './seat/seat.component';
+import { AvioCompanyFromListComponent } from './list-of-avio-companies/avio-company-from-list/avio-company-from-list.component';
+import { ReserveFlightComponent } from './reserve-flight/reserve-flight.component';
 
 
 import { ChartsModule } from 'ng2-charts';
@@ -93,6 +95,8 @@ import { CarDiscountsComponent } from './my-rentacar-company/car-discounts/car-d
     SeatComponent,
     CarsAvailabilityComponent,
     AdminBonusComponent,
+    AvioCompanyFromListComponent,
+    ReserveFlightComponent,
     CarDiscountsComponent,
     
   ],
