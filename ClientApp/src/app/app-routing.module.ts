@@ -37,6 +37,8 @@ import { AdminAviocompanySeatsComponent } from './admin-aviocompany/admin-avioco
 import { AirlineServicesComponent } from './airline-services/airline-services.component';
 import { AirlineCompanyComponent } from './airline-services/airline-company/airline-company.component';
 import { SeatComponent } from './seat/seat.component';
+import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availability/cars-availability.component';
+import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
 import { AvioCompanyFromListComponent } from './list-of-avio-companies/avio-company-from-list/avio-company-from-list.component';
 import { ReserveFlightComponent } from './reserve-flight/reserve-flight.component';
 
@@ -54,7 +56,8 @@ const routes: Routes = [
     { path: 'branches', component: RentacarBranchComponent},
     { path: 'cars', component: RentacarCarsComponent},
     { path: 'reservations', component: RentacarReservationsComponent},
-    { path: 'earnings', component: RentacarEarningsComponent}
+    { path: 'earnings', component: RentacarEarningsComponent},
+    { path: 'cars-availability', component: CarsAvailabilityComponent}
   ]},
   
   {path: 'app', component:RegisteredUserComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User]} },
@@ -82,6 +85,7 @@ const routes: Routes = [
   { path: 'admin/staff', component: StaffComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
   { path: 'admin/airline', component: AdminAirlineComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
   { path: 'admin/rentacar', component: AdminRentacarComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
+  { path: 'admin/bonus', component: AdminBonusComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
 
   { path: 'car/:id', component: CarComponent },
 

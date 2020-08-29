@@ -49,6 +49,11 @@ import { SeatComponent } from './seat/seat.component';
 import { AvioCompanyFromListComponent } from './list-of-avio-companies/avio-company-from-list/avio-company-from-list.component';
 import { ReserveFlightComponent } from './reserve-flight/reserve-flight.component';
 
+
+import { ChartsModule } from 'ng2-charts';
+import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availability/cars-availability.component';
+import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +92,8 @@ import { ReserveFlightComponent } from './reserve-flight/reserve-flight.componen
     AirlineServicesComponent,
     AirlineCompanyComponent,
     SeatComponent,
+    CarsAvailabilityComponent,
+    AdminBonusComponent,
     AvioCompanyFromListComponent,
     ReserveFlightComponent,
     
@@ -98,7 +105,8 @@ import { ReserveFlightComponent } from './reserve-flight/reserve-flight.componen
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    GooglePlaceModule
+    GooglePlaceModule,
+    ChartsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

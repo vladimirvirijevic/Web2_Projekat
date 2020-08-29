@@ -20,6 +20,7 @@
             <li *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'Admin'" class="nav-item">
                 <a class="nav-link mr-3" routerLink="/admin/staff" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-users mr-2"></i>Staff</a>
             </li>
+            
             <li *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'RentacarAdmin'" class="nav-item">
                 <a class="nav-link mr-3" routerLink="/rentalcompany/profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-briefcase mr-2"></i>My Company</a>
             </li>
@@ -31,6 +32,9 @@
             </li>
             <li *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'Admin'" class="nav-item">
                 <a class="nav-link mr-3" routerLink="/admin/rentacar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-truck-pickup mr-2"></i>Car Rental Services</a>
+            </li>
+            <li *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'Admin'" class="nav-item">
+                <a class="nav-link mr-3" routerLink="/admin/bonus" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-tags mr-2"></i>Bonus</a>
             </li>
             <li *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'User'" class="nav-item">
                 <a class="nav-link mr-3" routerLink="app/listOfAircompanies" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-building mr-2"></i>Airline companies</a>

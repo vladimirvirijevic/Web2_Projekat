@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using WebProjekat.Data;
 using WebProjekat.Helpers;
 using WebProjekat.Models;
+using WebProjekat.Requests.Admin;
 using WebProjekat.Services.Users;
 
 namespace WebProjekat.Controllers
@@ -125,6 +127,56 @@ namespace WebProjekat.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpGet]
+        [Route("bonus")]
+        [Authorize]
+        public async Task<ActionResult<BonusInfo>> GetBonusInfo()
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "Admin")
+            {
+                return Unauthorized();
+            }
+
+            var bonusInfo = await _context.BonusInfo.FirstOrDefaultAsync();
+
+            return Ok(bonusInfo);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("bonus")]
+        public async Task<ActionResult> ChangeBonusInfo([FromBody] ChangeBonusInfoRequest request)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "Admin")
+            {
+                return Unauthorized();
+            }
+
+            if (_context.BonusInfo.Count() > 0)
+            {
+                var bonusInfo = await _context.BonusInfo.FirstAsync();
+
+                bonusInfo.FlightBonus = request.FlightBonus;
+                bonusInfo.RentacarBonus = request.RentacarBonus;
+
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                BonusInfo newBonusInfo = new BonusInfo(request);
+
+                _context.BonusInfo.Add(newBonusInfo);
+
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok();
         }
     }
 }

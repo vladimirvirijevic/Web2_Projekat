@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { Branch } from '../models/branch';
 import { RentacarEarning } from '../models/rentacarEarning';
+import { Stats } from '../models/stats';
 
 @Injectable({
   providedIn: 'root'
@@ -84,5 +85,17 @@ export class RentacarAdminService {
 
   getMonthlyEarnings(month): Observable<RentacarEarning> {
     return this.http.get<RentacarEarning>(`${environment.api_url}/rentacaradmin/monthlyearnings/${month}`);
+  }
+
+  getDailyStats(day): Observable<Stats> {
+    return this.http.get<Stats>(`${environment.api_url}/rentacaradmin/dailystats/${day}`);
+  }
+
+  getWeeklyStats(week): Observable<Stats> {
+    return this.http.get<Stats>(`${environment.api_url}/rentacaradmin/weeklystats/${week}`);
+  }
+
+  getMonthlyStats(month): Observable<Stats> {
+    return this.http.get<Stats>(`${environment.api_url}/rentacaradmin/monthlystats/${month}`);
   }
 }

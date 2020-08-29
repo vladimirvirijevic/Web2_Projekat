@@ -467,6 +467,196 @@ namespace WebProjekat.Controllers
 
             return Ok(response);
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("weeklyStats/{week}")]
+        public async Task<ActionResult<Stats>> GetWeeklyStats(string week)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            // "2020-W35"
+            // "2020-W02"
+            int weekNumber = int.Parse(week.Split('-')[1].Remove(0, 1));
+            int year = int.Parse(week.Split('-')[0]);
+
+            var company = await _context.RentacarCompanies.Where(c => c.Admin.Id == currentUser.Id).FirstOrDefaultAsync();
+
+            if (company == null)
+            {
+                return BadRequest();
+            }
+
+            List<DateTime> daysOfWeek = _dateService.GetDaysOfWeek(year, weekNumber);
+            Dictionary<DateTime, int> daysDict = new Dictionary<DateTime, int>();
+
+            foreach (var day in daysOfWeek)
+            {
+                daysDict[day] = 0;
+            }
+
+            
+            foreach (var branch in company.Branches)
+            {
+                foreach (var car in branch.Cars)
+                {
+                    foreach (var reservation in car.CarReservations)
+                    {
+                        DateTime reservationPickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime reservationDropoffDate = DateTime.ParseExact(reservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                        List<DateTime> dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                        foreach (var date in dates)
+                        {
+                            if (daysOfWeek.Contains(date))
+                            {
+                                daysDict[date] += 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            var response = new Stats();
+            int i = 0;
+
+            foreach (KeyValuePair<DateTime, int> kvp in daysDict)
+            {
+                response.Dates.Add(kvp.Key.ToString("yyyy-MM-dd"));
+                response.ReservationsCount.Add(kvp.Value);
+
+                i++;
+            }
+
+            return Ok(response);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("monthlystats/{month}")]
+        public async Task<ActionResult<Stats>> GetMonthlyStats(string month)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            // "2020-07"
+            int monthNumber = int.Parse(month.Split('-')[1]);
+            int year = int.Parse(month.Split('-')[0]);
+
+            var company = await _context.RentacarCompanies.Where(c => c.Admin.Id == currentUser.Id).FirstOrDefaultAsync();
+
+            if (company == null)
+            {
+                return BadRequest();
+            }
+            
+            List<DateTime> daysOfMonth = _dateService.GetDatesOfMonth(year, monthNumber);
+
+            Dictionary<DateTime, int> daysDict = new Dictionary<DateTime, int>();
+
+            foreach (var day in daysOfMonth)
+            {
+                daysDict[day] = 0;
+            }
+
+
+            foreach (var branch in company.Branches)
+            {
+                foreach (var car in branch.Cars)
+                {
+                    foreach (var reservation in car.CarReservations)
+                    {
+                        DateTime reservationPickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime reservationDropoffDate = DateTime.ParseExact(reservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                        List<DateTime> dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                        foreach (var date in dates)
+                        {
+                            if (daysOfMonth.Contains(date))
+                            {
+                                daysDict[date] += 1;
+                            }
+                        }
+                    }
+                }
+            }
+
+            var response = new Stats();
+            int i = 0;
+
+            foreach (KeyValuePair<DateTime, int> kvp in daysDict)
+            {
+                response.Dates.Add(kvp.Key.ToString("MM-dd"));
+                response.ReservationsCount.Add(kvp.Value);
+
+                i++;
+            }
+            
+
+            return Ok(response);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("dailystats/{day}")]
+        public async Task<ActionResult<Stats>> GetDailyStats(string day)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            var company = await _context.RentacarCompanies.Where(c => c.Admin.Id == currentUser.Id).FirstOrDefaultAsync();
+
+            if (company == null)
+            {
+                return BadRequest();
+            }
+
+            DateTime inputDay = DateTime.ParseExact(day, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            var response = new Stats();
+
+            response.Dates.Add(day);
+            response.ReservationsCount.Add(0);
+
+            foreach (var branch in company.Branches)
+            {
+                foreach (var car in branch.Cars)
+                {
+                    foreach (var reservation in car.CarReservations)
+                    {
+                        DateTime reservationPickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime reservationDropoffDate = DateTime.ParseExact(reservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                        List<DateTime> dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                        foreach (var date in dates)
+                        {
+                            if (inputDay == date)
+                            {
+                                response.ReservationsCount[0] += 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return Ok(response);
+        }
     }
 }
 

@@ -1,0 +1,66 @@
+<div class="row pl-3">
+    <h2 class="mr-5">Bonus</h2>
+    <button data-toggle="modal" data-target="#editBonusModal" class="btn btn-primary"><i class="fas fa-edit mr-2"></i>Change Bonus</button>
+</div>
+
+<div class="row mt-5">
+    <div class="col">
+        <p><b>Flight Bonus Points: </b> {{ bonusInfo.flightBonus }}</p>
+        <p><b>Rentacar Bonus Points: </b> {{ bonusInfo.rentacarBonus }}</p>
+        <p>User will get {{ bonusInfo.flightBonus }} points flight reservation is successufully finished, and {{ bonusInfo.rentacarBonus }} points after car reservations is finished</p>
+    </div>
+</div>
+
+<div class="modal fade" id="editBonusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header pl-4 pr-4">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Bonus Info</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4">
+            <div *ngIf="showMainErrorMessage" class="alert alert-danger" role="alert">
+                {{ errorMessageText }}
+            </div>
+            <div *ngIf="showMainSuccessMessage" class="alert alert-success" role="alert">
+                Bonus Info edited successfully!
+            </div>
+            <form [formGroup]="editBonusForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="name" 
+                        placeholder="Flight Bonus"
+                        required
+                        formControlName="flightBonus">
+                    <div *ngIf="flightBonus.invalid && (flightBonus.dirty || flightBonus.touched)" class="alert alert-danger">
+                        <div *ngIf="flightBonus.errors.required">
+                            Flight Bonus is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        id="name" 
+                        placeholder="Rentacar Bonus"
+                        required
+                        formControlName="rentacarBonus">
+                    <div *ngIf="rentacarBonus.invalid && (rentacarBonus.dirty || rentacarBonus.touched)" class="alert alert-danger">
+                        <div *ngIf="rentacarBonus.errors.required">
+                            Rentacar Bonus is required.
+                        </div>
+                    </div>
+                </div>
+                
+                <button [disabled]="editBonusForm.invalid" type="submit" class="btn btn-primary btn-lg auth-btn">Change</button>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>

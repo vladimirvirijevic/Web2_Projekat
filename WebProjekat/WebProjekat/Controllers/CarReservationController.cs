@@ -79,6 +79,17 @@ namespace WebProjekat.Controllers
                 return Conflict();
             }
 
+            // dodeli poene korisniku
+            var user = await _context.Users.FindAsync(reservation.User.Id);
+            var bonusPoints = await _context.BonusInfo.FirstOrDefaultAsync();
+
+            if (bonusPoints == null || user == null)
+            {
+                return BadRequest();
+            }
+
+            user.BonusPoints += bonusPoints.RentacarBonus;
+
             reservation.Status = "FINISHED";
 
             await _context.SaveChangesAsync();
