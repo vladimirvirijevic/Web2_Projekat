@@ -38,6 +38,7 @@ import { AirlineServicesComponent } from './airline-services/airline-services.co
 import { AirlineCompanyComponent } from './airline-services/airline-company/airline-company.component';
 import { SeatComponent } from './seat/seat.component';
 import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availability/cars-availability.component';
+import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
 
 const routes: Routes = [
   { path: '', component: FlightsComponent, pathMatch: 'full' },
@@ -76,6 +77,7 @@ const routes: Routes = [
   { path: 'admin/staff', component: StaffComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
   { path: 'admin/airline', component: AdminAirlineComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
   { path: 'admin/rentacar', component: AdminRentacarComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
+  { path: 'admin/bonus', component: AdminBonusComponent, canActivate: [AuthGuard], data: { roles: [Role.Admin] }},
 
   { path: 'car/:id', component: CarComponent },
 
