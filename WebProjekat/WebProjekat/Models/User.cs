@@ -17,6 +17,7 @@ namespace WebProjekat.Models
         public string ConfirmationToken { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public int BonusPoints { get; set; }
 
         public virtual List<AirplaneCompany> AirlineCompanies { get; set; } = new List<AirplaneCompany>();
         public virtual List<RentacarCompany> RentacarCompany { get; set; } = new List<RentacarCompany>();
