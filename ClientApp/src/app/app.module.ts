@@ -53,6 +53,7 @@ import { ReserveFlightComponent } from './reserve-flight/reserve-flight.componen
 import { ChartsModule } from 'ng2-charts';
 import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availability/cars-availability.component';
 import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
+import { UserReservesComponent } from './user-reserves/user-reserves.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
     AdminBonusComponent,
     AvioCompanyFromListComponent,
     ReserveFlightComponent,
+    UserReservesComponent,
     
   ],
   imports: [

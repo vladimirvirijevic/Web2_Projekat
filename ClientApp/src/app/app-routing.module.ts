@@ -41,6 +41,7 @@ import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availabili
 import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
 import { AvioCompanyFromListComponent } from './list-of-avio-companies/avio-company-from-list/avio-company-from-list.component';
 import { ReserveFlightComponent } from './reserve-flight/reserve-flight.component';
+import { UserReservesComponent } from './user-reserves/user-reserves.component';
 
 const routes: Routes = [
   { path: '', component: FlightsComponent, pathMatch: 'full' },
@@ -100,8 +101,9 @@ const routes: Routes = [
       {path:'flights', component:AdminAviocompanyFlightsComponent},
       {path: 'seats/:id', component:AdminAviocompanySeatsComponent}
     ],
-  canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }}
-  //path za korisnika ka sedistima
+  canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }},
+  //path za korisnika ka rezervaciji
+  {path:'app/userReserves/:idLeta/:idBrojSedista',component:UserReservesComponent}
 ];
 
 @NgModule({

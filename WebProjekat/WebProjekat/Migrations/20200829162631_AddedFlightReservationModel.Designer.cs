@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebProjekat.Data;
 
 namespace WebProjekat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200829162631_AddedFlightReservationModel")]
+    partial class AddedFlightReservationModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,9 +213,6 @@ namespace WebProjekat.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CityOfUserWhoSits")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DateOfReservation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstNameOfPersonWhoSits")

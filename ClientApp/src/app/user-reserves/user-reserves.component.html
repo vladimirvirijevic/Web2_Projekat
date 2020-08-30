@@ -1,0 +1,131 @@
+
+<div class="card p-4">
+    <h5>Sediste <b>{{numberOfSeat}}</b></h5>
+    <div *ngIf="isSeatAvailable">
+        <p>This seat is available!</p>
+    </div>
+    <div *ngIf="!isSeatAvailable">
+        <p>This seat isn't available!</p>
+    </div>
+</div>
+<div *ngIf="isSeatAvailable && !isReserved">
+    <div class="card p-4">
+        <h5><b>{{user.firstName}}</b>, make your reservation here!</h5> 
+        <br>
+        <div *ngIf="reservedBad" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+        </div>
+        <div *ngIf="reservedOk" class="alert alert-success" role="alert">
+           {{okMessage}}
+        </div>
+        <form [formGroup]="makeReservation" (ngSubmit)="onSubmit()">
+        <input 
+        type="text" 
+        class="form-control" 
+        id="passportNumber" 
+        placeholder="Passport number"
+        required
+        formControlName="passportNumber">
+        <br>
+        <div  class="form-check">
+            <input class="form-check-input" type="checkbox"  id="UnregisteredCheck"  (click)="CheckedClickedForUnregistered()">
+            <label class="form-check-label">
+              Are you making a reservation for a person who is not registered on our site?
+            </label>
+            <br>
+        </div>
+        <div *ngIf="nonregisterClicked">
+            <div class="input-group form-group-no-border mb-4 mt-2">  
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="nonUserFirstName" 
+                    placeholder="First name"
+                    required
+                    formControlName="nonUserFirstName">
+            </div>
+            <div class="input-group form-group-no-border mb-4 mt-2">
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="nonUserLastName" 
+                    placeholder="Last name"
+                    required
+                    formControlName="nonUserLastName">
+            </div>
+            <div class="input-group form-group-no-border mb-4 mt-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                       <i class="fas fa-map-marker-alt"></i>
+                    </span>
+                </div>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="cityNonUser" 
+                    placeholder="City"
+                    required
+                    formControlName="cityNonUser">
+                
+            </div>
+            <div class="input-group form-group-no-border mb-4 mt-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fas fa-phone"></i>
+                    </span>
+                </div>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="phoneNonUser" 
+                    placeholder="Phone"
+                    required
+                    formControlName="phoneNonUser">
+                
+            </div>
+            <div class="input-group form-group-no-border mb-4 mt-2">
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    id="nonUserPassport" 
+                    placeholder="Passport number"
+                    required
+                    formControlName="nonUserPassport">
+            </div>
+        </div>
+        <br/>
+        <label>Enter a date of reservation:</label>
+        <br>
+        <div class="input-group form-group-no-border mb-4 mt-2">
+            <input 
+                type="date" 
+                class="form-control" 
+                id="dateOfReservation" 
+                placeholder="Date of reservation"
+                required
+                formControlName="dateOfReservation">
+        </div> 
+        <button type="submit" class="btn btn-primary">Reserve</button>
+    </form>
+    </div>
+    <br/>
+    <label>If you want, you can book a car to wait for you in landing place:</label>
+    <br/>
+    <button class="btn btn-primary">Book a car</button>
+    <br/>
+    <br/>
+   </div>
+    
+<div *ngIf="isReserved">
+<h4>This seat is already reserved!</h4>
+</div>
+
+
+
+
+
+
+
+
+
+

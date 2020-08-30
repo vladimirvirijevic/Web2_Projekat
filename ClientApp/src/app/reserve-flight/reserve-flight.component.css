@@ -12,6 +12,17 @@ canvas-container
     width: 700px;
     height: 700px;
 }
+
+/*prvo sediste*/
+#labela1
+{
+    position:absolute;
+    left:655px;
+    top:435px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
+}
 #button1
 {
     position:absolute;
@@ -20,6 +31,16 @@ canvas-container
     width:45px;
     height: 45px;
 
+}
+/*drugo sediste*/
+#labela2
+{
+    position:absolute;
+    left:715px;
+    top:435px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
 }
 #button2
 {
@@ -30,6 +51,16 @@ canvas-container
     height: 45px;
 
 }
+/*trece sediste*/
+#labela3
+{
+    position:absolute;
+    left:775px;
+    top:435px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
+}
 #button3
 {
     position:absolute;
@@ -39,8 +70,16 @@ canvas-container
     height: 45px;
 
 }
-
-
+/*cetvrto sediste*/
+#labela4
+{
+    position:absolute;
+    left:655px;
+    top:495px;
+    width:3px;
+    height: 3px;
+    font-size: x-small;
+}
 #button4
 {
     position:absolute;
@@ -49,6 +88,16 @@ canvas-container
     width:45px;
     height: 45px;
 
+}
+/*peto sediste*/
+#labela5
+{
+    position:absolute;
+    left:715px;
+    top:495px;
+    width:3px;
+    height: 3px;
+    font-size: x-small;
 }
 #button5
 {
@@ -59,6 +108,16 @@ canvas-container
     height: 45px;
 
 }
+/*sesto sediste*/
+#labela6
+{
+    position:absolute;
+    left:775px;
+    top:495px;
+    width:3px;
+    height: 3px;
+    font-size: x-small;
+}
 #button6
 {
     position:absolute;
@@ -66,91 +125,173 @@ canvas-container
     top:510px;
     width:45px;
     height: 45px;
-
 }
-
-
+/*sedmo sediste*/
+#labela7
+{
+    position:absolute;
+    left:655px;
+    top:555px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
+}
 #button7
 {
     position:absolute;
     left:655px;
-    top:565px;
+    top:570px;
     width:45px;
     height: 45px;
 
+}
+/*osmo sediste*/
+#labela8
+{
+    position:absolute;
+    left:715px;
+    top:555px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
 }
 #button8
 {
     position:absolute;
     left:715px;
-    top:565px;
+    top:570px;
     width:45px;
     height: 45px;
 
+}
+/*deveto sediste*/
+#labela9
+{
+    position:absolute;
+    left:775px;
+    top:555px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
 }
 #button9
 {
     position:absolute;
     left:775px;
-    top:565px;
+    top:570px;
     width:45px;
     height: 45px;
 }
-
-
-
+/*deseto sediste*/
+#labela10
+{
+    position:absolute;
+    left:655px;
+    top:615px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
+}
 #button10
 {
     position:absolute;
     left:655px;
-    top:620px;
+    top:630px;
     width:45px;
     height: 45px;
 
+}
+/*jedanaesto sediste*/
+#labela11
+{
+    position:absolute;
+    left:715px;
+    top:615px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
 }
 #button11
 {
     position:absolute;
     left:715px;
-    top:620px;
+    top:630px;
     width:45px;
     height: 45px;
 
+}
+/*dvanaesto sediste*/
+#labela12
+{
+    position:absolute;
+    left:775px;
+    top:615px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
 }
 #button12
 {
     position:absolute;
     left:775px;
-    top:620px;
+    top:630px;
     width:45px;
     height: 45px;
 }
-
-
-
-#button13
+/*trinaesto sediste*/
+#labela13
 {
     position:absolute;
     left:655px;
     top:675px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
+}
+#button13
+{
+    position:absolute;
+    left:655px;
+    top:690px;
     width:45px;
     height: 45px;
 
+}
+
+/*cetrnaesto sediste*/
+#labela14
+{
+    position:absolute;
+    left:715px;
+    top:675px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
 }
 #button14
 {
     position:absolute;
     left:715px;
-    top:675px;
+    top:690px;
     width:45px;
     height: 45px;
 
+}
+/*petnaesto sediste*/
+#labela15
+{
+    position:absolute;
+    left:775px;
+    top:675px;
+    width:5px;
+    height: 5px;
+    font-size: x-small;
 }
 #button15
 {
     position:absolute;
     left:775px;
-    top:675px;
+    top:690px;
     width:45px;
     height: 45px;
 }
