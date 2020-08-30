@@ -86,7 +86,40 @@
 
     </div>
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
+        <h5>*Your reservation cannot be canceled until 3 days have passed from date of its creation</h5>
+        <div *ngIf="reservations.length > 0" class="row mt-5 mb-3">
+            <div class="col">
+                <h4>Current Flight Reservations</h4>
+                <table class="table mt-4">
+                    <thead class="thead">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Date of reservation:</th>
+                        <th scope="col">Name of user:</th>
+                        <th scope="col">Location:</th>
+                        <th scope="col">Date and time of taking off:</th>
+                        <th scope="col">Date and time of landing:</th>
+                        <th scope="col">Reserved seat</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let reservation of reservations; let i=index">
+                        <th>{{ i+1 }}</th>
+                        <td>{{reservation.dateOfReservation}}</td>
+                        <td>{{ reservation.firstNameOfPersonWhoSits + " " + reservation.secondNameOfPersonWhoSits }}</td>
+                        <td>{{ reservation.flightOfReservation.locationFrom+"----->"+reservation.flightOfReservation.locationTo }}</td>
+                        <td>{{ reservation.flightOfReservation.dateOfTakingOff+" ----- "+reservation.flightOfReservation.timeOfTakingOff+" h"}}</td>
+                        <td>{{ reservation.flightOfReservation.dateOfLanding+" ----- "+reservation.flightOfReservation.timeOfLanding+" h"}}</td>
+                        <td>{{ reservation.seatOfReservation }}</td>
+                        <td>{{ reservation.priceOfReservation }}</td>
+                        <td>  <button type="button" id="button3" class="btn-danger" (click)="OnDeleteReservation(reservation.id)">Cancel reservation</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 
     </div>

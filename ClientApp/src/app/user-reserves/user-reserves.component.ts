@@ -7,6 +7,7 @@ import { User } from '../models/User';
 import { AuthUser } from '../models/authUser';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FlightReservationService } from '../services/flight-reservation.service';
+import { FlightReservation } from '../models/FlightReservation';
 
 @Component({
   selector: 'app-user-reserves',
@@ -27,6 +28,7 @@ export class UserReservesComponent implements OnInit {
   public reservedBad:Boolean;
   public okMessage:string;
   public errorMessage:string;
+  public reservations:FlightReservation[];
 
   constructor( 
     private route: ActivatedRoute,
@@ -61,6 +63,7 @@ export class UserReservesComponent implements OnInit {
     this.numberOfSeat=Number(this.route.snapshot.paramMap.get("idBrojSedista"));
     this.getSeats();
     this.user=this.authService.currentUserValue;
+    this.getFlightReservations();
   }
 
   getSeats()
@@ -157,9 +160,23 @@ export class UserReservesComponent implements OnInit {
       );
 }
 
-  
+  getFlightReservations()
+  {
+      this.flightReservationService.getReservations(this.authService.currentUserValue.id).subscribe
+      (
+        
+        data=>
+        {
+         this.reservations=data;
+         console.log(data);
+        },
+        err=>
+        {
+         console.log("ne radi");
+        }
 
+      );
 
-
+  }
 
 }
