@@ -11,6 +11,7 @@ namespace WebProjekat.Models
         public string Description { get; set; }
         public int Grade { get; set; }
         public virtual List<RentacarBranch> Branches { get; set; } = new List<RentacarBranch>();
+        public virtual List<RentacarGrade> Grades { get; set; } = new List<RentacarGrade>();
         public virtual User Admin { get; set; }
 
         public RentacarCompany() { }

@@ -657,6 +657,135 @@ namespace WebProjekat.Controllers
 
             return Ok(response);
         }
+
+        [Authorize]
+        [HttpPost]
+        [Route("discount")]
+        public async Task<ActionResult> AddDiscount([FromBody] AddDiscountRequest request)
+        {
+            // Validacija datuma
+            DateTime startDate = DateTime.ParseExact(request.StartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime endDate = DateTime.ParseExact(request.EndDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            if (startDate > endDate)
+            {
+                return Conflict();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            var car = await _context.Cars.FindAsync(request.CarId);
+
+            if (car == null)
+            {
+                return BadRequest();
+            }
+
+            if (car.Branch.Company.Admin != currentUser)
+            {
+                return Unauthorized();
+            }
+
+            // proveri da li vec postoji validacija za te datume
+
+            var days = _dateService.DaysListBetweenDates(startDate, endDate);
+
+            var discounts = await _context.CarDiscounts.Where(d => d.Car.Branch.Company.Admin.Id == currentUser.Id).ToListAsync();
+
+            foreach (var d in discounts)
+            {
+                DateTime discountStartDate = DateTime.ParseExact(d.StartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                DateTime discountEndDate = DateTime.ParseExact(d.EndDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                var discountDays = _dateService.DaysListBetweenDates(discountStartDate, discountEndDate);
+
+                foreach (var day in discountDays)
+                {
+                    if (days.Contains(day))
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+
+            var discount = new CarDiscount(request);
+
+            car.Discounts.Add(discount);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        } 
+
+        [Authorize]
+        [HttpGet]
+        [Route("cars")]
+        public async Task<ActionResult> GetCompanyCars()
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            var cars = await _context.Cars.Where(c => c.Branch.Company.Admin.Id == currentUser.Id).ToListAsync();
+
+            return Ok(cars);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("discounts")]
+        public async Task<ActionResult<List<CarDiscount>>> GetDiscounts()
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            var discounts = await _context.CarDiscounts.Where(d => d.Car.Branch.Company.Admin.Id == currentUser.Id).ToListAsync();
+
+            return Ok(discounts);
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("discount/{discountId}")]
+        public async Task<ActionResult> DeleteDiscount(int discountId)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "RentacarAdmin")
+            {
+                return Unauthorized();
+            }
+
+            var discount = await _context.CarDiscounts.FindAsync(discountId);
+
+            if (discount == null)
+            {
+                return BadRequest();
+            }
+
+            if (discount.Car.Branch.Company.Admin != currentUser)
+            {
+                return Unauthorized();
+            }
+
+            _context.CarDiscounts.Remove(discount);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }
 

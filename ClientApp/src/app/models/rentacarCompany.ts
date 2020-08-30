@@ -1,4 +1,5 @@
 import { Branch } from './branch';
+import { RentacarGrade } from './rentacarGrade';
 
 export class RentacarCompany {
     id: number;
@@ -7,4 +8,5 @@ export class RentacarCompany {
     description: string;
     grade: number;
     branches: Branch[];
+    grades: RentacarGrade[];
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebProjekat.Data;
 
 namespace WebProjekat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200830085947_AddGradeCars")]
+    partial class AddGradeCars
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,60 +228,6 @@ namespace WebProjekat.Migrations
                     b.ToTable("Flights");
                 });
 
-            modelBuilder.Entity("WebProjekat.Models.FlightReservation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AirplaneCompanyOfReservationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CityOfUserWhoSits")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DateOfReservation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstNameOfPersonWhoSits")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("FlightOfReservationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NumberOfPassport")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneOfUserWhoSits")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PriceOfReservation")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SeatOfReservation")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SecondNameOfPersonWhoSits")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StatusOfReservation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserWhoReservedId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AirplaneCompanyOfReservationId");
-
-                    b.HasIndex("FlightOfReservationId");
-
-                    b.HasIndex("UserWhoReservedId");
-
-                    b.ToTable("Reservations");
-                });
-
             modelBuilder.Entity("WebProjekat.Models.GradeCar", b =>
                 {
                     b.Property<int>("Id")
@@ -378,31 +326,6 @@ namespace WebProjekat.Migrations
                     b.HasIndex("AdminId");
 
                     b.ToTable("RentacarCompanies");
-                });
-
-            modelBuilder.Entity("WebProjekat.Models.RentacarGrade", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Grade")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RentacarGrades");
                 });
 
             modelBuilder.Entity("WebProjekat.Models.Seat", b =>
@@ -557,21 +480,6 @@ namespace WebProjekat.Migrations
                         .HasForeignKey("UsersId");
                 });
 
-            modelBuilder.Entity("WebProjekat.Models.FlightReservation", b =>
-                {
-                    b.HasOne("WebProjekat.Models.AirplaneCompany", "AirplaneCompanyOfReservation")
-                        .WithMany()
-                        .HasForeignKey("AirplaneCompanyOfReservationId");
-
-                    b.HasOne("WebProjekat.Models.Flight", "FlightOfReservation")
-                        .WithMany()
-                        .HasForeignKey("FlightOfReservationId");
-
-                    b.HasOne("WebProjekat.Models.User", "UserWhoReserved")
-                        .WithMany()
-                        .HasForeignKey("UserWhoReservedId");
-                });
-
             modelBuilder.Entity("WebProjekat.Models.Location", b =>
                 {
                     b.HasOne("WebProjekat.Models.AirplaneCompany", "Comapny")
@@ -591,17 +499,6 @@ namespace WebProjekat.Migrations
                     b.HasOne("WebProjekat.Models.User", "Admin")
                         .WithMany("RentacarCompany")
                         .HasForeignKey("AdminId");
-                });
-
-            modelBuilder.Entity("WebProjekat.Models.RentacarGrade", b =>
-                {
-                    b.HasOne("WebProjekat.Models.RentacarCompany", "Company")
-                        .WithMany("Grades")
-                        .HasForeignKey("CompanyId");
-
-                    b.HasOne("WebProjekat.Models.User", "User")
-                        .WithMany("RentacarGrades")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("WebProjekat.Models.Seat", b =>

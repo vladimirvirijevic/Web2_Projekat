@@ -39,6 +39,9 @@
             <li *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'User'" class="nav-item">
                 <a class="nav-link mr-3" routerLink="app/listOfAircompanies" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-building mr-2"></i>Airline companies</a>
             </li>
+            <li *ngIf="authService.currentUserValue && authService.currentUserValue.role == 'User'" class="nav-item">
+                <a class="nav-link mr-3" routerLink="/reservations" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"><i class="fas fa-clipboard-list mr-2"></i>Reservations</a>
+            </li>
         </ul>
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">

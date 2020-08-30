@@ -41,6 +41,9 @@ import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availabili
 import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
 import { AvioCompanyFromListComponent } from './list-of-avio-companies/avio-company-from-list/avio-company-from-list.component';
 import { ReserveFlightComponent } from './reserve-flight/reserve-flight.component';
+import { CarDiscountsComponent } from './my-rentacar-company/car-discounts/car-discounts.component';
+import { ReservationHistoryComponent } from './reservation-history/reservation-history.component';
+import { RentacarGradeComponent } from './reservation-history/rentacar-grade/rentacar-grade.component';
 import { UserReservesComponent } from './user-reserves/user-reserves.component';
 
 const routes: Routes = [
@@ -58,7 +61,8 @@ const routes: Routes = [
     { path: 'cars', component: RentacarCarsComponent},
     { path: 'reservations', component: RentacarReservationsComponent},
     { path: 'earnings', component: RentacarEarningsComponent},
-    { path: 'cars-availability', component: CarsAvailabilityComponent}
+    { path: 'cars-availability', component: CarsAvailabilityComponent},
+    { path: 'discounts', component: CarDiscountsComponent},
   ]},
   
   {path: 'app', component:RegisteredUserComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User]} },
@@ -101,6 +105,12 @@ const routes: Routes = [
       {path:'flights', component:AdminAviocompanyFlightsComponent},
       {path: 'seats/:id', component:AdminAviocompanySeatsComponent}
     ],
+  canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }},
+  //path za korisnika ka sedistima
+
+  { path: 'reservations', component: ReservationHistoryComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
+  { path: 'reservations/rentacar/:reservationId/grade', component: RentacarGradeComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
+    
   canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }},
   //path za korisnika ka rezervaciji
   {path:'app/userReserves/:idLeta/:idBrojSedista',component:UserReservesComponent}

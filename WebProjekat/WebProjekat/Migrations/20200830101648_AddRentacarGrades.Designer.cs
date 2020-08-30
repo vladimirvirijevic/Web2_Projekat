@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebProjekat.Data;
 
 namespace WebProjekat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200830101648_AddRentacarGrades")]
+    partial class AddRentacarGrades
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,60 +226,6 @@ namespace WebProjekat.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Flights");
-                });
-
-            modelBuilder.Entity("WebProjekat.Models.FlightReservation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AirplaneCompanyOfReservationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CityOfUserWhoSits")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DateOfReservation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstNameOfPersonWhoSits")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("FlightOfReservationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NumberOfPassport")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneOfUserWhoSits")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PriceOfReservation")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SeatOfReservation")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SecondNameOfPersonWhoSits")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StatusOfReservation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserWhoReservedId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AirplaneCompanyOfReservationId");
-
-                    b.HasIndex("FlightOfReservationId");
-
-                    b.HasIndex("UserWhoReservedId");
-
-                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("WebProjekat.Models.GradeCar", b =>
@@ -555,21 +503,6 @@ namespace WebProjekat.Migrations
                     b.HasOne("WebProjekat.Models.User", "Users")
                         .WithMany("GradeCars")
                         .HasForeignKey("UsersId");
-                });
-
-            modelBuilder.Entity("WebProjekat.Models.FlightReservation", b =>
-                {
-                    b.HasOne("WebProjekat.Models.AirplaneCompany", "AirplaneCompanyOfReservation")
-                        .WithMany()
-                        .HasForeignKey("AirplaneCompanyOfReservationId");
-
-                    b.HasOne("WebProjekat.Models.Flight", "FlightOfReservation")
-                        .WithMany()
-                        .HasForeignKey("FlightOfReservationId");
-
-                    b.HasOne("WebProjekat.Models.User", "UserWhoReserved")
-                        .WithMany()
-                        .HasForeignKey("UserWhoReservedId");
                 });
 
             modelBuilder.Entity("WebProjekat.Models.Location", b =>

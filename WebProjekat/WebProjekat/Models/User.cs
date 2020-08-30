@@ -22,5 +22,7 @@ namespace WebProjekat.Models
         public virtual List<AirplaneCompany> AirlineCompanies { get; set; } = new List<AirplaneCompany>();
         public virtual List<RentacarCompany> RentacarCompany { get; set; } = new List<RentacarCompany>();
         public virtual List<CarReservation> CarReservations { get; set; } = new List<CarReservation>();
+        public virtual List<GradeCar> GradeCars { get; set; } = new List<GradeCar>();
+        public virtual List<RentacarGrade> RentacarGrades { get; set; } = new List<RentacarGrade>();
     }
 }

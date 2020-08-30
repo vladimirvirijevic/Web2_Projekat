@@ -1,0 +1,124 @@
+<div class="row mt-5">
+    <div class="col">
+        <h2>Car Discounts <button data-toggle="modal" data-target="#addDiscountModal" class="ml-4 btn btn-success mb-3"><i class="fas fa-plus mr-2"></i>Add Discount</button></h2>
+    </div>
+</div>
+
+
+<div *ngIf="carDiscounts.length > 0" class="row mt-4">
+    <div class="col">
+        <table class="table">
+            <thead class="thead">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Car</th>
+                <th scope="col">Percent</th>
+                <th scope="col">Start date</th>
+                <th scope="col">End date</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let discount of carDiscounts; let i=index">
+                <th>{{ i+1 }}</th>
+                <td><a [routerLink]="'/car/'+discount.car.id">{{ discount.car.brand + " " + discount.car.model}}</a></td>
+                <td>{{ discount.percent }}</td>
+                <td>{{ discount.startDate }}</td>
+                <td>{{ discount.endDate }}</td>
+                <td><button (click)="deleteDiscount(discount.id)" class="btn btn-danger"><i class="fas fa-trash mr-2"></i>Delete</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addDiscountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header pl-4 pr-4">
+          <h5 class="modal-title" id="exampleModalLabel">Add Discount</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4">
+            <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+                {{ errorMessageText }}
+            </div>
+            <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+                Discount added successfully!
+            </div>
+            <form [formGroup]="addDiscountForm" (ngSubmit)="onSubmit()">
+
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        id="startDate" 
+                        placeholder="Start Date"
+                        required
+                        formControlName="startDate">
+                    
+                  </div>
+                  <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)" class="alert alert-danger ">
+                    <div *ngIf="startDate.errors.required">
+                        Start Date is required.
+                    </div>
+                </div>
+
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="date" 
+                        class="form-control" 
+                        id="endDate" 
+                        placeholder="End Date"
+                        required
+                        formControlName="endDate">
+                    
+                  </div>
+                  <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)" class="alert alert-danger ">
+                    <div *ngIf="endDate.errors.required">
+                        End Date is required.
+                    </div>
+                </div>
+
+                <div class="input-group form-group-no-border mb-2 mt-3">
+                    <input 
+                        type="number" 
+                        min="1" 
+                        max="99"
+                        class="form-control" 
+                        id="percent" 
+                        placeholder="Percent"
+                        required
+                        minlength="1"
+                        maxlength="100"
+                        formControlName="percent">
+                    
+                  </div>
+                  <div *ngIf="percent.invalid && (percent.dirty || percent.touched)" class="alert alert-danger ">
+                    <div *ngIf="percent.errors.required">
+                        Percent is required.
+                    </div>
+
+                    <div *ngIf="percent.errors.minlength || percent.errors.maxlength">
+                        Percent must be between 0-100.
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sel1">Choose Car</label>
+                    <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selectedCarId">
+                        <option  *ngFor="let car of cars" [ngValue]="car.id">{{car.brand}} {{ car.model }}</option>
+                    </select>
+                  </div>
+                                
+                <button [disabled]="addDiscountForm.invalid || selectedCarId == -1" type="submit" class="btn btn-primary btn-block">Add</button>
+              </form>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+
