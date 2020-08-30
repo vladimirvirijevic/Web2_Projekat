@@ -18,6 +18,7 @@ namespace WebProjekat.Models
         public virtual RentacarBranch Branch { get; set; }
         public virtual List<CarReservation> CarReservations { get; set; } = new List<CarReservation>();
         public virtual List<CarDiscount> Discounts { get; set; } = new List<CarDiscount>();
+        public virtual List<GradeCar> Grades { get; set; } = new List<GradeCar>();
 
         public Car() { }
 

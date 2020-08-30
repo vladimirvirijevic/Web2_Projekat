@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { Car } from '../models/car';
+import { CarReservation } from '../models/carReservation';
 
 @Injectable({
   providedIn: 'root'
@@ -63,4 +64,6 @@ export class RentacarService {
   getCars(companyId): Observable<Car[]> {
     return this.http.get<Car[]>(`${environment.api_url}/rentacar/${companyId}/cars`);
   }
+
+  
 }

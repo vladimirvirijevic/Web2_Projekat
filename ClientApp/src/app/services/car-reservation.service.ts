@@ -28,7 +28,33 @@ export class CarReservationService {
     );
   }
 
+  gradeCar(gradeCarInfo) {
+    return this.http.post<any>(`${environment.api_url}/carreservation/reservation/rentacar/gradecar`, gradeCarInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  gradeCompany(gradeCompanyInfo) {
+    return this.http.post<any>(`${environment.api_url}/carreservation/reservation/rentacar/gradecompany`, gradeCompanyInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
   handleError(error: HttpErrorResponse) {
     return throwError(error);
+  }
+
+  getUserReservations(): Observable<CarReservation[]> {
+    return this.http.get<CarReservation[]>(`${environment.api_url}/carreservation/reservations`);
+  }
+
+  getReservation(reservationId): Observable<CarReservation> {
+    return this.http.get<CarReservation>(`${environment.api_url}/carreservation/reservations/${reservationId}`);
+  }
+
+  getCarGrade(carId): Observable<number> {
+    return this.http.get<number>(`${environment.api_url}/carreservation/car/grade/${carId}`);
   }
 }

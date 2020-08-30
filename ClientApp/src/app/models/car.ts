@@ -1,4 +1,5 @@
 import { Branch } from './branch';
+import { GradeCar } from './gradeCar';
 
 export class Car {
     id: number;
@@ -14,4 +15,6 @@ export class Car {
     dropoffLocation: string;
     branchAddress: string;
     branch: Branch;
+    grade: number;
+    grades: GradeCar[];
 }

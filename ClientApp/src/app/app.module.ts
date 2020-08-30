@@ -54,6 +54,8 @@ import { ChartsModule } from 'ng2-charts';
 import { CarsAvailabilityComponent } from './my-rentacar-company/cars-availability/cars-availability.component';
 import { AdminBonusComponent } from './admin/admin-bonus/admin-bonus.component';
 import { CarDiscountsComponent } from './my-rentacar-company/car-discounts/car-discounts.component';
+import { ReservationHistoryComponent } from './reservation-history/reservation-history.component';
+import { RentacarGradeComponent } from './reservation-history/rentacar-grade/rentacar-grade.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +100,8 @@ import { CarDiscountsComponent } from './my-rentacar-company/car-discounts/car-d
     AvioCompanyFromListComponent,
     ReserveFlightComponent,
     CarDiscountsComponent,
+    ReservationHistoryComponent,
+    RentacarGradeComponent,
     
   ],
   imports: [
