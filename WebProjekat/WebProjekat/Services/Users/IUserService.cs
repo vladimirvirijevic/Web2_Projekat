@@ -19,5 +19,6 @@ namespace WebProjekat.Services.Users
         Task<bool> ChangeAdminPassword(User userInfo, string newPassword);
         Task<bool> ConfirmAccount(string email, string token);
         Task<bool> EditUser(User user);
+        
     }
 }

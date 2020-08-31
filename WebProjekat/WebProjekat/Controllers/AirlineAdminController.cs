@@ -92,7 +92,7 @@ namespace WebProjekat.Controllers
             }
 
             //TODO: jedna kompanija ne sme da ima vise istih lokacija
-            bool locationExists = await _context.Locations.FirstOrDefaultAsync(x => x.Name == request.Address)!=null;
+            bool locationExists = await _context.Locations.FirstOrDefaultAsync(x => x.Name == request.Address && x.Comapny.Id==companyId)!=null;
 
             if (locationExists)
             {

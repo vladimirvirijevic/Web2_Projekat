@@ -25,6 +25,9 @@ namespace WebProjekat.Data
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Seat> Seats { get; set; }
         public DbSet<FlightReservation> Reservations { get; set; }
+
+        public DbSet<FriendModel> Friends { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();

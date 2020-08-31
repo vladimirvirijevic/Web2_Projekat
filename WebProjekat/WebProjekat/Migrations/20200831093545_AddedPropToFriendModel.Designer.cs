@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebProjekat.Data;
 
 namespace WebProjekat.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200831093545_AddedPropToFriendModel")]
+    partial class AddedPropToFriendModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -296,15 +298,13 @@ namespace WebProjekat.Migrations
                     b.Property<string>("FriendLastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("KoJePrihvatioId")
+                    b.Property<int>("IdKoJePrihvatio")
                         .HasColumnType("int");
 
                     b.Property<int?>("KoJeRezervisaoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("KoJePrihvatioId");
 
                     b.HasIndex("KoJeRezervisaoId");
 
@@ -594,10 +594,6 @@ namespace WebProjekat.Migrations
 
             modelBuilder.Entity("WebProjekat.Models.FriendModel", b =>
                 {
-                    b.HasOne("WebProjekat.Models.User", "KoJePrihvatio")
-                        .WithMany()
-                        .HasForeignKey("KoJePrihvatioId");
-
                     b.HasOne("WebProjekat.Models.User", "KoJeRezervisao")
                         .WithMany()
                         .HasForeignKey("KoJeRezervisaoId");
