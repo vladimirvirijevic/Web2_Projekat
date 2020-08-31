@@ -695,20 +695,23 @@ namespace WebProjekat.Controllers
 
             var days = _dateService.DaysListBetweenDates(startDate, endDate);
 
-            var discounts = await _context.CarDiscounts.Where(d => d.Car.Branch.Company.Admin.Id == currentUser.Id).ToListAsync();
+            var discounts = await _context.CarDiscounts.Where(d => d.Car.Id == car.Id).ToListAsync();
 
-            foreach (var d in discounts)
+            if (discounts != null)
             {
-                DateTime discountStartDate = DateTime.ParseExact(d.StartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                DateTime discountEndDate = DateTime.ParseExact(d.EndDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-                var discountDays = _dateService.DaysListBetweenDates(discountStartDate, discountEndDate);
-
-                foreach (var day in discountDays)
+                foreach (var d in discounts)
                 {
-                    if (days.Contains(day))
+                    DateTime discountStartDate = DateTime.ParseExact(d.StartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    DateTime discountEndDate = DateTime.ParseExact(d.EndDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                    var discountDays = _dateService.DaysListBetweenDates(discountStartDate, discountEndDate);
+
+                    foreach (var day in discountDays)
                     {
-                        return NotFound();
+                        if (days.Contains(day))
+                        {
+                            return NotFound();
+                        }
                     }
                 }
             }

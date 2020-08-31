@@ -21,5 +21,11 @@ namespace WebProjekat.Models
             PickupDate = bookingInfo.PickupDate;
             DropoffDate = bookingInfo.DropoffDate;
         }
+
+        public CarReservation(FastBookCarRequest bookingInfo)
+        {
+            PickupDate = bookingInfo.PickupDate;
+            DropoffDate = bookingInfo.DropoffDate;
+        }
     }
 }

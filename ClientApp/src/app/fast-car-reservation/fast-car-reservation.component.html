@@ -1,0 +1,33 @@
+<div class="row mt-5 mb-5">
+    <div class="col">
+        <h3>Fast Car Reservation</h3>
+    </div>
+</div>
+
+<div *ngIf="flight" class="row">
+    <div class="col">
+        <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+        </div>
+        <div *ngIf="showSuccessMessage" class="alert alert-success" role="alert">
+            Car booked successfully!
+        </div>
+        <p>Discounted cars from <b>{{ flight.dateOfTakingOff }}</b> to <b>{{ flight.dateOfLanding }}</b></p>
+        <div class="form-group">
+            <label for="sel1">Choose Car</label>
+            <select [ngModelOptions]="{standalone: true}" class="form-control" [(ngModel)]="selectedDiscountedCar">
+                <option  *ngFor="let discountedCar of cars" [ngValue]="discountedCar">{{discountedCar.car.brand + " " + discountedCar.car.model }}, Discount: {{ discountedCar.discount.percent }}% , {{ discountedCar.car.model }}, Price Per Day Before Discount: {{ discountedCar.car.pricePerDay }}, Price Per Day After Discount: {{ (discountedCar.car.pricePerDay * (1 - discountedCar.discount.percent /100)).toFixed(2) }}</option>
+            </select>
+        </div>
+        <p>Pickup Data: <b>{{ flight.dateOfLanding }}</b></p>
+        <div class="form-group">
+            <label for="sel1">Car Return Date</label>
+            <input 
+                type="date" 
+                class="form-control" 
+                [(ngModel)]="returnDate">
+        </div>
+                        
+        <button (click)="bookCar()" [disabled]="selectedDiscountedCar == null || returnDate == ''" type="submit" class="btn btn-primary">Book Now</button>
+    </div>
+</div>

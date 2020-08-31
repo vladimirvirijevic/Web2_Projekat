@@ -229,5 +229,43 @@ namespace WebProjekat.Controllers
 
             return Ok(carGrade);
         }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("delete/{reservationId}")]
+        public async Task<IActionResult> DeleteReservation(int reservationId)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            var reservation = await _context.CarReservations.FindAsync(reservationId);
+
+            if (reservation == null)
+            {
+                return BadRequest();
+            }
+
+            if (reservation.User.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            var currentDate = DateTime.ParseExact(DateTime.Now.ToString("yyyy-MM-dd"), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            var pickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            var cancelDeadline = pickupDate.AddDays(-2);
+
+            if (currentDate > cancelDeadline)
+            {
+                return Conflict();
+            }
+
+            _context.CarReservations.Remove(reservation);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        
     }
 }

@@ -35,6 +35,13 @@ export class CarReservationService {
     );
   }
 
+  cancelReservation(reservationId) {
+    return this.http.delete<any>(`${environment.api_url}/carreservation/delete/${reservationId}`)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
   gradeCompany(gradeCompanyInfo) {
     return this.http.post<any>(`${environment.api_url}/carreservation/reservation/rentacar/gradecompany`, gradeCompanyInfo)
     .pipe(

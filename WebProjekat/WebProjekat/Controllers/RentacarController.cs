@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Ocsp;
 using WebProjekat.Data;
 using WebProjekat.Helpers;
+using WebProjekat.Migrations;
 using WebProjekat.Models;
 using WebProjekat.Requests.Rentacar;
 using WebProjekat.Requests.RentacarAdmin;
@@ -169,6 +170,32 @@ namespace WebProjekat.Controllers
                     {
                         foreach (var car in branch.Cars)
                         {
+                            /*
+                            bool carHasDisocunt = false;
+                            // Ako je auto na popustu, nece biti prikazan tokom obicne rezervacije
+                            if (car.Discounts.Count > 0)
+                            {
+                                foreach (var discount in car.Discounts)
+                                {
+                                    DateTime discountStartDate = DateTime.ParseExact(discount.StartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                                    DateTime discountEndDate= DateTime.ParseExact(discount.EndDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                                    var dates = _dateService.DaysListBetweenDates(discountStartDate, discountEndDate);
+
+                                    if (dates.Contains(pickupDate) || dates.Contains(dropoffDate))
+                                    {
+                                        carHasDisocunt = true;
+                                        break;
+                                    }
+                                }
+
+                                if (carHasDisocunt)
+                                {
+                                    continue;
+                                }
+                            }
+                            */
+
                             if (car.CarReservations.Count > 0)
                             {
                                 foreach (var carReservation in car.CarReservations)
@@ -373,6 +400,139 @@ namespace WebProjekat.Controllers
             });
 
             return Ok(cars);
+        }
+
+        [HttpGet("discounted-cars/{flightId}")]
+        [Authorize]
+        public async Task<ActionResult<List<DiscountedCar>>> GetDiscountedCars(int flightId)
+        {
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (currentUser.Role != "User")
+            {
+                return BadRequest();
+            }
+
+            var flight = await _context.Flights.FindAsync(flightId);
+
+            if (flight == null)
+            {
+                return BadRequest();
+            }
+
+            var takeoffDate = DateTime.ParseExact(flight.DateOfTakingOff, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            var landingDate = DateTime.ParseExact(flight.DateOfLanding, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            var cars = await _context.Cars.Where(c => c.Discounts.Count > 0).ToListAsync();
+
+            List<DiscountedCar> discountedCars = new List<DiscountedCar>();
+
+            foreach (var car in cars)
+            {
+                foreach (var discount in car.Discounts)
+                {
+                    var discountStart = DateTime.ParseExact(discount.StartDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    var discountEnd = DateTime.ParseExact(discount.EndDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                    if (takeoffDate >= discountStart && landingDate <= discountEnd)
+                    {
+                        var discountedCar = new DiscountedCar(car, discount);
+
+                        if (!discountedCars.Contains(discountedCar))
+                        {
+                            discountedCars.Add(discountedCar);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return Ok(discountedCars);
+        }
+
+        [HttpPost("fast-book")]
+        [Authorize]
+        public async Task<ActionResult> FastBookCar([FromBody] FastBookCarRequest request)
+        {
+            DateTime pickupDate = DateTime.ParseExact(request.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime dropoffDate = DateTime.ParseExact(request.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            /*
+            if (!_dateService.ValidateDateRange(pickupDate, dropoffDate))
+            {
+                return Conflict();
+            }
+            */
+
+            DateTime today = DateTime.Today;
+
+            /*
+            if (pickupDate < today)
+            {
+                return StatusCode(403);
+            }
+            */
+
+            var user = await _context.Users.FindAsync(request.UserId);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var currentUser = (User)_httpContextAccessor.HttpContext.Items["User"];
+
+            if (request.UserId != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            var car = await _context.Cars.FindAsync(request.CarId);
+
+            if (car == null)
+            {
+                return BadRequest();
+            }
+
+            // TODO Proveri da li auto vec rezervisan za taj datum
+            if (car.CarReservations.Count > 0)
+            {
+                foreach (var reservation in car.CarReservations)
+                {
+                    DateTime reservationPickupDate = DateTime.ParseExact(reservation.PickupDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    DateTime reservationDropoffDate = DateTime.ParseExact(reservation.DropoffDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                    var dates = _dateService.DaysListBetweenDates(reservationPickupDate, reservationDropoffDate);
+
+                    if (dates.Contains(pickupDate) || dates.Contains(dropoffDate))
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+
+            var discount = await _context.CarDiscounts.FindAsync(request.DiscountId);
+
+            if (discount == null)
+            {
+                return BadRequest();
+            }
+
+            var carReservation = new CarReservation(request);
+
+            carReservation.Days = _dateService.DaysBetweenDates(pickupDate, dropoffDate);
+
+            // smanji za popust
+            double discountedPricePerDay = car.PricePerDay * (1 - discount.Percent / 100);
+            
+            carReservation.TotalPrice = discountedPricePerDay * carReservation.Days;
+            carReservation.Status = "CONFIRMED";
+
+            car.CarReservations.Add(carReservation);
+            user.CarReservations.Add(carReservation);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

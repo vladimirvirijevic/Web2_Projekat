@@ -28,6 +28,10 @@ export class AirlineService {
     return this.http.get<Flight[]>(`${environment.api_url}/airline/flights`);
   }
 
+  getFlight(flightId): Observable<Flight> {
+    return this.http.get<Flight>(`${environment.api_url}/airline/flights/${flightId}`);
+  }
+
   createCompany(companyInfo) {
     return this.http.post<any>(`${environment.api_url}/airline/companies`, companyInfo)
     .pipe(

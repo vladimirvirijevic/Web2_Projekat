@@ -16,6 +16,11 @@ export class ReservationHistoryComponent implements OnInit {
   currentReservations: CarReservation[] = [];
   reservations: FlightReservation[]=[];
 
+  showDeleteSuccess = false;
+  showDeleteError = false;
+
+  errorMessage = "There was an error!";
+
   constructor(
     private carReservationService: CarReservationService,
     private flightReservationService: FlightReservationService,
@@ -76,4 +81,23 @@ export class ReservationHistoryComponent implements OnInit {
     );
   }
 
+  cancelReservation(reservationId) {
+    this.carReservationService.cancelReservation(reservationId)
+      .subscribe(
+        data => {
+          this.getCarReservations();
+          this.showDeleteError = false;
+          this.showDeleteSuccess = true;
+        },
+        error => {
+          console.log(error);
+          if (error.status == 409) {
+            this.errorMessage = "You can only cancel reservation two days before pickup date!";
+          }
+
+          this.showDeleteError = true;
+          this.showDeleteSuccess = false;
+        }
+      )
+  }
 }

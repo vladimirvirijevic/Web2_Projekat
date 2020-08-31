@@ -20,6 +20,12 @@
         
         <div *ngIf="currentReservations.length > 0" class="row mt-5 mb-3">
             <div class="col">
+                <div *ngIf="showDeleteError" class="alert alert-danger" role="alert">
+                    {{ errorMessage }}
+                </div>
+                <div *ngIf="showDeleteSuccess" class="alert alert-success" role="alert">
+                    Reservation canceled successfully!
+                </div>
                 <h4>Current Reservations</h4>
                 <table class="table mt-4">
                     <thead class="thead">
@@ -32,6 +38,7 @@
                         <th scope="col">Days</th>
                         <th scope="col">Total Price</th>
                         <th scope="col">Status</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,6 +51,7 @@
                         <td>{{ reservation.days }}</td>
                         <td>{{ reservation.totalPrice }}</td>
                         <td>{{ reservation.status }}</td>
+                        <td><button class="btn btn-danger" (click)="cancelReservation(reservation.id)">Cancel</button></td>
                     </tr>
                     </tbody>
                 </table>
