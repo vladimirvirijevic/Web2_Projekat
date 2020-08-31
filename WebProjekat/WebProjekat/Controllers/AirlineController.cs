@@ -108,6 +108,14 @@ namespace WebProjekat.Controllers
             return await _context.Flights.ToListAsync();
         }
 
+        [HttpGet("flights/{flightId}")]
+        public async Task<Flight> GetFlight(int flightId)
+        {
+            var flight = await _context.Flights.FindAsync(flightId);
+
+            return flight;
+        }
+
         [HttpPost("searchcompanies")]
         public async Task<ActionResult<IEnumerable<AirplaneCompany>>> SearchCompanies([FromBody] SearchAirlineCompanyRequest request)
         {

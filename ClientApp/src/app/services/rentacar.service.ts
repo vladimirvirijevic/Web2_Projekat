@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { Car } from '../models/car';
 import { CarReservation } from '../models/carReservation';
+import { DiscountedCar } from '../models/discountedCar';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class RentacarService {
 
   getCar(carId): Observable<Car> {
     return this.http.get<Car>(`${environment.api_url}/rentacar/car/${carId}`);
+  }
+
+  getDiscountedCars(flightId): Observable<DiscountedCar[]> {
+    return this.http.get<DiscountedCar[]>(`${environment.api_url}/rentacar/discounted-cars/${flightId}`);
   }
 
   createCompany(companyInfo) {
@@ -49,6 +54,13 @@ export class RentacarService {
 
   bookCar(bookingInfo) {
     return this.http.post<any>(`${environment.api_url}/rentacar/book`, bookingInfo)
+    .pipe(
+        catchError(this.handleError)
+    );
+  }
+
+  fastBookCar(bookingInfo) {
+    return this.http.post<any>(`${environment.api_url}/rentacar/fast-book`, bookingInfo)
     .pipe(
         catchError(this.handleError)
     );

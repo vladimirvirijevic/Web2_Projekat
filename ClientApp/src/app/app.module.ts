@@ -57,6 +57,7 @@ import { UserReservesComponent } from './user-reserves/user-reserves.component';
 import { CarDiscountsComponent } from './my-rentacar-company/car-discounts/car-discounts.component';
 import { ReservationHistoryComponent } from './reservation-history/reservation-history.component';
 import { RentacarGradeComponent } from './reservation-history/rentacar-grade/rentacar-grade.component';
+import { FastCarReservationComponent } from './fast-car-reservation/fast-car-reservation.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { RentacarGradeComponent } from './reservation-history/rentacar-grade/ren
     ReservationHistoryComponent,
     RentacarGradeComponent,
     UserReservesComponent,
+    FastCarReservationComponent,
     
   ],
   imports: [

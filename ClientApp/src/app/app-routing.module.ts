@@ -45,6 +45,7 @@ import { CarDiscountsComponent } from './my-rentacar-company/car-discounts/car-d
 import { ReservationHistoryComponent } from './reservation-history/reservation-history.component';
 import { RentacarGradeComponent } from './reservation-history/rentacar-grade/rentacar-grade.component';
 import { UserReservesComponent } from './user-reserves/user-reserves.component';
+import { FastCarReservationComponent } from './fast-car-reservation/fast-car-reservation.component';
 
 const routes: Routes = [
   { path: '', component: FlightsComponent, pathMatch: 'full' },
@@ -110,8 +111,8 @@ const routes: Routes = [
 
   { path: 'reservations', component: ReservationHistoryComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
   { path: 'reservations/rentacar/:reservationId/grade', component: RentacarGradeComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
-    
-  canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }},
+  { path: 'fast-rentacar/:flightId', component: FastCarReservationComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
+  //canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }},
   //path za korisnika ka rezervaciji
   {path:'app/userReserves/:idLeta/:idBrojSedista',component:UserReservesComponent}
 ];
