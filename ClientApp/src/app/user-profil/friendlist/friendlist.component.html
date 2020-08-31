@@ -1,5 +1,8 @@
-<div class="row row-no-gutters">
-  <div class="col-lg-7">
+<div class="row">
+  <div *ngIf="nonFriends.length>0" class="col-lg-7">
+    <br/>
+    <br/>
+    <h5>You have some friend requests:</h5>
     <table class="table">
       <thead>
         <tr>
@@ -10,31 +13,49 @@
         </tr>
     </thead>
       <tbody>
-         <tr>
-           <th scope="row">1.</th><!--verovatno slike prijatelja-->
-           <td>Ime1</td>
-           <td>Prezime1</td>
-           <td><button type="button" class="btn btn-primary">Delete</button></td>
+         <tr *ngFor="let nonFriend of nonFriends">
+           <td></td>
+           <td>{{nonFriend.koJeRezervisao.firstName}}</td>
+           <td>{{nonFriend.koJeRezervisao.lastName}}</td>
+           <td><button type="button" class="btn btn-primary" (click)="Accept(nonFriend.id)">Accept</button></td>
+           <td><button type="button" class="btn btn-primary" (click)="Decline(nonFriend.id)">Decline</button></td>
          </tr>
-          <tr>
-            <th scope="row">2.</th>
-            <td>Ime2</td>
-            <td>Prezime2</td>
-            <td><button type="button" class="btn btn-primary">Delete</button></td>
-          </tr>
-          <tr>
-            <th scope="row">3.</th>
-            <td>Ime3</td>
-            <td>Prezime3</td>
-            <td><button type="button" class="btn btn-primary">Delete</button></td>
-          </tr>
        </tbody>
     </table>
+    <br/>
+    <br/>
+    <br/>
   </div>
-  <div class="col-lg-4">
-    <div class="form-group pull-right">
-      <input type="text" class="search form-control" placeholder="Search">
-  </div>
+  
+  <div *ngIf="friends.length>0" class="col-lg-7">
+    <br/>
+    <br/>
+    <h5>Your friends</h5>
+    <table class="table">
+      <thead>
+        <tr>
+           <th scope="col">Friend</th>
+           <th scope="col">First name:</th>
+           <th scope="col">Last name:</th>
+           <th scope="col"></th>
+        </tr>
+    </thead>
+      <tbody *ngIf="prihv">
+         <tr *ngFor="let friend of friends">
+           <td>{{friend.koJeRezervisao.firstName}}</td>
+           <td>{{friend.koJeRezervisao.lastName}}</td>
+           <td><button type="button" class="btn btn-primary" (click)="DeleteFriend(friend.id)">Delete</button></td>
+         </tr>
+       </tbody>
+       <tbody *ngIf="rez" >
+        <tr *ngFor="let friend of friends">
+          <td>{{friend.koJePrihvatio.firstName}}</td>
+          <td>{{friend.koJePrihvatio.lastName}}</td>
+          <td><button type="button" class="btn btn-primary" (click)="DeleteFriend(friend.id)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
 </div>
 

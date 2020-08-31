@@ -1,6 +1,6 @@
-<!--trebalo bi da se tabela prikazuje ukoliko imamo trazenog usera u bazi svih usera-->
+
 <div class="row row-no-gutters">
-    <div class="col-lg-7">
+    <div *ngIf="!added" class="col-lg-7">
    <table class="table">
       <thead>
         <tr>
@@ -11,30 +11,37 @@
         </tr>
     </thead>
       <tbody>
-         <tr>
+        <br>
+         <tr *ngFor="let user of users">
            <th scope="row"></th>
-           <td></td>
-           <td></td>
-           <td><button type="button" class="btn btn-primary">Add</button></td>
+           <td>{{user.firstName}}</td>
+           <td>{{user.lastName}}</td>
+           <td><button type="button" class="btn btn-primary" (click)="AddFriend(user.firstName, user.lastName, user.id)">Add</button></td>
          </tr>
-          <tr>
-            <th scope="row"></th>
-            <td></td>
-            <td></td>
-            <td><button type="button" class="btn btn-primary">Add</button></td>
-          </tr>
-          <tr>
-            <th scope="row"></th>
-            <td></td>
-            <td></td>
-            <td><button type="button" class="btn btn-primary">Add</button></td>
-          </tr>
        </tbody>
     </table>
   </div>
+  <div *ngIf="added" class="col-lg-7">
+    <h5>Friend request has been sent!</h5>
+  </div>
   <div class="col-lg-4">
-    <div class="form-group pull-right">
-      <input type="text" class="search form-control" placeholder="Search">
+    <div  class="form-group pull-right">
+      <form [formGroup]="searchFriend" (ngSubmit)="onSubmit()">
+      <input 
+                    type="text" 
+                    class="form-control" 
+                    id="firstName" 
+                    placeholder="Search with firstname..."
+                    formControlName="firstName">
+     <input 
+                    type="text" 
+                    class="form-control" 
+                    id="lastName" 
+                    placeholder="Search with lastname..."
+                    required
+                    formControlName="lastName">
+      <button id="buttonS" type="submit" class="btn btn-primary">Search</button>
+      </form>
   </div>
   </div>
 </div>

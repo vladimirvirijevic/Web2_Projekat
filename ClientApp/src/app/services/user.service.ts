@@ -52,5 +52,5 @@ export class UserService {
     {
         return this.http.put<any>(`${environment.api_url}/users/editUser`, userInfo);
     }
-
+   
 }
