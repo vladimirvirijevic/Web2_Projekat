@@ -21,6 +21,9 @@ export class FlightReservationService {
   {
     return this.http.get<FlightReservation[]>(`${environment.api_url}/flightreservation/getReservations/${userId}`);
   }
-  
+  deleteReservation(reservationId)
+  {
+    return this.http.delete<any>(`${environment.api_url}/flightreservation/deleteReservation/${reservationId}`);
+  }
 
 }

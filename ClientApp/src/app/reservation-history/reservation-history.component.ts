@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CarReservation } from '../models/carReservation';
 import { CarReservationService } from '../services/car-reservation.service';
+import { FlightReservationService } from '../services/flight-reservation.service';
+import { FlightReservation } from '../models/FlightReservation';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-reservation-history',
@@ -11,6 +14,7 @@ export class ReservationHistoryComponent implements OnInit {
   carReservations: CarReservation[] = [];
   finishedReservations: CarReservation[] = [];
   currentReservations: CarReservation[] = [];
+  reservations: FlightReservation[]=[];
 
   showDeleteSuccess = false;
   showDeleteError = false;
@@ -18,11 +22,14 @@ export class ReservationHistoryComponent implements OnInit {
   errorMessage = "There was an error!";
 
   constructor(
-    private carReservationService: CarReservationService
+    private carReservationService: CarReservationService,
+    private flightReservationService: FlightReservationService,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
     this.getCarReservations();
+    this.getFlightReservations();
   }
 
   getCarReservations() {
@@ -38,6 +45,40 @@ export class ReservationHistoryComponent implements OnInit {
 
   gradeCarReservation(reservationId) {
     alert(reservationId);
+  }
+
+  getFlightReservations()
+  {
+      this.flightReservationService.getReservations(this.authService.currentUserValue.id).subscribe
+      (
+        
+        data=>
+        {
+         this.reservations=data;
+         console.log(data);
+        },
+        err=>
+        {
+         console.log("ne radi");
+        }
+
+      );
+  }
+  OnDeleteReservation(reservationId)
+  {
+    this.flightReservationService.deleteReservation(reservationId).subscribe
+    (
+      data=>
+      {
+       console.log("radi");
+       this.getFlightReservations();
+      },
+      err=>
+      {
+       console.log("ne radi");
+      }
+
+    );
   }
 
   cancelReservation(reservationId) {

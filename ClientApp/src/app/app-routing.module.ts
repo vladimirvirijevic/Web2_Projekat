@@ -113,6 +113,8 @@ const routes: Routes = [
   { path: 'reservations/rentacar/:reservationId/grade', component: RentacarGradeComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
   { path: 'fast-rentacar/:flightId', component: FastCarReservationComponent, canActivate: [AuthGuard], data: { roles: [Role.User] }},
   //canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }},
+    
+  //canActivate: [AuthGuard], data: { roles: [Role.AirlineAdmin] }},
   //path za korisnika ka rezervaciji
   {path:'app/userReserves/:idLeta/:idBrojSedista',component:UserReservesComponent}
 ];

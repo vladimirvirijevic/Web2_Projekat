@@ -129,7 +129,42 @@ namespace WebProjekat.Controllers
         }
 
 
+        [HttpDelete("deleteReservation/{reservationId}")]
+        public async Task<IActionResult> DeleteReservation(int reservationId)
+        {
+            if (reservationId == 0)
+            {
+                return BadRequest();
+            }
 
+            var reservation = await _context.Reservations.FindAsync(reservationId);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            DateTime startDate = DateTime.Parse(reservation.DateOfReservation);
+            DateTime expiryDate = startDate.AddDays(3);
+            if (DateTime.Now < expiryDate)
+            {
+                return BadRequest();
+            }
+            var seat = await _context.Seats.FirstOrDefaultAsync(x => x.NumberOfSeat == reservation.SeatOfReservation && x.FlightBelonging.Id == reservation.FlightOfReservation.Id);
+            if (seat == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                seat.IsItReserved = false;
+            }
+
+            _context.Reservations.Remove(reservation);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+        }
 
 
 
