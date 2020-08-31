@@ -151,7 +151,7 @@
             </div>
             
         <div class="row pl-3">
-            <button (click)="viewCar(car.id)" class="btn btn-primary">Book</button>
+            <button (click)="viewCar(car.id)" class="btn btn-primary">{{ (authService.currentUserValue != null) ? "Book" : "See More" }}</button>
         </div>
     </div>
             

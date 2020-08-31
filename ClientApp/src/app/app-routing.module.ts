@@ -46,6 +46,7 @@ import { ReservationHistoryComponent } from './reservation-history/reservation-h
 import { RentacarGradeComponent } from './reservation-history/rentacar-grade/rentacar-grade.component';
 import { UserReservesComponent } from './user-reserves/user-reserves.component';
 import { FastCarReservationComponent } from './fast-car-reservation/fast-car-reservation.component';
+import { RentacarAdminProfileComponent } from './rentacar-admin-profile/rentacar-admin-profile.component';
 
 const routes: Routes = [
   { path: '', component: FlightsComponent, pathMatch: 'full' },
@@ -65,6 +66,8 @@ const routes: Routes = [
     { path: 'cars-availability', component: CarsAvailabilityComponent},
     { path: 'discounts', component: CarDiscountsComponent},
   ]},
+
+  { path: 'admin/rentacar/profile', component: RentacarAdminProfileComponent },
   
   {path: 'app', component:RegisteredUserComponent, canActivate: [AuthGuard], data: { roles: [Role.RentacarAdmin, Role.AirlineAdmin, Role.User]} },
   //korinsik moze da vidi sve aviokompanije i da ih poseti

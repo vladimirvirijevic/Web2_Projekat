@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CarsComponent } from '../cars/cars.component';
 import { Car } from '../models/car';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-rentacar-profile',
@@ -27,7 +28,8 @@ export class RentacarProfileComponent implements OnInit {
     private rentacarService: RentacarService,
     private route: ActivatedRoute,
     private location: Location,
-    private router: Router
+    private router: Router,
+    public authService: AuthenticationService
   ) { 
     this.searchForm = this.formBuilder.group({
       'pickupLocation': ['', [Validators.required]],

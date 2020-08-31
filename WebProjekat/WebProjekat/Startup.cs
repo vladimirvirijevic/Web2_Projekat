@@ -104,7 +104,7 @@ namespace WebProjekat
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context, IUserService userService)
         {
             if (env.IsDevelopment())
             {
@@ -129,6 +129,29 @@ namespace WebProjekat
             {
                 endpoints.MapControllers();
             });
+
+            // Dodaj Admina ako ga nema
+            var admin = context.Users.Where(x => x.Role == "Admin").FirstOrDefault();
+
+            if (admin == null)
+            {
+                var user = new User
+                {
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    Phone = "32131",
+                    City = "Novi Sad",
+                    Email = "admin1@projekat.com",
+                    Confirmed = true,
+                    PasswordChanged = true,
+                    IsCompanyAdmin = false,
+                    Role = "Admin"
+                };
+
+                string password = "admin123";
+
+                var result =  userService.Create(user, password, null);
+            }
         }
     }
 }

@@ -99,6 +99,41 @@ namespace WebProjekat.Services.Users
             return user;
         }
 
+        public User Create(User user, string password, string emailLink)
+        {
+            // validation
+            if (string.IsNullOrWhiteSpace(password))
+                throw new AppException("Password is required");
+
+            if (_context.Users.Any(x => x.Email == user.Email))
+                return null;
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            var confirmationToken = _emailSender.GenerateConfirmationToken();
+            user.ConfirmationToken = confirmationToken;
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            if (emailLink != null)
+            {
+                // Posalji Email
+                var sendTo = user.Email;
+
+                var link = $"{emailLink}/api/users/activate/{user.Email}/{confirmationToken}";
+
+                var message = new Message(new string[] { sendTo }, "Account Confirmation Link", $"Click the link below to activate your account:\n<a>{link}</a>");
+                _emailSender.SendEmail(message);
+            }
+
+            return user;
+        }
+
         // private helper methods
 
         public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

@@ -15,6 +15,8 @@ export class MyRentacarProfileComponent implements OnInit {
   company: RentacarCompany;
   editCompany: FormGroup;
 
+  companyGrade = 0;
+
   companyExists = false;
 
   errorMessageText = "";
@@ -49,6 +51,16 @@ export class MyRentacarProfileComponent implements OnInit {
     this.editCompany.controls.description.setValue(company.description);
   }
 
+  calculateCompanyGrade(grades) {
+    let total = 0;
+
+    grades.forEach(g => {
+      total += g.grade;
+    });
+
+    return total / grades.length;
+  }
+
   getCompany() {
     const userId = this.authService.currentUserValue.id;
 
@@ -58,6 +70,7 @@ export class MyRentacarProfileComponent implements OnInit {
           this.companyExists = true;
           this.company = data;
           this.setEditFormValues(this.company);
+          this.companyGrade = this.calculateCompanyGrade(data.grades);
           console.log(data);
         },
         error => {

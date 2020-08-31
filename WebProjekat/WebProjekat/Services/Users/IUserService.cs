@@ -12,6 +12,7 @@ namespace WebProjekat.Services.Users
         IEnumerable<User> GetAll();
         User GetById(int id);
         Task<User> CreateAsync(User user, string password, string emailLink);
+        User Create(User user, string password, string emailLink);
         string GenerateToken(User user);
         User GetCurrentUser(ClaimsPrincipal principal);
 

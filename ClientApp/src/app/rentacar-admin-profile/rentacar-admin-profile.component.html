@@ -1,0 +1,61 @@
+<div class="row mt-5">
+    <div class="col">
+        <div *ngIf="showErrorMessage" class="alert alert-danger" role="alert">
+            There was an error!
+        </div>
+        <div *ngIf="showConfirmation" class="alert alert-success" role="alert">
+            Password changed successfully!
+        </div>
+        <h4 class="text-center mb-3">Change Password</h4>
+        <form style="width: 500px; margin: 0 auto;" [formGroup]="changePasswordForm" (ngSubmit)="onSubmit()" class="">
+            <div class="input-group form-group-no-border mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fas fa-key"></i>
+                </span>
+              </div>
+
+                <input 
+                type="password" 
+                class="form-control" 
+                placeholder="Password"
+                required
+                minlength="6"
+                formControlName="password"
+                >
+            </div>
+            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                <div *ngIf="password.errors.required">
+                    Password is required.
+                </div>
+                <div *ngIf="password.errors.minlength">
+                    Password must be at least 6 characters long.
+                </div>
+            </div>
+            <div class="input-group form-group-no-border mb-2 mt-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="fas fa-key"></i>
+                </span>
+              </div>
+                <input 
+                type="password" 
+                class="form-control" 
+                placeholder="Confirm Password" 
+                required
+                formControlName="confirmPassword"
+                >
+            </div>
+            <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="alert alert-danger">
+                <div *ngIf="confirmPassword.errors.required">
+                    Confirmed Password is required.
+                </div>
+                <div *ngIf="confirmPassword.errors.mustMatch">
+                    Passwords must match.
+                </div>
+            </div>
+            
+            <button [disabled]="changePasswordForm.invalid" class="btn btn-primary btn-block">Change Password</button>
+        </form>
+    </div>
+</div>

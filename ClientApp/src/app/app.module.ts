@@ -58,6 +58,7 @@ import { CarDiscountsComponent } from './my-rentacar-company/car-discounts/car-d
 import { ReservationHistoryComponent } from './reservation-history/reservation-history.component';
 import { RentacarGradeComponent } from './reservation-history/rentacar-grade/rentacar-grade.component';
 import { FastCarReservationComponent } from './fast-car-reservation/fast-car-reservation.component';
+import { RentacarAdminProfileComponent } from './rentacar-admin-profile/rentacar-admin-profile.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { FastCarReservationComponent } from './fast-car-reservation/fast-car-res
     RentacarGradeComponent,
     UserReservesComponent,
     FastCarReservationComponent,
+    RentacarAdminProfileComponent,
     
   ],
   imports: [

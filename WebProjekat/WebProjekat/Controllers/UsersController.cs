@@ -12,6 +12,7 @@ using WebProjekat.Services.Auth;
 using WebProjekat.Requests;
 using WebProjekat.Requests.User;
 using WebProjekat.Responses;
+using WebProjekat.Requests.RentacarAdmin;
 
 namespace WebProjekat.Controllers
 {
